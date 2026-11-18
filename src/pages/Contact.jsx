@@ -1,0 +1,100 @@
+import React from 'react';
+import { useOutletContext } from 'react-router-dom';
+import { Helmet } from 'react-helmet-async';
+import { MapPin, Phone, Mail, Clock, MessageCircle } from 'lucide-react';
+import SectionHeading from '../components/common/SectionHeading';
+import Breadcrumb from '../components/common/Breadcrumb';
+import EnquiryForm from '../components/common/EnquiryForm';
+import ContactDetails from '../components/common/ContactDetails';
+
+export const Contact = () => {
+  const { settings } = useOutletContext() || {};
+
+  const companyName = settings?.companyName || 'MP Landscape Services';
+  const mapUrl = settings?.mapUrl || 'https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d125322.43770335894!2d76.88483284061807!3d11.01429995166291!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3ba859af2f971cb5%3A0x2fc1c81e183ed282!2sCoimbatore%2C%20Tamil%20Nadu!5e0!3m2!1sen!2sin!4v1700000000000!5m2!1sen!2sin';
+
+  return (
+    <>
+      <Helmet>
+        <title>Contact Us | {companyName} - Enquiries & Consultations</title>
+        <meta
+          name="description"
+          content={`Connect with ${companyName}. Request a personalized site survey, agricultural consultation, or landscape engineering estimate.`}
+        />
+      </Helmet>
+
+      {/* Header Banner */}
+      <section className="bg-gradient-to-b from-cream via-cream to-sand/20 border-b border-sand py-12 lg:py-16">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          <Breadcrumb items={[{ label: 'Contact' }]} />
+          <div className="max-w-3xl mt-4 space-y-3">
+            <span className="badge-burgundy">Reach Out to Our Specialists</span>
+            <h1 className="text-3xl sm:text-4xl lg:text-5xl font-extrabold text-burgundy font-sans tracking-tight">
+              Get in Touch with Our Team
+            </h1>
+            <p className="text-base sm:text-lg text-brand-muted leading-relaxed">
+              Whether you are planning an agricultural orchard, a commercial campus redesign, or a luxury villa garden, our agronomists and landscape architects are ready to assist.
+            </p>
+          </div>
+        </div>
+      </section>
+
+      {/* Main Grid: Contact Details & Interactive Enquiry Form */}
+      <section className="py-16 sm:py-20 bg-cream">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          <div className="grid lg:grid-cols-12 gap-12 items-start">
+            {/* Left Column: Direct Info Card */}
+            <div className="lg:col-span-5 space-y-8">
+              <div className="card-luxury p-6 sm:p-8 border border-sand bg-cream-light">
+                <SectionHeading
+                  align="left"
+                  badge="Corporate Office"
+                  title="Direct Contact Channels"
+                  subtitle="We are available during working hours for technical discussions, site survey scheduling, and general enquiries."
+                />
+
+                <div className="mt-8">
+                  <ContactDetails settings={settings} />
+                </div>
+              </div>
+            </div>
+
+            {/* Right Column: Enquiry Form */}
+            <div className="lg:col-span-7">
+              <EnquiryForm
+                title="Submit Project Enquiry"
+                subtitle="Complete the form below and an MP Landscape engineering consultant will respond within 24 hours."
+              />
+            </div>
+          </div>
+        </div>
+      </section>
+
+      {/* Interactive Google Map Section */}
+      <section className="bg-cream-light border-t border-sand pb-16">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pt-12">
+          <SectionHeading
+            badge="Location"
+            title="Visit Our Horticultural Office & Propagation Center"
+            subtitle="Explore our living specimen trees, palms, and design consultation studio in person."
+          />
+
+          <div className="mt-8 rounded-2xl overflow-hidden shadow-lg border border-sand h-[350px] sm:h-[420px] bg-sand/20">
+            <iframe
+              src={mapUrl}
+              width="100%"
+              height="100%"
+              style={{ border: 0 }}
+              allowFullScreen=""
+              loading="lazy"
+              referrerPolicy="no-referrer-when-downgrade"
+              title="MP Landscape Services Location Map"
+            />
+          </div>
+        </div>
+      </section>
+    </>
+  );
+};
+
+export default Contact;

@@ -1,0 +1,228 @@
+@import "tailwindcss";
+
+@theme {
+  /* Brand Approved Palette: Burgundy & Sand */
+  --color-burgundy: #542B32;
+  --color-burgundy-50: #FAF5F6;
+  --color-burgundy-100: #F3E6E8;
+  --color-burgundy-200: #E6CBD0;
+  --color-burgundy-300: #D4A9B1;
+  --color-burgundy-400: #B87682;
+  --color-burgundy-500: #9B4F5C;
+  --color-burgundy-600: #7E3844;
+  --color-burgundy-700: #682E37;
+  --color-burgundy-800: #542B32;
+  --color-burgundy-900: #422026;
+  --color-burgundy-950: #2C1318;
+  --color-burgundy-dark: #3D1E24;
+  --color-burgundy-light: #6F3B44;
+  --color-burgundy-subtle: #F5EDEE;
+
+  --color-bronze: #B68B55;
+  --color-bronze-50: #FAF7F2;
+  --color-bronze-100: #F3ECE0;
+  --color-bronze-200: #E6D7BE;
+  --color-bronze-300: #D5BD97;
+  --color-bronze-400: #C49F6E;
+  --color-bronze-500: #B68B55;
+  --color-bronze-600: #A07442;
+  --color-bronze-700: #855C33;
+  --color-bronze-800: #6E4A2A;
+  --color-bronze-900: #5A3C23;
+  --color-bronze-950: #332011;
+  --color-bronze-light: #C9A16E;
+  --color-bronze-dark: #8F693A;
+  --color-bronze-subtle: #F7F1E8;
+
+  --color-sand: #D8C3A5;
+  --color-sand-50: #FBF8F4;
+  --color-sand-100: #F6F0E7;
+  --color-sand-200: #EDE1D0;
+  --color-sand-300: #E0CEB5;
+  --color-sand-400: #D8C3A5;
+  --color-sand-500: #C2A782;
+  --color-sand-600: #A98C64;
+  --color-sand-700: #8D7250;
+  --color-sand-800: #745E44;
+  --color-sand-900: #5F4E3A;
+  --color-sand-950: #352B1E;
+  --color-sand-light: #E7D8C4;
+  --color-sand-dark: #BCA384;
+  --color-sand-subtle: #FAF5EE;
+
+  --color-cream: #F4EDE3;
+  --color-cream-light: #FAF7F2;
+  --color-cream-dark: #E6DCce;
+
+  --color-charcoal: #292626;
+  --color-brand-dark: #292626;
+  --color-brand-charcoal: #1E1B1B;
+  --color-brand-muted: #736B69;
+  --color-brand-border: #D8C3A5;
+
+  /* Typography */
+  --font-sans: 'Poppins', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+  --font-serif: 'Playfair Display', Georgia, Cambria, 'Times New Roman', serif;
+}
+
+/* Global Text Selection */
+::selection {
+  background-color: #542B32;
+  color: #FFFFFF;
+}
+::-moz-selection {
+  background-color: #542B32;
+  color: #FFFFFF;
+}
+
+/* CSS Variables for Dynamic Components and Theming */
+:root {
+  --primary: #542B32;
+  --primary-hover: #3D1E24;
+  --primary-light: #6F3B44;
+  --primary-subtle: #F5EDEE;
+
+  --accent: #B68B55;
+  --accent-light: #C9A16E;
+  --accent-dark: #8F693A;
+
+  --bg-secondary: #D8C3A5;
+  --bg-main: #F4EDE3;
+  --bg-card: #FAF7F2;
+
+  --text-dark: #292626;
+  --text-muted: #736B69;
+  --border-color: #D8C3A5;
+}
+
+/* Global Elements */
+body {
+  background-color: var(--bg-main);
+  color: var(--text-dark);
+  font-family: var(--font-sans);
+  margin: 0;
+  padding: 0;
+  overflow-x: hidden;
+}
+
+/* Reusable UI Utility Classes adhering strictly to Burgundy & Sand (No Green) */
+.btn-primary {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+  background-color: #542B32;
+  color: #FFFFFF;
+  font-weight: 500;
+  padding: 0.75rem 1.5rem;
+  border-radius: 0.5rem;
+  transition: all 0.25s ease-in-out;
+  border: 1px solid #542B32;
+}
+
+.btn-primary:hover {
+  background-color: #3D1E24;
+  border-color: #B68B55;
+  box-shadow: 0 4px 14px rgba(84, 43, 50, 0.25);
+  transform: translateY(-1px);
+}
+
+.btn-accent {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+  background-color: #B68B55;
+  color: #FFFFFF;
+  font-weight: 500;
+  padding: 0.75rem 1.5rem;
+  border-radius: 0.5rem;
+  transition: all 0.25s ease-in-out;
+  border: 1px solid #B68B55;
+}
+
+.btn-accent:hover {
+  background-color: #8F693A;
+  box-shadow: 0 4px 14px rgba(182, 139, 85, 0.3);
+  transform: translateY(-1px);
+}
+
+.btn-outline {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+  background-color: transparent;
+  color: #542B32;
+  font-weight: 500;
+  padding: 0.75rem 1.5rem;
+  border-radius: 0.5rem;
+  border: 1.5px solid #542B32;
+  transition: all 0.25s ease-in-out;
+}
+
+.btn-outline:hover {
+  background-color: #542B32;
+  color: #FFFFFF;
+  border-color: #542B32;
+}
+
+.card-luxury {
+  background-color: #FAF7F2;
+  border: 1px solid #E7D8C4;
+  border-radius: 0.75rem;
+  transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+  box-shadow: 0 2px 8px rgba(41, 38, 38, 0.04);
+}
+
+.card-luxury:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 12px 24px rgba(84, 43, 50, 0.08);
+  border-color: #B68B55;
+}
+
+.badge-burgundy {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.25rem;
+  padding: 0.25rem 0.75rem;
+  font-size: 0.75rem;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  background-color: #F5EDEE;
+  color: #542B32;
+  border: 1px solid #542B32/20;
+  border-radius: 9999px;
+}
+
+.badge-bronze {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.25rem;
+  padding: 0.25rem 0.75rem;
+  font-size: 0.75rem;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  background-color: #F7F1E8;
+  color: #8F693A;
+  border: 1px solid #B68B55/30;
+  border-radius: 9999px;
+}
+
+/* Custom Scrollbar */
+::-webkit-scrollbar {
+  width: 8px;
+  height: 8px;
+}
+::-webkit-scrollbar-track {
+  background: #F4EDE3;
+}
+::-webkit-scrollbar-thumb {
+  background: #D8C3A5;
+  border-radius: 4px;
+}
+::-webkit-scrollbar-thumb:hover {
+  background: #B68B55;
+}
