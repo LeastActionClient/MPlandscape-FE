@@ -11,18 +11,30 @@ export const ServiceCard = ({ service, onEnquire, className = '' }) => {
       className={`card-luxury flex flex-col h-full overflow-hidden group border border-sand bg-cream-light ${className}`}
     >
       {/* Image Thumbnail with Overlay Accent */}
-      <div className="relative h-56 sm:h-64 w-full overflow-hidden bg-sand/20">
-        <img
-          src={service.imageUrl || '/mp-logo.png'}
-          alt={service.title}
-          className="w-full h-full object-cover transition-transform duration-700 ease-out group-hover:scale-108"
-          loading="lazy"
-          onError={(e) => {
-            e.currentTarget.src = '/mp-logo.png';
-          }}
-        />
+      <div className="relative h-56 sm:h-64 w-full overflow-hidden bg-sand/20 flex items-center justify-center">
+        {service.imageUrl ? (
+          <img
+            src={service.imageUrl}
+            alt={service.title}
+            className="w-full h-full object-cover transition-transform duration-700 ease-out group-hover:scale-108"
+            loading="lazy"
+            onError={(e) => {
+              e.currentTarget.onerror = null;
+              e.currentTarget.src = '/mp-logo.png';
+              e.currentTarget.className = 'w-auto h-24 object-contain p-4 transition-transform duration-700 ease-out group-hover:scale-105';
+            }}
+          />
+        ) : (
+          <div className="w-full h-full flex flex-col items-center justify-center bg-sand/30 p-6 text-center">
+            <img
+              src="/mp-logo.png"
+              alt="MP Landscape Services"
+              className="w-auto h-24 object-contain opacity-90 transition-transform duration-700 ease-out group-hover:scale-105 drop-shadow-xs"
+            />
+          </div>
+        )}
 
-        <div className="absolute inset-0 bg-gradient-to-t from-brand-charcoal/70 via-transparent to-transparent opacity-60 group-hover:opacity-40 transition-opacity" />
+        <div className="absolute inset-0 bg-gradient-to-t from-brand-charcoal/70 via-transparent to-transparent opacity-60 group-hover:opacity-40 transition-opacity pointer-events-none" />
         
         {service.subtitle && (
           <span className="absolute bottom-3 left-3 right-3 text-xs font-semibold text-white tracking-wide truncate bg-burgundy/85 backdrop-blur-xs px-2.5 py-1 rounded-md">
@@ -34,8 +46,8 @@ export const ServiceCard = ({ service, onEnquire, className = '' }) => {
       {/* Card Content */}
       <div className="p-6 flex-1 flex flex-col justify-between space-y-4">
         <div className="space-y-3">
-          <h3 className="text-xl font-bold font-sans text-brand-dark group-hover:text-burgundy transition-colors line-clamp-1">
-            <Link to={`/services/${service.slug}`}>
+          <h3 className="text-xl font-bold font-sans text-brand-dark group-hover:text-burgundy transition-colors leading-snug break-words">
+            <Link to={`/services/${service.slug}`} className="hover:underline">
               {service.title}
             </Link>
           </h3>

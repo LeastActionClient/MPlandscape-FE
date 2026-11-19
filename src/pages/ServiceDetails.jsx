@@ -126,12 +126,27 @@ export const ServiceDetails = () => {
             {/* Left Content Column */}
             <div className="lg:col-span-7 space-y-8">
               {/* Feature Hero Image */}
-              <div className="rounded-2xl overflow-hidden shadow-xl border border-sand bg-sand/20 aspect-16/9">
-                <img
-                  src={service.imageUrl}
-                  alt={service.title}
-                  className="w-full h-full object-cover"
-                />
+              <div className="rounded-2xl overflow-hidden shadow-xl border border-sand bg-sand/20 aspect-16/9 flex items-center justify-center">
+                {service.imageUrl ? (
+                  <img
+                    src={service.imageUrl}
+                    alt={service.title}
+                    className="w-full h-full object-cover"
+                    onError={(e) => {
+                      e.currentTarget.onerror = null;
+                      e.currentTarget.src = '/mp-logo.png';
+                      e.currentTarget.className = 'max-h-40 w-auto object-contain p-6';
+                    }}
+                  />
+                ) : (
+                  <div className="w-full h-full flex items-center justify-center bg-sand/30 p-8">
+                    <img
+                      src="/mp-logo.png"
+                      alt="MP Landscape Services"
+                      className="max-h-36 w-auto object-contain opacity-90 drop-shadow-xs"
+                    />
+                  </div>
+                )}
               </div>
 
               {/* Description Body */}

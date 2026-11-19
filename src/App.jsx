@@ -24,7 +24,6 @@ import ServicesManagement from './pages/admin/ServicesManagement';
 import GalleryManagement from './pages/admin/GalleryManagement';
 import EnquiriesManagement from './pages/admin/EnquiriesManagement';
 import ContactManagement from './pages/admin/ContactManagement';
-import CompanySettings from './pages/admin/CompanySettings';
 import Profile from './pages/admin/Profile';
 import { Navigate } from 'react-router-dom';
 
@@ -57,7 +56,7 @@ function App() {
                 <Route path="gallery" element={<GalleryManagement />} />
                 <Route path="enquiries" element={<EnquiriesManagement />} />
                 <Route path="contact" element={<ContactManagement />} />
-                <Route path="settings" element={<CompanySettings />} />
+                <Route path="settings" element={<Navigate to="/admin/dashboard" replace />} />
                 <Route path="profile" element={<Profile />} />
               </Route>
             </Route>

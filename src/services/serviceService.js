@@ -17,7 +17,7 @@ export const serviceService = {
   createService: async (data) => {
     const isFormData = data instanceof FormData;
     const response = await api.post('/services', data, {
-      headers: isFormData ? { 'Content-Type': 'multipart/form-data' } : {},
+      headers: isFormData ? { 'Content-Type': undefined } : {},
     });
     return response.data;
   },
@@ -26,7 +26,7 @@ export const serviceService = {
   updateService: async (id, data) => {
     const isFormData = data instanceof FormData;
     const response = await api.put(`/services/${id}`, data, {
-      headers: isFormData ? { 'Content-Type': 'multipart/form-data' } : {},
+      headers: isFormData ? { 'Content-Type': undefined } : {},
     });
     return response.data;
   },
