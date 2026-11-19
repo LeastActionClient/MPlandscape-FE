@@ -47,6 +47,7 @@ const ServicesManagement = () => {
   const [formData, setFormData] = useState(INITIAL_FORM);
   const [imageFile, setImageFile] = useState(null);
   const [imagePreview, setImagePreview] = useState('');
+  const [imageLoadError, setImageLoadError] = useState(false);
   const [tagInput, setTagInput] = useState('');
   const [formError, setFormError] = useState('');
   const [isSaving, setIsSaving] = useState(false);
@@ -76,6 +77,7 @@ const ServicesManagement = () => {
     setFormData(INITIAL_FORM);
     setImageFile(null);
     setImagePreview('');
+    setImageLoadError(false);
     setTagInput('');
     setFormError('');
     setIsModalOpen(true);
@@ -97,18 +99,41 @@ const ServicesManagement = () => {
     });
     setImageFile(null);
     setImagePreview(service.imageUrl || '');
+    setImageLoadError(false);
     setTagInput('');
     setFormError('');
     setIsModalOpen(true);
   };
 
   const handleImageChange = (e) => {
-    const file = e.target.files[0];
-    if (file) {
-      setImageFile(file);
-      const previewUrl = URL.createObjectURL(file);
-      setImagePreview(previewUrl);
+    const file = e.target.files?.[0];
+    if (!file) return;
+
+    const allowedTypes = ['image/jpeg', 'image/jpg', 'image/png', 'image/webp', 'image/avif'];
+    if (!allowedTypes.includes(file.type.toLowerCase())) {
+      setFormError('Invalid image format. Allowed formats are JPG, JPEG, PNG, WEBP, and AVIF.');
+      e.target.value = '';
+      return;
     }
+
+    if (file.size > 5 * 1024 * 1024) {
+      setFormError('Image file size exceeds the 5MB limit. Please select a smaller file.');
+      e.target.value = '';
+      return;
+    }
+
+    setFormError('');
+    setImageLoadError(false);
+    setImageFile(file);
+    const previewUrl = URL.createObjectURL(file);
+    setImagePreview(previewUrl);
+  };
+
+  const handleClearImage = () => {
+    setImageFile(null);
+    setImagePreview('');
+    setImageLoadError(false);
+    setFormData((prev) => ({ ...prev, imageUrl: '' }));
   };
 
   const handleAddTag = (e) => {
@@ -142,9 +167,27 @@ const ServicesManagement = () => {
       setFormError('Service description is required');
       return;
     }
-    if (!editingId && !imageFile && !formData.imageUrl) {
-      setFormError('Please select an image file or provide an image URL');
+
+    // Service image is strictly MANDATORY:
+    // Support: 1) Uploaded image file, 2) Valid image URL string, 3) Existing saved image when editing
+    const hasImageFile = Boolean(imageFile);
+    const hasImageUrl = Boolean(formData.imageUrl && formData.imageUrl.trim());
+    const hasExistingImage = Boolean(editingId && imagePreview);
+
+    if (!hasImageFile && !hasImageUrl && !hasExistingImage) {
+      setFormError('Please upload a service image or provide a valid image URL.');
       return;
+    }
+
+    // If an image URL is provided (and no file uploaded), validate URL format
+    if (!hasImageFile && hasImageUrl) {
+      const trimmedUrl = formData.imageUrl.trim();
+      const urlPattern = /^https?:\/\/.+/i;
+      const isLocal = trimmedUrl.startsWith('/uploads/');
+      if (!urlPattern.test(trimmedUrl) && !isLocal) {
+        setFormError('Please provide a valid image URL starting with http:// or https://');
+        return;
+      }
     }
 
     try {
@@ -160,10 +203,11 @@ const ServicesManagement = () => {
       dataPayload.append('seoDescription', formData.seoDescription.trim());
       dataPayload.append('features', JSON.stringify(formData.features));
 
+      // Prioritize uploaded file over image URL.
       if (imageFile) {
         dataPayload.append('image', imageFile);
-      } else if (formData.imageUrl) {
-        dataPayload.append('imageUrl', formData.imageUrl);
+      } else if (formData.imageUrl?.trim()) {
+        dataPayload.append('imageUrl', formData.imageUrl.trim());
       }
 
       if (editingId) {
@@ -315,9 +359,13 @@ const ServicesManagement = () => {
                           <img
                             src={service.imageUrl || '/mp-logo.png'}
                             alt={service.title}
-                            className="w-14 h-12 object-cover rounded-lg border border-sand-300 bg-sand-100 flex-shrink-0"
+                            className={`w-14 h-12 rounded-lg border border-sand-300 bg-sand-100 flex-shrink-0 ${
+                              service.imageUrl ? 'object-cover' : 'object-contain p-1'
+                            }`}
                             onError={(e) => {
-                              e.target.src = '/mp-logo.png';
+                              e.currentTarget.onerror = null;
+                              e.currentTarget.src = '/mp-logo.png';
+                              e.currentTarget.className = 'w-14 h-12 object-contain p-1 rounded-lg border border-sand-300 bg-sand-100 flex-shrink-0';
                             }}
                           />
                           <div className="min-w-0">
@@ -478,17 +526,34 @@ const ServicesManagement = () => {
 
               {/* Image Upload & Preview */}
               <div className="sm:col-span-2">
-                <label className="block text-xs font-semibold text-charcoal mb-1">
-                  Service Banner Image
-                </label>
+                <div className="flex items-center justify-between mb-1">
+                  <label className="block text-xs font-semibold text-charcoal">
+                    Service Banner Image <span className="text-red-500 font-bold">*</span>
+                  </label>
+                  {imagePreview && (
+                    <button
+                      type="button"
+                      onClick={handleClearImage}
+                      className="text-[11px] text-burgundy-700 hover:text-burgundy-900 font-medium"
+                    >
+                      Clear Image
+                    </button>
+                  )}
+                </div>
                 <div className="flex flex-col sm:flex-row gap-4 items-start">
                   <div className="w-full sm:w-1/2">
-                    <label className="flex flex-col items-center justify-center border-2 border-dashed border-sand-300 hover:border-burgundy-600 rounded-xl p-4 cursor-pointer bg-sand-50/50 hover:bg-sand-50 transition-colors">
+                    <label
+                      className={`flex flex-col items-center justify-center border-2 border-dashed rounded-xl p-4 cursor-pointer transition-colors ${
+                        formError && (formError.includes('upload a service image') || formError.includes('valid image URL'))
+                          ? 'border-red-400 bg-red-50/30'
+                          : 'border-sand-300 hover:border-burgundy-600 bg-sand-50/50 hover:bg-sand-50'
+                      }`}
+                    >
                       <Upload className="w-6 h-6 text-burgundy-700 mb-1" />
                       <span className="text-xs font-semibold text-charcoal">
                         Upload Image File
                       </span>
-                      <span className="text-[10px] text-charcoal/50">PNG, JPG, WEBP up to 5MB</span>
+                      <span className="text-[10px] text-charcoal/50">PNG, JPG, WEBP, AVIF up to 5MB</span>
                       <input
                         type="file"
                         accept="image/*"
@@ -502,26 +567,57 @@ const ServicesManagement = () => {
                         type="url"
                         value={formData.imageUrl}
                         onChange={(e) => {
-                          setFormData({ ...formData, imageUrl: e.target.value });
-                          setImagePreview(e.target.value);
+                          const val = e.target.value;
+                          setFormData({ ...formData, imageUrl: val });
+                          if (!imageFile) {
+                            setImagePreview(val);
+                            setImageLoadError(false);
+                          }
                         }}
                         placeholder="https://..."
-                        className="w-full px-2.5 py-1.5 mt-0.5 border border-sand-300 rounded-lg text-xs focus:ring-2 focus:ring-burgundy-600 focus:outline-none"
+                        className={`w-full px-2.5 py-1.5 mt-0.5 border rounded-lg text-xs focus:ring-2 focus:outline-none ${
+                          formError && (formError.includes('upload a service image') || formError.includes('valid image URL'))
+                            ? 'border-red-400 focus:ring-red-400'
+                            : 'border-sand-300 focus:ring-burgundy-600'
+                        }`}
                       />
                     </div>
                   </div>
 
-                  <div className="w-full sm:w-1/2 flex flex-col items-center justify-center p-2 border border-sand-200 rounded-xl bg-sand-50 h-36">
+                  <div className="w-full sm:w-1/2 flex flex-col items-center justify-center p-2 border border-sand-200 rounded-xl bg-sand-50 h-36 relative">
                     {imagePreview ? (
-                      <img
-                        src={imagePreview}
-                        alt="Preview"
-                        className="h-full w-full object-cover rounded-lg"
-                      />
+                      <>
+                        <img
+                          src={imagePreview}
+                          alt="Preview"
+                          className="h-full w-full object-cover rounded-lg"
+                          onError={() => {
+                            setImageLoadError(true);
+                          }}
+                        />
+                        {imageLoadError && (
+                          <div className="absolute inset-2 bg-sand-50/95 border border-red-300 rounded-lg flex flex-col items-center justify-center p-2 text-center text-xs text-red-700">
+                            <AlertCircle className="w-5 h-5 mb-1 text-red-600" />
+                            <span className="font-semibold">Image failed to load</span>
+                            <span className="text-[10px] text-charcoal/70 mt-0.5">
+                              Please replace with a valid file or URL
+                            </span>
+                          </div>
+                        )}
+                        <button
+                          type="button"
+                          onClick={handleClearImage}
+                          className="absolute top-3 right-3 p-1 rounded-full bg-white/90 text-charcoal/70 hover:text-red-600 shadow-xs border border-sand-200 transition-colors z-10"
+                          title="Remove image"
+                        >
+                          <X className="w-3.5 h-3.5" />
+                        </button>
+                      </>
                     ) : (
                       <div className="text-center text-charcoal/40 text-xs flex flex-col items-center gap-1">
-                        <ImageIcon className="w-6 h-6" />
-                        <span>No image selected</span>
+                        <ImageIcon className="w-6 h-6 text-sand-500" />
+                        <span className="font-medium text-charcoal/70">No image selected *</span>
+                        <span className="text-[10px] text-charcoal/50">Upload a file or provide a URL</span>
                       </div>
                     )}
                   </div>

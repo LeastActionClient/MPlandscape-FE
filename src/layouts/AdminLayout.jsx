@@ -6,7 +6,6 @@ import {
   Image,
   Inbox,
   Phone,
-  Settings,
   User,
   LogOut,
   Menu,
@@ -36,7 +35,6 @@ const AdminLayout = () => {
     { name: 'Gallery', path: '/admin/gallery', icon: Image },
     { name: 'Enquiries', path: '/admin/enquiries', icon: Inbox },
     { name: 'Contact Info', path: '/admin/contact', icon: Phone },
-    { name: 'Company Settings', path: '/admin/settings', icon: Settings },
     { name: 'Profile', path: '/admin/profile', icon: User },
   ];
 

@@ -15,6 +15,10 @@ export const api = axios.create({
 // Request Interceptor: Attach bearer token if present in localStorage (fallback for mobile/headers)
 api.interceptors.request.use(
   (config) => {
+    // If request payload is FormData, remove manual or default Content-Type to let browser/Axios compute multipart boundary
+    if (config.data instanceof FormData) {
+      delete config.headers['Content-Type'];
+    }
     const token = localStorage.getItem('mp_admin_token');
     if (token) {
       config.headers.Authorization = `Bearer ${token}`;

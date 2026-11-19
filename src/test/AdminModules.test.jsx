@@ -9,7 +9,6 @@ import ServicesManagement from '../pages/admin/ServicesManagement';
 import GalleryManagement from '../pages/admin/GalleryManagement';
 import EnquiriesManagement from '../pages/admin/EnquiriesManagement';
 import ContactManagement from '../pages/admin/ContactManagement';
-import CompanySettings from '../pages/admin/CompanySettings';
 import Profile from '../pages/admin/Profile';
 import dashboardService from '../services/dashboardService';
 import serviceService from '../services/serviceService';
@@ -241,23 +240,6 @@ describe('Admin Modules & Management Pages (Task 8.2)', () => {
       expect(screen.getAllByDisplayValue('+91 98765 43210')[0]).toBeInTheDocument();
       expect(screen.getByDisplayValue('info@mplandscape.com')).toBeInTheDocument();
     });
-  });
-
-  it('renders CompanySettings with loaded tagline and mission', async () => {
-    render(
-      <HelmetProvider>
-        <AuthProvider>
-          <BrowserRouter>
-            <CompanySettings />
-          </BrowserRouter>
-        </AuthProvider>
-      </HelmetProvider>
-    );
-
-    await waitFor(() => {
-      expect(screen.getByDisplayValue(/Premier Landscaping/i)).toBeInTheDocument();
-    });
-    expect(screen.getByRole('button', { name: /Save Company Settings/i })).toBeInTheDocument();
   });
 
   it('renders Profile page with administrator information', () => {
