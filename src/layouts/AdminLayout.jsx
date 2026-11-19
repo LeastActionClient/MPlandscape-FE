@@ -50,25 +50,25 @@ const AdminLayout = () => {
 
       {/* Sidebar (Desktop fixed + Mobile slide-over) */}
       <aside
-        className={`fixed inset-y-0 left-0 z-50 w-64 bg-burgundy-900 text-white flex flex-col transition-transform duration-300 ease-in-out md:translate-x-0 md:static md:inset-auto md:min-h-screen ${
+        className={`fixed inset-y-0 left-0 z-40 w-64 bg-burgundy-900 text-white flex flex-col transition-transform duration-300 ease-in-out md:translate-x-0 ${
           mobileSidebarOpen ? 'translate-x-0' : '-translate-x-full'
         }`}
       >
         {/* Sidebar Header */}
-        <div className="h-20 flex items-center justify-between px-6 border-b border-burgundy-800 bg-burgundy-950/40">
+        <div className="h-20 flex items-center justify-between px-6 border-b border-burgundy-800 bg-burgundy-950/40 shrink-0">
           <Link
             to="/admin/dashboard"
             onClick={() => setMobileSidebarOpen(false)}
             className="flex items-center gap-3 group"
           >
-            <div className="bg-white p-1 rounded-md shadow-sm">
-              <MPLogo className="h-9 w-auto" />
+            <div className="w-12 h-12 bg-white rounded-xl shadow-xs p-1.5 flex items-center justify-center shrink-0">
+              <MPLogo imgClassName="h-9 w-9 object-contain" />
             </div>
-            <div>
-              <span className="block font-serif text-sm font-bold text-sand-100 tracking-wide">
+            <div className="flex flex-col justify-center">
+              <span className="block font-serif text-sm font-bold text-sand-100 tracking-wide leading-tight">
                 MP LANDSCAPE
               </span>
-              <span className="block text-[10px] uppercase font-semibold text-sand-300 tracking-wider">
+              <span className="block text-[10px] uppercase font-semibold text-sand-300 tracking-wider leading-tight mt-0.5">
                 Admin Console
               </span>
             </div>
@@ -109,7 +109,7 @@ const AdminLayout = () => {
         </nav>
 
         {/* User Card & Logout in Sidebar Footer */}
-        <div className="p-4 border-t border-burgundy-800 bg-burgundy-950/50">
+        <div className="p-4 border-t border-burgundy-800 bg-burgundy-950/50 shrink-0">
           <div className="flex items-center gap-3 mb-3 px-2 py-1.5">
             <div className="w-9 h-9 rounded-full bg-sand-300 text-burgundy-950 font-bold flex items-center justify-center flex-shrink-0 text-sm">
               {user?.name ? user.name.charAt(0).toUpperCase() : 'A'}
@@ -135,9 +135,9 @@ const AdminLayout = () => {
       </aside>
 
       {/* Main Content Area */}
-      <div className="flex-1 flex flex-col min-w-0">
+      <div className="flex-1 flex flex-col min-w-0 md:pl-64">
         {/* Top Navigation Bar */}
-        <header className="h-16 bg-white border-b border-sand-300 px-4 sm:px-6 lg:px-8 flex items-center justify-between sticky top-0 z-30 shadow-xs">
+        <header className="h-16 bg-white border-b border-sand-300 px-4 sm:px-6 lg:px-8 flex items-center justify-between sticky top-0 z-30 shadow-xs shrink-0">
           <div className="flex items-center gap-4">
             <button
               type="button"

@@ -30,7 +30,7 @@ export const ServiceDetails = () => {
       setError(null);
       try {
         const res = await serviceService.getServiceBySlug(slug);
-        if (isMounted) {
+        if (isMounted && res.data) {
           setService(res.data);
 
           // Fetch other services for related section

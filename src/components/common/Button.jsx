@@ -15,10 +15,10 @@ export const Button = ({
   ...props
 }) => {
   const baseStyles =
-    'inline-flex items-center justify-center font-medium rounded-lg transition-all duration-200 select-none focus:outline-hidden disabled:opacity-50 disabled:cursor-not-allowed cursor-pointer active:scale-[0.99]';
+    'inline-flex flex-row items-center justify-center font-medium rounded-lg transition-all duration-200 select-none focus:outline-hidden disabled:opacity-50 disabled:cursor-not-allowed cursor-pointer active:scale-[0.99] whitespace-nowrap shrink-0';
 
   const sizeStyles = {
-    sm: 'text-xs px-3.5 py-2 gap-1.5',
+    sm: 'text-xs px-3.5 py-2 gap-2',
     md: 'text-sm px-5 py-2.5 gap-2',
     lg: 'text-base px-6 py-3.5 gap-2.5 font-semibold',
   };
@@ -26,6 +26,8 @@ export const Button = ({
   const variantStyles = {
     primary:
       'bg-burgundy text-white hover:bg-burgundy-dark hover:shadow-md border border-burgundy hover:border-bronze',
+    secondary:
+      'bg-white text-charcoal border border-sand-300 hover:bg-sand-100 hover:border-sand-400',
     accent:
       'bg-bronze text-white hover:bg-bronze-dark hover:shadow-md border border-bronze',
     outline:
@@ -41,17 +43,17 @@ export const Button = ({
       type={type}
       disabled={disabled || loading}
       onClick={onClick}
-      className={`${baseStyles} ${sizeStyles[size]} ${variantStyles[variant]} ${className}`}
+      className={`${baseStyles} ${sizeStyles[size]} ${variantStyles[variant] || ''} ${className}`}
       {...props}
     >
       {loading ? (
-        <Loader2 className="w-4 h-4 animate-spin text-current" />
+        <Loader2 className="w-4 h-4 animate-spin text-current shrink-0" />
       ) : (
-        Icon && iconPosition === 'left' && <Icon className="w-4 h-4 flex-shrink-0" />
+        Icon && iconPosition === 'left' && <Icon className="w-4 h-4 shrink-0" />
       )}
-      <span>{children}</span>
+      <span className="inline-flex flex-row items-center justify-center gap-2 whitespace-nowrap shrink-0">{children}</span>
       {!loading && Icon && iconPosition === 'right' && (
-        <Icon className="w-4 h-4 flex-shrink-0" />
+        <Icon className="w-4 h-4 shrink-0" />
       )}
     </button>
   );

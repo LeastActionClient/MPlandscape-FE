@@ -77,10 +77,10 @@ const Profile = () => {
                   variant="outline"
                   size="sm"
                   onClick={() => setShowLogoutConfirm(true)}
-                  className="gap-1.5 text-xs text-red-600 hover:text-red-700 hover:bg-red-50"
+                  className="gap-2 text-xs text-red-600 hover:text-red-700 hover:bg-red-50 shrink-0"
                 >
-                  <LogOut className="w-3.5 h-3.5" />
-                  Sign Out
+                  <LogOut className="w-3.5 h-3.5 shrink-0" />
+                  <span>Sign Out</span>
                 </Button>
               </div>
             </div>

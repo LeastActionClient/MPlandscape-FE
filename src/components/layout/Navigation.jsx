@@ -11,15 +11,15 @@ export const navItems = [
 
 export const Navigation = ({ className = '' }) => {
   return (
-    <nav className={`hidden md:flex items-center space-x-1 lg:space-x-2 ${className}`}>
+    <nav className={`flex items-center space-x-1 xl:space-x-2 ${className}`}>
       {navItems.map((item) => (
         <NavLink
           key={item.path}
           to={item.path}
           className={({ isActive }) =>
-            `px-3 py-2 rounded-md text-sm font-medium transition-all ${
+            `px-2.5 lg:px-3 py-1.5 rounded-lg text-xs lg:text-sm font-medium transition-all whitespace-nowrap ${
               isActive
-                ? 'text-burgundy font-semibold bg-sand/30 border-b-2 border-burgundy'
+                ? 'text-burgundy font-semibold bg-sand/35 border-b-2 border-burgundy shadow-2xs'
                 : 'text-brand-dark hover:text-burgundy hover:bg-sand/20'
             }`
           }

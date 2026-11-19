@@ -1,7 +1,9 @@
-import React from 'react';
-import { ZoomIn } from 'lucide-react';
+import React, { useState } from 'react';
+import { ZoomIn, Image as ImageIcon } from 'lucide-react';
 
 export const GalleryCard = ({ item, onSelect, className = '' }) => {
+  const [imageError, setImageError] = useState(!item?.imageUrl);
+
   if (!item) return null;
 
   return (
@@ -10,17 +12,21 @@ export const GalleryCard = ({ item, onSelect, className = '' }) => {
       className={`group relative overflow-hidden rounded-xl border border-sand bg-cream-light cursor-pointer shadow-xs hover:shadow-xl transition-all duration-300 transform hover:-translate-y-1 ${className}`}
     >
       {/* Image Container */}
-      <div className="relative aspect-4/3 w-full overflow-hidden bg-sand/30">
-        <img
-          src={item.imageUrl || '/mp-logo.png'}
-          alt={item.title}
-          className="w-full h-full object-cover transition-transform duration-700 ease-out group-hover:scale-110"
-          loading="lazy"
-          onError={(e) => {
-            e.currentTarget.src = '/mp-logo.png';
-          }}
-        />
-
+      <div className="relative aspect-4/3 w-full overflow-hidden bg-sand/25">
+        {!imageError && item.imageUrl ? (
+          <img
+            src={item.imageUrl}
+            alt={item.title}
+            className="w-full h-full object-cover transition-transform duration-700 ease-out group-hover:scale-108"
+            loading="lazy"
+            onError={() => setImageError(true)}
+          />
+        ) : (
+          <div className="w-full h-full flex flex-col items-center justify-center bg-sand/30 text-brand-muted p-4 text-center">
+            <ImageIcon className="w-8 h-8 text-bronze/60 mb-1" />
+            <span className="text-xs font-medium text-brand-muted line-clamp-1">{item.title}</span>
+          </div>
+        )}
 
         {/* Hover Gradient Overlay */}
         <div className="absolute inset-0 bg-gradient-to-t from-brand-charcoal/85 via-brand-charcoal/40 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex flex-col justify-end p-5 text-white">

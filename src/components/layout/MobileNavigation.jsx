@@ -34,7 +34,7 @@ export const MobileNavigation = ({ isOpen, onClose, settings }) => {
         <div className="p-6">
           {/* Header row */}
           <div className="flex items-center justify-between pb-6 border-b border-sand">
-            <MPLogo imgClassName="h-14 w-auto" />
+            <MPLogo imgClassName="h-12 w-auto object-contain" showText={true} />
             <button
               onClick={onClose}
               className="p-2 rounded-lg text-brand-dark hover:bg-sand/30 transition-colors"

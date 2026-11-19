@@ -53,6 +53,9 @@ const EnquiriesManagement = () => {
   const [currentPage, setCurrentPage] = useState(1);
   const [totalPages, setTotalPages] = useState(1);
   const [totalCount, setTotalCount] = useState(0);
+  const [pageSize, setPageSize] = useState(15);
+  const [refreshing, setRefreshing] = useState(false);
+  const [refreshToast, setRefreshToast] = useState(null);
 
   // Filters from URL or local
   const [search, setSearch] = useState(searchParams.get('search') || '');
@@ -89,14 +92,14 @@ const EnquiriesManagement = () => {
   }, []);
 
   // Fetch Enquiries
-  const fetchEnquiries = async (page = currentPage) => {
+  const fetchEnquiries = async (page = currentPage, limit = pageSize) => {
     try {
       setLoading(true);
       setError(null);
 
       const params = {
         page,
-        limit: 15,
+        limit,
       };
 
       if (search.trim()) params.search = search.trim();
@@ -123,12 +126,28 @@ const EnquiriesManagement = () => {
       setError(err.response?.data?.message || 'Failed to fetch enquiries');
     } finally {
       setLoading(false);
+      setRefreshing(false);
     }
   };
 
   useEffect(() => {
-    fetchEnquiries(1);
+    fetchEnquiries(1, pageSize);
   }, [statusFilter, serviceFilter, startDate, endDate]);
+
+  const handleRefresh = async () => {
+    if (refreshing) return;
+    try {
+      setRefreshing(true);
+      await fetchEnquiries(currentPage, pageSize);
+      setRefreshToast({ type: 'success', message: 'Enquiries refreshed successfully.' });
+      setTimeout(() => setRefreshToast(null), 3000);
+    } catch (err) {
+      setRefreshToast({ type: 'error', message: 'Failed to refresh enquiries.' });
+      setTimeout(() => setRefreshToast(null), 4000);
+    } finally {
+      setRefreshing(false);
+    }
+  };
 
   const handleSearchSubmit = (e) => {
     e.preventDefault();
@@ -210,6 +229,7 @@ const EnquiriesManagement = () => {
     try {
       setIsExporting(true);
       const params = {};
+      if (search.trim()) params.search = search.trim();
       if (statusFilter !== 'All') params.status = statusFilter;
       if (serviceFilter !== 'All') params.serviceId = serviceFilter;
       if (startDate) params.startDate = startDate;
@@ -256,11 +276,12 @@ const EnquiriesManagement = () => {
               type="button"
               variant="outline"
               size="sm"
-              onClick={() => fetchEnquiries(currentPage)}
-              className="gap-2"
+              onClick={handleRefresh}
+              disabled={refreshing}
+              className="gap-2 shrink-0"
             >
-              <RefreshCw className="w-3.5 h-3.5" />
-              Refresh
+              <RefreshCw className={`w-3.5 h-3.5 shrink-0 ${refreshing ? 'animate-spin text-burgundy-900' : ''}`} />
+              <span>Refresh</span>
             </Button>
             <Button
               type="button"
@@ -268,13 +289,36 @@ const EnquiriesManagement = () => {
               size="sm"
               onClick={handleExportCSV}
               disabled={isExporting}
-              className="gap-2 shadow-xs"
+              className="gap-2 shadow-xs shrink-0"
             >
-              <Download className="w-4 h-4" />
-              {isExporting ? 'Exporting...' : 'Export to CSV'}
+              <Download className="w-4 h-4 shrink-0" />
+              <span>{isExporting ? 'Exporting...' : 'Export to CSV'}</span>
             </Button>
           </div>
         </div>
+
+        {/* Refresh Toast Banner */}
+        {refreshToast && (
+          <div
+            className={`p-3.5 rounded-xl border text-xs font-semibold flex items-center justify-between gap-3 animate-fade-in shadow-xs ${
+              refreshToast.type === 'success'
+                ? 'bg-sand-100 border-sand-300 text-burgundy-950'
+                : 'bg-red-50 border-red-200 text-red-800'
+            }`}
+          >
+            <div className="flex items-center gap-2">
+              <CheckCircle className="w-4 h-4 text-bronze shrink-0" />
+              <span>{refreshToast.message}</span>
+            </div>
+            <button
+              type="button"
+              onClick={() => setRefreshToast(null)}
+              className="p-1 hover:opacity-75 text-charcoal/60"
+            >
+              &times;
+            </button>
+          </div>
+        )}
 
         {/* Filter Controls Bar */}
         <div className="bg-white p-4 rounded-2xl border border-sand-300 shadow-xs space-y-4">
@@ -490,15 +534,20 @@ const EnquiriesManagement = () => {
             </div>
 
             {/* Pagination Controls */}
-            {totalPages > 1 && (
-              <div className="p-4 border-t border-sand-200">
-                <Pagination
-                  currentPage={currentPage}
-                  totalPages={totalPages}
-                  onPageChange={(p) => fetchEnquiries(p)}
-                />
-              </div>
-            )}
+            <div className="p-4 border-t border-sand-200">
+              <Pagination
+                currentPage={currentPage}
+                totalPages={totalPages}
+                totalRecords={totalCount}
+                pageSize={pageSize}
+                pageSizeOptions={[10, 15, 25, 50]}
+                onPageSizeChange={(newSize) => {
+                  setPageSize(newSize);
+                  fetchEnquiries(1, newSize);
+                }}
+                onPageChange={(p) => fetchEnquiries(p, pageSize)}
+              />
+            </div>
           </div>
         )}
 
