@@ -57,7 +57,7 @@
   --color-charcoal: #292626;
   --color-brand-dark: #292626;
   --color-brand-charcoal: #1E1B1B;
-  --color-brand-muted: #736B69;
+  --color-brand-muted: #4A3E3D;
   --color-brand-border: #D8C3A5;
 
   /* Typography */
@@ -91,7 +91,7 @@
   --bg-card: #FAF7F2;
 
   --text-dark: #292626;
-  --text-muted: #736B69;
+  --text-muted: #4A3E3D;
   --border-color: #D8C3A5;
 }
 
@@ -382,4 +382,68 @@ body {
 }
 ::-webkit-scrollbar-thumb:hover {
   background: #B68B55;
+}
+
+/* ==========================================================================
+   Mobile Typography & Contrast Enhancements
+   Increases mobile font sizes by approximately one typographic step for
+   optimal readability across small screens (360px - 430px) without horizontal overflow.
+   ========================================================================== */
+
+/* Enhanced contrast & weight for supporting/muted text across all backgrounds */
+.text-brand-muted {
+  color: #4A3E3D;
+  font-weight: 450;
+}
+
+@media (max-width: 639.98px) {
+  /* Boost text-xs (12px) to ~13.5px on mobile for readability */
+  .text-xs {
+    font-size: 0.84375rem !important; /* 13.5px */
+    line-height: 1.35rem !important;
+  }
+
+  /* Boost text-[10px] & text-[11px] to ~12.5px-13px on mobile */
+  .text-\[10px\],
+  .text-\[11px\] {
+    font-size: 0.78125rem !important; /* 12.5px */
+    line-height: 1.25rem !important;
+  }
+
+  /* Boost text-sm (14px) to ~15.2px on mobile */
+  .text-sm {
+    font-size: 0.95rem !important; /* 15.2px */
+    line-height: 1.5rem !important;
+  }
+
+  /* Form controls, inputs, select, textarea */
+  input[type="text"],
+  input[type="email"],
+  input[type="tel"],
+  input[type="password"],
+  select,
+  textarea {
+    font-size: 1rem !important; /* 16px prevents iOS Safari auto-zoom on focus */
+  }
+
+  /* Buttons on mobile */
+  .btn-primary,
+  .btn-accent,
+  .btn-outline {
+    font-size: 0.9375rem; /* 15px */
+    padding-top: 0.65rem;
+    padding-bottom: 0.65rem;
+  }
+
+  /* Badges */
+  .badge-burgundy,
+  .badge-bronze {
+    font-size: 0.8125rem; /* 13px */
+    padding: 0.35rem 0.85rem;
+  }
+
+  /* Muted text slightly bolder on mobile */
+  .text-brand-muted {
+    font-weight: 500;
+  }
 }

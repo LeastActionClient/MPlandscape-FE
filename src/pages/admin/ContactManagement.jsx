@@ -314,7 +314,7 @@ const ContactManagement = () => {
                         type="text"
                         value={phone}
                         onChange={(e) => handlePhoneChange(idx, e.target.value)}
-                        placeholder="+91 98765 43210"
+                        placeholder="+91 8838548402"
                         className="flex-1 px-3 py-2 border border-sand-300 rounded-lg text-sm focus:ring-2 focus:ring-burgundy-600 focus:outline-none"
                       />
                       {phoneNumbers.length > 1 && (
@@ -349,7 +349,7 @@ const ContactManagement = () => {
                   type="text"
                   value={whatsappNumber}
                   onChange={(e) => setWhatsappNumber(e.target.value)}
-                  placeholder="+91 98765 43210"
+                  placeholder="+91 8838548402"
                   className="w-full px-3 py-2 border border-sand-300 rounded-lg text-sm focus:ring-2 focus:ring-burgundy-600 focus:outline-none"
                 />
                 <p className="text-[11px] text-charcoal/60 mt-1.5">

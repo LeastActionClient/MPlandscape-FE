@@ -54,9 +54,9 @@ vi.mock('../services/settingsService', () => ({
     getSettings: vi.fn().mockResolvedValue({
       data: {
         companyName: 'MP Landscape Services',
-        phoneNumbers: ['+91 98765 43210'],
+        phoneNumbers: ['+91 8838548402'],
         emailAddresses: ['info@mplandscape.com'],
-        whatsappNumber: '+91 98765 43210',
+        whatsappNumber: '+91 8838548402',
         address: 'Coimbatore, Tamil Nadu, India',
         workingHours: 'Mon - Sat: 8:00 AM - 6:30 PM',
       },
@@ -128,7 +128,7 @@ describe('Public Website Pages & Forms (Task 8.2)', () => {
       </HelmetProvider>
     );
 
-    expect(screen.getByText(/Reach Out to Our Specialists/i)).toBeInTheDocument();
+    expect(screen.getByText(/Get in Touch with Our Team/i)).toBeInTheDocument();
     expect(screen.getByPlaceholderText(/e.g. Ramesh Kumar/i)).toBeInTheDocument();
   });
 
@@ -145,9 +145,11 @@ describe('Public Website Pages & Forms (Task 8.2)', () => {
     fireEvent.click(submitBtn);
 
     await waitFor(() => {
-      expect(screen.getByText(/Name must be at least 2 characters/i)).toBeInTheDocument();
-      expect(screen.getByText(/Please enter a valid phone number/i)).toBeInTheDocument();
-      expect(screen.getByText(/Please enter a valid email address/i)).toBeInTheDocument();
+      expect(screen.getByText(/Please enter a valid name using letters only/i)).toBeInTheDocument();
+      expect(screen.getByText(/Please enter a valid 10-digit mobile number/i)).toBeInTheDocument();
+      expect(screen.getByText(/Email address is required/i)).toBeInTheDocument();
+      expect(screen.getByText(/Please select an interested service/i)).toBeInTheDocument();
+      expect(screen.getByText(/Project details must be at least 10 characters/i)).toBeInTheDocument();
     });
   });
 
@@ -160,14 +162,21 @@ describe('Public Website Pages & Forms (Task 8.2)', () => {
       </HelmetProvider>
     );
 
+    await waitFor(() => {
+      expect(screen.getByText('Commercial Landscape Maintenance')).toBeInTheDocument();
+    });
+
     fireEvent.change(screen.getByPlaceholderText(/e.g. Ramesh Kumar/i), {
       target: { value: 'Suresh Raina' },
     });
-    fireEvent.change(screen.getByPlaceholderText(/\+91 98765 43210/i), {
-      target: { value: '+91 98765 43210' },
+    fireEvent.change(screen.getByPlaceholderText(/9876543210/i), {
+      target: { value: '9876543210' },
     });
     fireEvent.change(screen.getByPlaceholderText(/e\.g\. ramesh@example\.com/i), {
       target: { value: 'suresh@example.com' },
+    });
+    fireEvent.change(screen.getByRole('combobox'), {
+      target: { value: '1' },
     });
     fireEvent.change(
       screen.getByPlaceholderText(/Describe your site dimensions/i),

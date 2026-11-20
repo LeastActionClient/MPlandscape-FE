@@ -10,6 +10,7 @@ import EmptyState from '../components/common/EmptyState';
 import Pagination from '../components/common/Pagination';
 import Modal from '../components/common/Modal';
 import galleryService from '../services/galleryService';
+import galleryHeroBg from '../assets/gallery-hero-bg.jpg';
 
 export const Gallery = () => {
   const [items, setItems] = useState([]);
@@ -51,18 +52,23 @@ export const Gallery = () => {
         />
       </Helmet>
 
-      {/* Header Banner - Burgundy Dark */}
-      <section className="bg-burgundy-dark text-white border-b border-burgundy-900/80 py-6 sm:py-8 md:py-9 relative overflow-hidden">
-        {/* Subtle decorative glow */}
-        <div className="absolute top-0 right-1/4 w-72 h-72 bg-bronze/10 rounded-full blur-3xl pointer-events-none" />
-        <div className="absolute bottom-0 left-1/4 w-60 h-60 bg-burgundy/30 rounded-full blur-2xl pointer-events-none" />
-
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
-          <div className="max-w-2xl mx-auto text-center space-y-1.5 sm:space-y-2">
-            <h1 className="text-xl sm:text-2xl md:text-3xl lg:text-[2rem] font-bold text-white font-sans tracking-tight break-words leading-snug">
+      {/* Projects Gallery Hero Banner with Horticulture Nursery Background */}
+      <section
+        className="relative w-full text-white border-b border-sand/60 overflow-hidden min-h-[260px] sm:min-h-[300px] md:min-h-[340px] lg:min-h-[380px] flex items-center justify-center py-10 sm:py-14 md:py-16"
+        style={{
+          backgroundImage: `url(${galleryHeroBg})`,
+          backgroundSize: 'cover',
+          backgroundPosition: 'center',
+          backgroundRepeat: 'no-repeat',
+        }}
+        aria-label="Projects Gallery Header"
+      >
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10 w-full">
+          <div className="max-w-2xl sm:max-w-3xl mx-auto text-center space-y-2 sm:space-y-3">
+            <h1 className="text-2xl sm:text-3xl md:text-4xl lg:text-[2.35rem] font-bold text-white font-sans tracking-tight break-words leading-snug drop-shadow-[0_2px_8px_rgba(0,0,0,0.85)]">
               Curated Portfolio of Completed Works
             </h1>
-            <p className="text-xs sm:text-sm md:text-[15px] text-sand-200/90 leading-relaxed max-w-xl mx-auto font-light">
+            <p className="text-xs sm:text-sm md:text-base text-sand-50 leading-relaxed max-w-xl mx-auto font-light drop-shadow-[0_2px_6px_rgba(0,0,0,0.85)]">
               Browse our dynamic visual archive showcasing bespoke residential estates, agro-forestry plantations, commercial courtyards, and smart irrigation networks.
             </p>
           </div>

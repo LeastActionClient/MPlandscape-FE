@@ -23,6 +23,7 @@ import Modal from '../../components/common/Modal';
 import ConfirmationDialog from '../../components/common/ConfirmationDialog';
 import Pagination from '../../components/common/Pagination';
 import Button from '../../components/common/Button';
+import compressImageFile from '../../utils/imageCompressor';
 
 const GalleryManagement = () => {
   const [items, setItems] = useState([]);
@@ -92,11 +93,21 @@ const GalleryManagement = () => {
     }
   };
 
-  const handleFilesSelect = (e) => {
+  const handleFilesSelect = async (e) => {
     const files = Array.from(e.target.files);
     if (files.length > 0) {
-      setUploadFiles((prev) => [...prev, ...files]);
-      const newPreviews = files.map((f) => URL.createObjectURL(f));
+      // Automatically compress images client-side to prevent Vercel 4.5MB payload limit errors
+      const optimizedFiles = await Promise.all(
+        files.map(async (file) => {
+          try {
+            return await compressImageFile(file);
+          } catch {
+            return file;
+          }
+        })
+      );
+      setUploadFiles((prev) => [...prev, ...optimizedFiles]);
+      const newPreviews = optimizedFiles.map((f) => URL.createObjectURL(f));
       setPreviewUrls((prev) => [...prev, ...newPreviews]);
     }
   };
@@ -614,11 +625,17 @@ const GalleryManagement = () => {
                     <input
                       type="file"
                       accept="image/*"
-                      onChange={(e) => {
-                        const file = e.target.files[0];
+                      onChange={async (e) => {
+                        const file = e.target.files?.[0];
                         if (file) {
-                          setEditFile(file);
-                          setEditPreview(URL.createObjectURL(file));
+                          try {
+                            const optimized = await compressImageFile(file);
+                            setEditFile(optimized);
+                            setEditPreview(URL.createObjectURL(optimized));
+                          } catch {
+                            setEditFile(file);
+                            setEditPreview(URL.createObjectURL(file));
+                          }
                         }
                       }}
                       className="text-xs text-charcoal"

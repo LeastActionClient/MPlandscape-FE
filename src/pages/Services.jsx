@@ -65,18 +65,22 @@ export const Services = () => {
           aria-hidden="true"
         />
 
-        {/* Mobile / Tablet Cream Gradient Wash for Superior Readability */}
+        {/* Mobile / Tablet Background Shade Overlay */}
         <div
-          className="absolute inset-0 pointer-events-none md:hidden bg-gradient-to-b from-cream/95 via-cream/90 to-cream/75"
+          className="absolute inset-0 pointer-events-none md:hidden"
+          style={{
+            background:
+              'linear-gradient(to bottom, rgba(250, 246, 240, 0.95) 0%, rgba(250, 246, 240, 0.90) 50%, rgba(250, 246, 240, 0.65) 75%, rgba(250, 246, 240, 0.20) 90%, transparent 100%)',
+          }}
           aria-hidden="true"
         />
 
-        {/* Desktop Left-to-Right Feathered Cream Gradient Overlay */}
+        {/* Desktop Left-to-Right Background Shade Overlay */}
         <div
           className="hidden md:block absolute inset-0 pointer-events-none"
           style={{
             background:
-              'linear-gradient(to right, #FAF7F2 0%, #FAF7F2 36%, rgba(250, 247, 242, 0.94) 46%, rgba(250, 247, 242, 0.62) 60%, rgba(250, 247, 242, 0.15) 76%, transparent 100%)',
+              'linear-gradient(to right, rgba(250, 246, 240, 0.96) 0%, rgba(250, 246, 240, 0.92) 28%, rgba(250, 246, 240, 0.82) 42%, rgba(250, 246, 240, 0.50) 58%, rgba(250, 246, 240, 0.15) 72%, transparent 88%)',
           }}
           aria-hidden="true"
         />
@@ -87,11 +91,11 @@ export const Services = () => {
           <div className="max-w-xl lg:max-w-2xl space-y-3 sm:space-y-3.5">
             {/* Eyebrow with Flanking Accent Lines matching reference */}
             <div className="flex items-center gap-3">
-              <span className="h-px w-8 sm:w-12 bg-bronze/60" />
+              <span className="h-px w-8 sm:w-12 bg-bronze/70" />
               <span className="text-[11px] sm:text-xs font-semibold tracking-[0.22em] text-burgundy uppercase">
                 Our Core Divisions
               </span>
-              <span className="h-px w-8 sm:w-12 bg-bronze/60" />
+              <span className="h-px w-8 sm:w-12 bg-bronze/70" />
             </div>
 
             {/* Main Headline */}
@@ -100,7 +104,7 @@ export const Services = () => {
             </h1>
 
             {/* Subtitle Description */}
-            <p className="text-xs sm:text-sm md:text-base text-brand-muted leading-relaxed max-w-xl font-normal pt-0.5">
+            <p className="text-xs sm:text-sm md:text-base text-brand-dark leading-relaxed max-w-xl font-medium pt-0.5">
               Explore our seven integrated divisions engineered to bring technical rigor, horticultural mastery, and breathtaking aesthetic value to your property.
             </p>
 
@@ -117,7 +121,7 @@ export const Services = () => {
                 <Search className="w-4 h-4 sm:w-5 sm:h-5 text-bronze absolute left-3 sm:left-3.5 pointer-events-none" />
                 <button
                   type="submit"
-                  className="absolute right-1.5 px-3 sm:px-5 py-1.5 sm:py-2.5 rounded-lg bg-burgundy text-white text-xs sm:text-sm font-semibold hover:bg-burgundy-dark transition-all cursor-pointer shadow-xs active:scale-98"
+                  className="absolute right-1.5 px-3 sm:px-5 py-1.5 sm:py-2.5 rounded-lg bg-burgundy text-white text-sm sm:text-sm font-semibold hover:bg-burgundy-dark transition-all cursor-pointer shadow-xs active:scale-98"
                 >
                   Search
                 </button>

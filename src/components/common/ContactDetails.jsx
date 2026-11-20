@@ -29,9 +29,9 @@ const YoutubeIcon = ({ className = 'w-4 h-4' }) => (
 export const ContactDetails = ({ settings, className = '' }) => {
   if (!settings) return null;
 
-  const phones = settings.phoneNumbers || ['+91 98765 43210'];
+  const phones = settings.phoneNumbers || ['+91 8838548402'];
   const emails = settings.emailAddresses || ['info@mplandscape.com'];
-  const whatsapp = settings.whatsappNumber || '+91 98765 43210';
+  const whatsapp = settings.whatsappNumber || '+91 8838548402';
   const cleanWhatsapp = whatsapp.replace(/[^0-9]/g, '');
 
   return (
@@ -42,13 +42,13 @@ export const ContactDetails = ({ settings, className = '' }) => {
           <Phone className="w-5 h-5 text-burgundy" />
         </div>
         <div>
-          <h4 className="text-xs font-bold uppercase tracking-wider text-bronze">Telephone / Enquiries</h4>
+          <h4 className="text-sm sm:text-xs font-bold uppercase tracking-wider text-bronze">Telephone / Enquiries</h4>
           <div className="mt-1 space-y-1">
             {phones.map((phone, idx) => (
               <a
                 key={idx}
                 href={`tel:${phone.replace(/\s+/g, '')}`}
-                className="block text-sm font-semibold text-brand-dark hover:text-burgundy transition-colors"
+                className="block text-base sm:text-sm font-semibold text-brand-dark hover:text-burgundy transition-colors"
               >
                 {phone}
               </a>
@@ -64,15 +64,15 @@ export const ContactDetails = ({ settings, className = '' }) => {
             <MessageCircle className="w-5 h-5 text-bronze-dark" />
           </div>
           <div>
-            <h4 className="text-xs font-bold uppercase tracking-wider text-bronze">WhatsApp Direct</h4>
+            <h4 className="text-sm sm:text-xs font-bold uppercase tracking-wider text-bronze">WhatsApp Direct</h4>
             <a
               href={`https://wa.me/${cleanWhatsapp}?text=Hello%20MP%20Landscape%20Services,%20I%20would%20like%20to%20enquire%20about%20your%20services.`}
               target="_blank"
               rel="noopener noreferrer"
-              className="mt-1 inline-flex flex-wrap items-center gap-1.5 text-sm font-semibold text-brand-dark hover:text-burgundy transition-colors"
+              className="mt-1 inline-flex flex-wrap items-center gap-1.5 text-base sm:text-sm font-semibold text-brand-dark hover:text-burgundy transition-colors"
             >
               <span className="break-all">{whatsapp}</span>
-              <span className="text-[10px] bg-sand/60 px-2 py-0.5 rounded-full font-medium text-brand-dark shrink-0">Chat Now</span>
+              <span className="text-xs sm:text-[10px] bg-sand/60 px-2 py-0.5 rounded-full font-medium text-brand-dark shrink-0">Chat Now</span>
             </a>
           </div>
         </div>
@@ -84,13 +84,13 @@ export const ContactDetails = ({ settings, className = '' }) => {
           <Mail className="w-5 h-5 text-burgundy" />
         </div>
         <div>
-          <h4 className="text-xs font-bold uppercase tracking-wider text-bronze">Email Correspondence</h4>
+          <h4 className="text-sm sm:text-xs font-bold uppercase tracking-wider text-bronze">Email Correspondence</h4>
           <div className="mt-1 space-y-1">
             {emails.map((email, idx) => (
               <a
                 key={idx}
                 href={`mailto:${email}`}
-                className="block text-sm font-semibold text-brand-dark hover:text-burgundy transition-colors break-all"
+                className="block text-base sm:text-sm font-semibold text-brand-dark hover:text-burgundy transition-colors break-all"
               >
                 {email}
               </a>
@@ -106,8 +106,8 @@ export const ContactDetails = ({ settings, className = '' }) => {
             <MapPin className="w-5 h-5 text-burgundy" />
           </div>
           <div>
-            <h4 className="text-xs font-bold uppercase tracking-wider text-bronze">Headquarters & Nursery</h4>
-            <p className="mt-1 text-sm text-brand-dark leading-relaxed font-medium">
+            <h4 className="text-sm sm:text-xs font-bold uppercase tracking-wider text-bronze">Headquarters & Nursery</h4>
+            <p className="mt-1 text-base sm:text-sm text-brand-dark leading-relaxed font-medium">
               {settings.address}
             </p>
           </div>
@@ -121,8 +121,8 @@ export const ContactDetails = ({ settings, className = '' }) => {
             <Clock className="w-5 h-5 text-burgundy" />
           </div>
           <div>
-            <h4 className="text-xs font-bold uppercase tracking-wider text-bronze">Operational Hours</h4>
-            <p className="mt-1 text-sm text-brand-dark font-medium">
+            <h4 className="text-sm sm:text-xs font-bold uppercase tracking-wider text-bronze">Operational Hours</h4>
+            <p className="mt-1 text-base sm:text-sm text-brand-dark font-medium">
               {settings.workingHours}
             </p>
           </div>
@@ -132,7 +132,7 @@ export const ContactDetails = ({ settings, className = '' }) => {
       {/* Social Media Links */}
       {settings.socialLinks && (
         <div className="pt-4 border-t border-sand">
-          <h4 className="text-xs font-bold uppercase tracking-wider text-bronze mb-3">Connect With Us</h4>
+          <h4 className="text-sm sm:text-xs font-bold uppercase tracking-wider text-bronze mb-3">Connect With Us</h4>
           <div className="flex items-center gap-3">
             {settings.socialLinks.facebook && (
               <a
