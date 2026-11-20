@@ -18,9 +18,9 @@ export const Button = ({
     'inline-flex flex-row items-center justify-center font-medium rounded-lg transition-all duration-200 select-none focus:outline-hidden disabled:opacity-50 disabled:cursor-not-allowed cursor-pointer active:scale-[0.99] whitespace-nowrap shrink-0';
 
   const sizeStyles = {
-    sm: 'text-xs px-3.5 py-2 gap-2',
-    md: 'text-sm px-5 py-2.5 gap-2',
-    lg: 'text-base px-6 py-3.5 gap-2.5 font-semibold',
+    sm: 'text-sm sm:text-xs px-3.5 py-2 gap-2',
+    md: 'text-base sm:text-sm px-5 py-2.5 gap-2',
+    lg: 'text-lg sm:text-base px-6 py-3.5 gap-2.5 font-semibold',
   };
 
   const variantStyles = {

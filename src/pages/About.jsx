@@ -105,11 +105,11 @@ export const About = () => {
               <div className="pt-2 grid grid-cols-2 gap-4">
                 <div className="p-4 rounded-xl bg-cream-light border border-sand">
                   <p className="text-3xl font-extrabold text-burgundy">15+</p>
-                  <p className="text-xs font-semibold text-brand-muted mt-1 uppercase tracking-wider">Years of Practice</p>
+                  <p className="text-sm sm:text-xs font-semibold text-brand-muted mt-1 uppercase tracking-wider">Years of Practice</p>
                 </div>
                 <div className="p-4 rounded-xl bg-cream-light border border-sand">
                   <p className="text-3xl font-extrabold text-burgundy">350+</p>
-                  <p className="text-xs font-semibold text-brand-muted mt-1 uppercase tracking-wider">Projects Delivered</p>
+                  <p className="text-sm sm:text-xs font-semibold text-brand-muted mt-1 uppercase tracking-wider">Projects Delivered</p>
                 </div>
               </div>
             </div>
@@ -190,7 +190,7 @@ export const About = () => {
             <div className="p-6 rounded-2xl bg-cream-light border border-sand relative">
               <span className="text-3xl font-black text-sand-dark">01</span>
               <h4 className="text-lg font-bold text-burgundy mt-2 mb-2">Discovery & Soil Science</h4>
-              <p className="text-xs text-brand-muted leading-relaxed">
+              <p className="text-sm sm:text-xs text-brand-muted leading-relaxed">
                 Comprehensive site surveying, sunlight path tracing, topographical grading, and soil nutrient chemical profiling.
               </p>
             </div>
@@ -198,7 +198,7 @@ export const About = () => {
             <div className="p-6 rounded-2xl bg-cream-light border border-sand relative">
               <span className="text-3xl font-black text-sand-dark">02</span>
               <h4 className="text-lg font-bold text-burgundy mt-2 mb-2">Architectural Master Plan</h4>
-              <p className="text-xs text-brand-muted leading-relaxed">
+              <p className="text-sm sm:text-xs text-brand-muted leading-relaxed">
                 2D CAD and 3D realistic rendering detailing hardscape pathways, planting palettes, hydraulic irrigation diagrams, and nighttime lighting.
               </p>
             </div>
@@ -206,7 +206,7 @@ export const About = () => {
             <div className="p-6 rounded-2xl bg-cream-light border border-sand relative">
               <span className="text-3xl font-black text-sand-dark">03</span>
               <h4 className="text-lg font-bold text-burgundy mt-2 mb-2">Turnkey Construction</h4>
-              <p className="text-xs text-brand-muted leading-relaxed">
+              <p className="text-sm sm:text-xs text-brand-muted leading-relaxed">
                 Excavation, drainage pipes, masonry construction, automated pump stations, organic soil mixing, and specimen tree installation.
               </p>
             </div>
@@ -214,7 +214,7 @@ export const About = () => {
             <div className="p-6 rounded-2xl bg-cream-light border border-sand relative">
               <span className="text-3xl font-black text-sand-dark">04</span>
               <h4 className="text-lg font-bold text-burgundy mt-2 mb-2">Perpetual Stewardship</h4>
-              <p className="text-xs text-brand-muted leading-relaxed">
+              <p className="text-sm sm:text-xs text-brand-muted leading-relaxed">
                 Long-term grounds maintenance, routine horticultural check-ups, lawn aeration, organic fertilization, and seasonal replanting.
               </p>
             </div>
@@ -236,7 +236,7 @@ export const About = () => {
             <div className="p-6 rounded-xl bg-cream/5 border border-cream/10">
               <CheckCircle2 className="w-8 h-8 text-bronze mb-3" />
               <h4 className="text-lg font-bold text-cream mb-2">Single-Point Responsibility</h4>
-              <p className="text-xs text-cream/70 leading-relaxed font-light">
+              <p className="text-sm sm:text-xs text-cream/85 leading-relaxed font-normal">
                 No third-party subcontractors or finger-pointing. We manage earthworks, horticulture, electrical lighting, and plumbing under one clear contract.
               </p>
             </div>
@@ -244,7 +244,7 @@ export const About = () => {
             <div className="p-6 rounded-xl bg-cream/5 border border-cream/10">
               <CheckCircle2 className="w-8 h-8 text-bronze mb-3" />
               <h4 className="text-lg font-bold text-cream mb-2">Water-Conservation Engineering</h4>
-              <p className="text-xs text-cream/70 leading-relaxed font-light">
+              <p className="text-sm sm:text-xs text-cream/85 leading-relaxed font-normal">
                 Advanced automated controllers and precision micro-drip networks engineered specifically for tropical and arid climate variations.
               </p>
             </div>
@@ -252,14 +252,14 @@ export const About = () => {
             <div className="p-6 rounded-xl bg-cream/5 border border-cream/10">
               <CheckCircle2 className="w-8 h-8 text-bronze mb-3" />
               <h4 className="text-lg font-bold text-cream mb-2">Specimen Nursery Reserves</h4>
-              <p className="text-xs text-cream/70 leading-relaxed font-light">
+              <p className="text-sm sm:text-xs text-cream/85 leading-relaxed font-normal">
                 Immediate access to healthy, mature specimen trees, palms, and exotic shrubs from our dedicated propagation centers.
               </p>
             </div>
           </div>
 
           <div className="mt-12 text-center">
-            <Link to="/contact" className="btn-accent text-sm px-6 py-3">
+            <Link to="/contact" className="btn-accent text-base sm:text-sm px-6 py-3">
               <span>Connect with Our Leadership Team</span>
               <ArrowRight className="w-4 h-4" />
             </Link>

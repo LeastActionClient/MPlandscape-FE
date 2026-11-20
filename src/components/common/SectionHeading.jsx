@@ -18,7 +18,7 @@ export const SectionHeading = ({
     <div className={`flex flex-col max-w-3xl ${alignment} ${className}`}>
       {badge && (
         <span
-          className={`inline-flex items-center gap-1.5 px-3.5 py-1 rounded-full text-xs font-semibold tracking-wider uppercase mb-3 border transition-all duration-300 shadow-2xs hover:scale-102 ${
+          className={`inline-flex items-center gap-1.5 px-3.5 py-1 rounded-full text-xs sm:text-xs font-semibold tracking-wider uppercase mb-3 border transition-all duration-300 shadow-2xs hover:scale-102 ${
             light
               ? 'bg-cream/10 text-cream border-cream/20 hover:border-bronze/40'
               : 'bg-burgundy/10 text-burgundy border-burgundy/20 hover:border-bronze/50'
@@ -31,7 +31,7 @@ export const SectionHeading = ({
 
       {title && (
         <h2
-          className={`text-xl xs:text-2xl sm:text-3xl md:text-4xl font-bold font-sans tracking-tight leading-snug break-words ${
+          className={`text-2xl sm:text-3xl md:text-4xl font-bold font-sans tracking-tight leading-snug break-words ${
             light ? 'text-cream' : 'text-burgundy'
           }`}
         >
@@ -48,8 +48,8 @@ export const SectionHeading = ({
 
       {subtitle && (
         <p
-          className={`text-xs xs:text-sm sm:text-base md:text-lg leading-relaxed ${
-            light ? 'text-cream/80' : 'text-brand-muted'
+          className={`text-sm sm:text-base md:text-lg leading-relaxed font-normal ${
+            light ? 'text-cream/90' : 'text-brand-muted font-medium'
           }`}
         >
           {subtitle}

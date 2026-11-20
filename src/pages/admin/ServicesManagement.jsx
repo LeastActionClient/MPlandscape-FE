@@ -23,6 +23,7 @@ import Modal from '../../components/common/Modal';
 import ConfirmationDialog from '../../components/common/ConfirmationDialog';
 import Pagination from '../../components/common/Pagination';
 import Button from '../../components/common/Button';
+import compressImageFile from '../../utils/imageCompressor';
 
 const INITIAL_FORM = {
   title: '',
@@ -129,7 +130,7 @@ const ServicesManagement = () => {
     setIsModalOpen(true);
   };
 
-  const handleImageChange = (e) => {
+  const handleImageChange = async (e) => {
     const file = e.target.files?.[0];
     if (!file) return;
 
@@ -140,7 +141,15 @@ const ServicesManagement = () => {
       return;
     }
 
-    if (file.size > 5 * 1024 * 1024) {
+    // Automatically optimize/compress image to ensure fast uploads and stay under Vercel serverless limits
+    let finalFile = file;
+    try {
+      finalFile = await compressImageFile(file);
+    } catch {
+      finalFile = file;
+    }
+
+    if (finalFile.size > 5 * 1024 * 1024) {
       setFormError('Image file size exceeds the 5MB limit. Please select a smaller file.');
       e.target.value = '';
       return;
@@ -148,8 +157,8 @@ const ServicesManagement = () => {
 
     setFormError('');
     setImageLoadError(false);
-    setImageFile(file);
-    const previewUrl = URL.createObjectURL(file);
+    setImageFile(finalFile);
+    const previewUrl = URL.createObjectURL(finalFile);
     setImagePreview(previewUrl);
   };
 

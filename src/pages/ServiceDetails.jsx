@@ -72,7 +72,7 @@ export const ServiceDetails = () => {
           message={error || 'We could not find the service you are looking for.'}
         />
         <div className="text-center mt-6">
-          <Link to="/services" className="btn-primary text-xs">
+          <Link to="/services" className="btn-primary text-sm sm:text-xs">
             <ArrowLeft className="w-4 h-4 mr-1.5" />
             <span>Return to All Services</span>
           </Link>
@@ -181,14 +181,14 @@ export const ServiceDetails = () => {
 
               {/* Quality Guarantee Box */}
               <div className="p-6 rounded-2xl bg-burgundy text-white space-y-2 border border-bronze/30">
-                <div className="flex items-center gap-2 text-bronze text-xs font-bold uppercase tracking-wider">
+                <div className="flex items-center gap-2 text-bronze text-sm sm:text-xs font-bold uppercase tracking-wider">
                   <ShieldCheck className="w-4 h-4 text-bronze" />
                   <span>The MP Landscape Guarantee</span>
                 </div>
-                <h4 className="text-lg font-bold font-sans">
+                <h4 className="text-xl sm:text-lg font-bold font-sans">
                   Sustainable Execution & Biological Health
                 </h4>
-                <p className="text-xs sm:text-sm text-cream/90 font-light leading-relaxed">
+                <p className="text-sm sm:text-sm text-cream/95 font-normal leading-relaxed">
                   Every installation is overseen by certified agronomists and landscape architects to ensure full structural compliance, soil health, and minimal maintenance overheads.
                 </p>
               </div>

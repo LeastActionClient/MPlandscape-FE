@@ -41,6 +41,14 @@ api.interceptors.response.use(
     // Handle Edge Case: Request timeout
     else if (error.code === 'ECONNABORTED') {
       message = 'Request timed out. The server is taking longer than expected to respond.';
+    }
+    // Handle Vercel / server payload limit exceeded (413 Content Too Large)
+    else if (error.response?.status === 413 || error.message?.includes('413')) {
+      message = 'Upload size exceeds server limits. Please select smaller images or upload them one at a time.';
+    }
+    // Handle serverless gateway error (502 Bad Gateway)
+    else if (error.response?.status === 502) {
+      message = error.response?.data?.message || 'Server image gateway error. Please retry or provide a direct image URL.';
     } else if (!message) {
       message = error.message || 'An unexpected error occurred. Please try again.';
     }

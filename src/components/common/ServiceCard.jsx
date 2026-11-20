@@ -40,41 +40,37 @@ export const ServiceCard = ({ service, onEnquire, className = '' }) => {
         <div className="absolute inset-0 bg-gradient-to-t from-brand-charcoal/80 via-transparent to-transparent opacity-70 group-hover:opacity-50 transition-opacity duration-300 pointer-events-none" />
 
         {service.subtitle && (
-          <span className="absolute bottom-2.5 left-2.5 right-2.5 text-[11px] font-semibold text-white tracking-wide truncate bg-burgundy/90 backdrop-blur-md px-3 py-1 rounded-md border border-white/15 shadow-md">
+          <span className="absolute bottom-2.5 left-2.5 right-2.5 text-xs sm:text-xs font-semibold text-white tracking-wide truncate bg-burgundy/90 backdrop-blur-md px-3 py-1 rounded-md border border-white/15 shadow-md">
             {service.subtitle}
           </span>
         )}
       </div>
 
-      {/* Compact Card Content: Title, Clamped Description & Action Buttons */}
-      <div className="p-5 sm:p-6 flex-1 flex flex-col justify-between">
-        <div className="space-y-2.5">
+      {/* Compact Card Content: Title & Horizontal Action Buttons */}
+      <div className="p-4 sm:p-5 flex-1 flex flex-col justify-between gap-4">
+        <div>
           <h3 className="text-lg sm:text-xl font-bold font-sans text-brand-dark group-hover:text-burgundy transition-colors duration-300 leading-snug break-words">
-            <Link to={`/services/${service.slug}`} className="hover:underline flex items-center justify-between">
+            <Link to={`/services/${service.slug}`} className="hover:underline flex items-start justify-between gap-2">
               <span>{service.title}</span>
-              <ArrowRight className="w-4 h-4 opacity-0 -translate-x-2 group-hover:opacity-100 group-hover:translate-x-0 transition-all duration-300 text-bronze shrink-0 ml-2" />
+              <ArrowRight className="w-4 h-4 opacity-0 -translate-x-2 group-hover:opacity-100 group-hover:translate-x-0 transition-all duration-300 text-bronze shrink-0 mt-1" />
             </Link>
           </h3>
-
-          <p className="text-xs sm:text-sm text-brand-muted line-clamp-3 leading-relaxed">
-            {service.description}
-          </p>
         </div>
 
-        {/* Action Buttons: Anchored to Bottom */}
-        <div className="pt-4 mt-5 flex flex-col xs:flex-row items-stretch xs:items-center gap-2 sm:gap-3 border-t border-sand/40">
+        {/* Action Buttons: Horizontally Aligned in the Same Row */}
+        <div className="grid grid-cols-2 gap-2 sm:gap-2.5 pt-3 border-t border-sand/40">
           <Link
             to={`/services/${service.slug}`}
-            className="w-full xs:flex-1 inline-flex items-center justify-center gap-1.5 text-xs font-semibold py-2 sm:py-2.5 px-2.5 sm:px-3 rounded-lg border border-burgundy/30 text-burgundy bg-transparent hover:bg-burgundy hover:text-white hover:border-burgundy shadow-2xs hover:shadow-md transition-all duration-300 text-center group/btn"
+            className="inline-flex items-center justify-center gap-1 text-xs sm:text-[13px] font-semibold py-2 px-2 sm:px-2.5 rounded-lg border border-burgundy/35 text-burgundy bg-transparent hover:bg-burgundy hover:text-white hover:border-burgundy shadow-2xs hover:shadow-xs transition-all duration-300 text-center whitespace-nowrap group/btn"
           >
             <span>View Details</span>
-            <ArrowRight className="w-3.5 h-3.5 transition-transform duration-300 group-hover/btn:translate-x-1 shrink-0" />
+            <ArrowRight className="w-3.5 h-3.5 transition-transform duration-300 group-hover/btn:translate-x-0.5 shrink-0" />
           </Link>
 
           <button
             type="button"
             onClick={() => (onEnquire ? onEnquire(service) : null)}
-            className="w-full xs:flex-1 inline-flex items-center justify-center text-xs font-semibold py-2 sm:py-2.5 px-2.5 sm:px-3 rounded-lg bg-gradient-to-r from-bronze to-bronze-dark text-white hover:from-bronze-light hover:to-bronze transition-all duration-300 text-center shadow-xs hover:shadow-lg hover:shadow-bronze/25 hover:-translate-y-0.5 active:translate-y-0 cursor-pointer relative overflow-hidden"
+            className="inline-flex items-center justify-center text-xs sm:text-[13px] font-semibold py-2 px-2 sm:px-2.5 rounded-lg bg-gradient-to-r from-bronze to-bronze-dark text-white hover:from-bronze-light hover:to-bronze transition-all duration-300 text-center shadow-xs hover:shadow-md hover:-translate-y-0.5 active:translate-y-0 cursor-pointer whitespace-nowrap"
           >
             Enquire Now
           </button>

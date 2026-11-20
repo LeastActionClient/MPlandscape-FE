@@ -34,7 +34,7 @@ vi.mock('../services/dashboardService', () => ({
         {
           _id: 'e1',
           customerName: 'Aravind Swamy',
-          phone: '+91 98765 43210',
+          phone: '+91 8838548402',
           email: 'aravind@example.com',
           status: 'NEW',
           createdAt: new Date().toISOString(),
@@ -112,9 +112,9 @@ vi.mock('../services/settingsService', () => ({
       data: {
         companyName: 'MP Landscape Services',
         tagline: 'Premier Landscaping, Agriculture & Horticultural Solutions',
-        phoneNumbers: ['+91 98765 43210'],
+        phoneNumbers: ['+91 8838548402'],
         emailAddresses: ['info@mplandscape.com'],
-        whatsappNumber: '+91 98765 43210',
+        whatsappNumber: '+91 8838548402',
         address: 'Coimbatore, Tamil Nadu, India',
         workingHours: 'Mon - Sat: 8:00 AM - 6:30 PM',
         vision: 'Excellence in horticultural solutions',
@@ -237,7 +237,7 @@ describe('Admin Modules & Management Pages (Task 8.2)', () => {
     );
 
     await waitFor(() => {
-      expect(screen.getAllByDisplayValue('+91 98765 43210')[0]).toBeInTheDocument();
+      expect(screen.getAllByDisplayValue('+91 8838548402')[0]).toBeInTheDocument();
       expect(screen.getByDisplayValue('info@mplandscape.com')).toBeInTheDocument();
     });
   });

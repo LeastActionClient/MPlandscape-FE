@@ -1,21 +1,12 @@
 import React, { useState, useEffect } from 'react';
 import { useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
-import { z } from 'zod';
 import toast from 'react-hot-toast';
 import { Send, CheckCircle2 } from 'lucide-react';
 import enquiryService from '../../services/enquiryService';
 import serviceService from '../../services/serviceService';
 import Button from './Button';
-
-const enquirySchema = z.object({
-  customerName: z.string().min(2, 'Name must be at least 2 characters').max(100),
-  phone: z.string().min(7, 'Please enter a valid phone number').max(20),
-  email: z.string().email('Please enter a valid email address'),
-  serviceId: z.string().optional(),
-  location: z.string().max(200).optional(),
-  message: z.string().min(10, 'Message must be at least 10 characters').max(2000),
-});
+import { enquiryValidationSchema } from '../../validators/enquirySchema';
 
 export const EnquiryForm = ({
   preselectedServiceId = '',
@@ -33,9 +24,12 @@ export const EnquiryForm = ({
     handleSubmit,
     reset,
     setValue,
+    watch,
     formState: { errors },
   } = useForm({
-    resolver: zodResolver(enquirySchema),
+    resolver: zodResolver(enquiryValidationSchema),
+    mode: 'onBlur',
+    reValidateMode: 'onChange',
     defaultValues: {
       customerName: '',
       phone: '',
@@ -43,8 +37,52 @@ export const EnquiryForm = ({
       serviceId: preselectedServiceId || '',
       location: '',
       message: '',
+      website_hp: '',
     },
   });
+
+  const messageValue = watch('message') || '';
+
+  // Input-level restrictions for Full Name
+  const handleNameKeyDown = (e) => {
+    // Allow keyboard navigation & editing shortcuts (Ctrl+A, Ctrl+C, Ctrl+V, Backspace, Delete, Arrows, etc.)
+    if (e.ctrlKey || e.metaKey || e.altKey) return;
+    if (['Backspace', 'Delete', 'Tab', 'ArrowLeft', 'ArrowRight', 'Home', 'End', 'Enter'].includes(e.key)) return;
+    // Explicitly prevent numeric characters, symbols, or special characters
+    if (!/^[a-zA-Z\s]$/.test(e.key)) {
+      e.preventDefault();
+    }
+  };
+
+  const handleNameChange = (e) => {
+    // Sanitize on paste / autofill to strictly alphabetic letters and spaces
+    const sanitized = e.target.value.replace(/[^a-zA-Z\s]/g, '');
+    e.target.value = sanitized;
+  };
+
+  // Input-level restrictions for Phone Number (strictly 10 digits for Indian mobile)
+  const handlePhoneKeyDown = (e) => {
+    // Allow keyboard navigation & editing shortcuts
+    if (e.ctrlKey || e.metaKey || e.altKey) return;
+    if (['Backspace', 'Delete', 'Tab', 'ArrowLeft', 'ArrowRight', 'Home', 'End', 'Enter'].includes(e.key)) return;
+    // Disallow alphabets, spaces, and special characters
+    if (!/^[0-9]$/.test(e.key)) {
+      e.preventDefault();
+      return;
+    }
+    // Restrict input to a maximum of 10 digits
+    const target = e.target;
+    const selectedLength = (target.selectionEnd || 0) - (target.selectionStart || 0);
+    if (target.value.length >= 10 && selectedLength === 0) {
+      e.preventDefault();
+    }
+  };
+
+  const handlePhoneChange = (e) => {
+    // Strip non-digits and cap strictly at 10 digits
+    const sanitized = e.target.value.replace(/\D/g, '').slice(0, 10);
+    e.target.value = sanitized;
+  };
 
   // Load available active services dynamically from the API for dropdown
   useEffect(() => {
@@ -72,9 +110,9 @@ export const EnquiryForm = ({
         (s) => s._id === preselectedServiceId || s.slug === preselectedServiceId
       );
       if (match) {
-        setValue('serviceId', match._id);
+        setValue('serviceId', match._id, { shouldValidate: true });
       } else {
-        setValue('serviceId', preselectedServiceId);
+        setValue('serviceId', preselectedServiceId, { shouldValidate: true });
       }
     }
   }, [preselectedServiceId, services, setValue]);
@@ -89,6 +127,7 @@ export const EnquiryForm = ({
         serviceId: data.serviceId || null,
         location: data.location || '',
         message: data.message,
+        website_hp: data.website_hp || '',
       };
 
       await enquiryService.createEnquiry(payload);
@@ -134,43 +173,67 @@ export const EnquiryForm = ({
       )}
 
       <form onSubmit={handleSubmit(onSubmit)} className="space-y-4" noValidate>
+        {/* Hidden Honeypot Field */}
+        <div className="hidden" aria-hidden="true">
+          <input
+            type="text"
+            tabIndex={-1}
+            autoComplete="off"
+            {...register('website_hp')}
+          />
+        </div>
+
         {/* Full Name & Phone */}
         <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
           <div>
-            <label className="block text-xs font-semibold text-brand-dark uppercase tracking-wider mb-1.5">
+            <label className="block text-sm sm:text-xs font-semibold text-brand-dark uppercase tracking-wider mb-1.5">
               Full Name <span className="text-burgundy">*</span>
             </label>
             <input
               type="text"
               placeholder="e.g. Ramesh Kumar"
-              {...register('customerName')}
-              className={`w-full px-3.5 py-2.5 rounded-lg border text-sm text-brand-dark bg-white focus:outline-hidden transition-all ${
+              disabled={submitting}
+              maxLength={60}
+              autoComplete="name"
+              {...register('customerName', {
+                onChange: handleNameChange,
+              })}
+              onKeyDown={handleNameKeyDown}
+              className={`w-full px-3.5 py-2.5 rounded-lg border text-base sm:text-sm text-brand-dark bg-white focus:outline-hidden transition-all disabled:opacity-60 disabled:cursor-not-allowed ${
                 errors.customerName
                   ? 'border-burgundy focus:ring-1 focus:ring-burgundy'
                   : 'border-sand focus:border-bronze focus:ring-1 focus:ring-bronze'
               }`}
             />
             {errors.customerName && (
-              <p className="text-xs text-burgundy mt-1">{errors.customerName.message}</p>
+              <p className="text-sm sm:text-xs text-burgundy mt-1 font-medium">{errors.customerName.message}</p>
             )}
           </div>
 
           <div>
-            <label className="block text-xs font-semibold text-brand-dark uppercase tracking-wider mb-1.5">
+            <label className="block text-sm sm:text-xs font-semibold text-brand-dark uppercase tracking-wider mb-1.5">
               Phone Number <span className="text-burgundy">*</span>
             </label>
             <input
               type="tel"
-              placeholder="e.g. +91 98765 43210"
-              {...register('phone')}
-              className={`w-full px-3.5 py-2.5 rounded-lg border text-sm text-brand-dark bg-white focus:outline-hidden transition-all ${
+              inputMode="numeric"
+              maxLength={10}
+              pattern="[0-9]{10}"
+              placeholder="e.g. 9876543210"
+              disabled={submitting}
+              autoComplete="tel-national"
+              {...register('phone', {
+                onChange: handlePhoneChange,
+              })}
+              onKeyDown={handlePhoneKeyDown}
+              className={`w-full px-3.5 py-2.5 rounded-lg border text-base sm:text-sm text-brand-dark bg-white focus:outline-hidden transition-all disabled:opacity-60 disabled:cursor-not-allowed ${
                 errors.phone
                   ? 'border-burgundy focus:ring-1 focus:ring-burgundy'
                   : 'border-sand focus:border-bronze focus:ring-1 focus:ring-bronze'
               }`}
             />
             {errors.phone && (
-              <p className="text-xs text-burgundy mt-1">{errors.phone.message}</p>
+              <p className="text-sm sm:text-xs text-burgundy mt-1 font-medium">{errors.phone.message}</p>
             )}
           </div>
         </div>
@@ -178,73 +241,102 @@ export const EnquiryForm = ({
         {/* Email & Location */}
         <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
           <div>
-            <label className="block text-xs font-semibold text-brand-dark uppercase tracking-wider mb-1.5">
+            <label className="block text-sm sm:text-xs font-semibold text-brand-dark uppercase tracking-wider mb-1.5">
               Email Address <span className="text-burgundy">*</span>
             </label>
             <input
               type="email"
               placeholder="e.g. ramesh@example.com"
+              disabled={submitting}
               {...register('email')}
-              className={`w-full px-3.5 py-2.5 rounded-lg border text-sm text-brand-dark bg-white focus:outline-hidden transition-all ${
+              className={`w-full px-3.5 py-2.5 rounded-lg border text-base sm:text-sm text-brand-dark bg-white focus:outline-hidden transition-all disabled:opacity-60 disabled:cursor-not-allowed ${
                 errors.email
                   ? 'border-burgundy focus:ring-1 focus:ring-burgundy'
                   : 'border-sand focus:border-bronze focus:ring-1 focus:ring-bronze'
               }`}
             />
             {errors.email && (
-              <p className="text-xs text-burgundy mt-1">{errors.email.message}</p>
+              <p className="text-sm sm:text-xs text-burgundy mt-1 font-medium">{errors.email.message}</p>
             )}
           </div>
 
           <div>
-            <label className="block text-xs font-semibold text-brand-dark uppercase tracking-wider mb-1.5">
+            <label className="block text-sm sm:text-xs font-semibold text-brand-dark uppercase tracking-wider mb-1.5">
               Project Location
             </label>
             <input
               type="text"
               placeholder="e.g. Coimbatore, Tamil Nadu"
+              disabled={submitting}
               {...register('location')}
-              className="w-full px-3.5 py-2.5 rounded-lg border border-sand text-sm text-brand-dark bg-white focus:outline-hidden focus:border-bronze focus:ring-1 focus:ring-bronze transition-all"
+              className={`w-full px-3.5 py-2.5 rounded-lg border text-base sm:text-sm text-brand-dark bg-white focus:outline-hidden transition-all disabled:opacity-60 disabled:cursor-not-allowed ${
+                errors.location
+                  ? 'border-burgundy focus:ring-1 focus:ring-burgundy'
+                  : 'border-sand focus:border-bronze focus:ring-1 focus:ring-bronze'
+              }`}
             />
+            {errors.location && (
+              <p className="text-sm sm:text-xs text-burgundy mt-1 font-medium">{errors.location.message}</p>
+            )}
           </div>
         </div>
 
         {/* Service Selector Dropdown */}
         <div>
-          <label className="block text-xs font-semibold text-brand-dark uppercase tracking-wider mb-1.5">
-            Interested Service
+          <label className="block text-sm sm:text-xs font-semibold text-brand-dark uppercase tracking-wider mb-1.5">
+            Interested Service <span className="text-burgundy">*</span>
           </label>
           <select
+            disabled={submitting}
             {...register('serviceId')}
-            className="w-full px-3.5 py-2.5 rounded-lg border border-sand text-sm text-brand-dark bg-white focus:outline-hidden focus:border-bronze focus:ring-1 focus:ring-bronze transition-all cursor-pointer"
+            className={`w-full px-3.5 py-2.5 rounded-lg border text-base sm:text-sm text-brand-dark bg-white focus:outline-hidden transition-all cursor-pointer disabled:opacity-60 disabled:cursor-not-allowed ${
+              errors.serviceId
+                ? 'border-burgundy focus:ring-1 focus:ring-burgundy'
+                : 'border-sand focus:border-bronze focus:ring-1 focus:ring-bronze'
+            }`}
           >
-            <option value="">General Landscaping & Consultation</option>
+            <option value="">-- Select an Interested Service --</option>
             {services.map((svc) => (
               <option key={svc._id} value={svc._id}>
                 {svc.title}
               </option>
             ))}
           </select>
+          {errors.serviceId && (
+            <p className="text-sm sm:text-xs text-burgundy mt-1 font-medium">{errors.serviceId.message}</p>
+          )}
         </div>
 
         {/* Message Field */}
         <div>
-          <label className="block text-xs font-semibold text-brand-dark uppercase tracking-wider mb-1.5">
+          <label className="block text-sm sm:text-xs font-semibold text-brand-dark uppercase tracking-wider mb-1.5">
             Project Details & Requirements <span className="text-burgundy">*</span>
           </label>
           <textarea
             rows="4"
-            placeholder="Describe your site dimensions, property type, intended landscape features, or farming goals..."
+            placeholder="Describe your site dimensions, property type, intended landscape features, or farming goals (min 10 characters)..."
+            disabled={submitting}
             {...register('message')}
-            className={`w-full px-3.5 py-2.5 rounded-lg border text-sm text-brand-dark bg-white focus:outline-hidden transition-all ${
+            className={`w-full px-3.5 py-2.5 rounded-lg border text-base sm:text-sm text-brand-dark bg-white focus:outline-hidden transition-all disabled:opacity-60 disabled:cursor-not-allowed ${
               errors.message
                 ? 'border-burgundy focus:ring-1 focus:ring-burgundy'
                 : 'border-sand focus:border-bronze focus:ring-1 focus:ring-bronze'
             }`}
           />
-          {errors.message && (
-            <p className="text-xs text-burgundy mt-1">{errors.message.message}</p>
-          )}
+          <div className="flex items-center justify-between mt-1">
+            {errors.message ? (
+              <p className="text-sm sm:text-xs text-burgundy font-medium">{errors.message.message}</p>
+            ) : (
+              <span className="text-xs sm:text-[11px] text-brand-muted font-medium">Min 10 meaningful characters</span>
+            )}
+            <span
+              className={`text-xs sm:text-[11px] tabular-nums font-medium ${
+                messageValue.length > 1000 ? 'text-burgundy font-semibold' : 'text-brand-muted'
+              }`}
+            >
+              {messageValue.length} / 1,000 characters
+            </span>
+          </div>
         </div>
 
         {/* Submit Button */}

@@ -18,7 +18,7 @@ export const MobileNavigation = ({ isOpen, onClose, settings }) => {
 
   if (!isOpen) return null;
 
-  const phone = settings?.phoneNumbers?.[0] || '+91 98765 43210';
+  const phone = settings?.phoneNumbers?.[0] || '+91 8838548402';
   const email = settings?.emailAddresses?.[0] || 'info@mplandscape.com';
 
   return (
@@ -52,7 +52,7 @@ export const MobileNavigation = ({ isOpen, onClose, settings }) => {
                 to={item.path}
                 onClick={onClose}
                 className={({ isActive }) =>
-                  `px-4 py-3 rounded-xl text-base font-medium transition-all ${
+                  `px-4 py-3 rounded-xl text-lg sm:text-base font-medium transition-all ${
                     isActive
                       ? 'bg-burgundy text-white font-semibold shadow-xs'
                       : 'text-brand-dark hover:bg-sand/30 hover:text-burgundy'
@@ -69,7 +69,7 @@ export const MobileNavigation = ({ isOpen, onClose, settings }) => {
             <Link
               to="/contact"
               onClick={onClose}
-              className="btn-primary w-full justify-center"
+              className="btn-primary w-full justify-center text-base sm:text-sm py-3"
             >
               <span>Request Consultation</span>
               <ArrowRight className="w-4 h-4 text-bronze-light" />
@@ -81,14 +81,14 @@ export const MobileNavigation = ({ isOpen, onClose, settings }) => {
         <div className="p-6 bg-cream border-t border-sand space-y-3">
           <a
             href={`tel:${phone.replace(/\s+/g, '')}`}
-            className="flex items-center gap-2.5 text-xs font-semibold text-brand-dark hover:text-burgundy"
+            className="flex items-center gap-2.5 text-sm sm:text-xs font-semibold text-brand-dark hover:text-burgundy"
           >
             <PhoneCall className="w-4 h-4 text-bronze" />
             <span>{phone}</span>
           </a>
           <a
             href={`mailto:${email}`}
-            className="flex items-center gap-2.5 text-xs font-medium text-brand-muted hover:text-burgundy"
+            className="flex items-center gap-2.5 text-sm sm:text-xs font-semibold text-brand-dark hover:text-burgundy"
           >
             <Mail className="w-4 h-4 text-bronze" />
             <span className="truncate">{email}</span>

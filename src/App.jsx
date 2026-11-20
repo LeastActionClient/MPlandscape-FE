@@ -14,6 +14,8 @@ import Services from './pages/Services';
 import ServiceDetails from './pages/ServiceDetails';
 import Gallery from './pages/Gallery';
 import Contact from './pages/Contact';
+import PrivacyPolicy from './pages/PrivacyPolicy';
+import TermsAndConditions from './pages/TermsAndConditions';
 import NotFound from './pages/NotFound';
 
 // Admin Routes & Pages
@@ -41,6 +43,8 @@ function App() {
               <Route path="services/:slug" element={<ServiceDetails />} />
               <Route path="gallery" element={<Gallery />} />
               <Route path="contact" element={<Contact />} />
+              <Route path="privacy-policy" element={<PrivacyPolicy />} />
+              <Route path="terms-and-conditions" element={<TermsAndConditions />} />
               <Route path="*" element={<NotFound />} />
             </Route>
 
