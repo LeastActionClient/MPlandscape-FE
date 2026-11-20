@@ -300,7 +300,7 @@ const CompanySettings = () => {
               variant="primary"
               size="lg"
               disabled={isSaving}
-              className="gap-2 shadow-sm shrink-0"
+              className="gap-2 shadow-sm w-full sm:w-auto justify-center"
             >
               <Save className="w-4 h-4 shrink-0" />
               <span>{isSaving ? 'Saving Settings...' : 'Save Company Settings'}</span>

@@ -101,7 +101,7 @@ export const Footer = ({ settings, services = [] }) => {
               </div>
               <div className="flex items-center gap-2.5">
                 <Mail className="w-4 h-4 text-bronze flex-shrink-0" />
-                <a href={`mailto:${emails[0]}`} className="hover:text-white truncate">
+                <a href={`mailto:${emails[0]}`} className="hover:text-white break-all">
                   {emails[0]}
                 </a>
               </div>
@@ -116,7 +116,7 @@ export const Footer = ({ settings, services = [] }) => {
 
       {/* Bottom Bar with Copyright & Admin Portal Access */}
       <div className="border-t border-brand-dark/80 bg-[#161414] py-6">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 flex flex-col sm:flex-row items-center justify-between gap-4 text-xs text-cream/50">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 flex flex-col sm:flex-row items-center justify-between gap-4 text-xs text-cream/50 text-center sm:text-left">
           <p>
             © {new Date().getFullYear()} {companyName}. All rights reserved. Professional Landscaping, Agriculture & Horticultural Solutions.
           </p>

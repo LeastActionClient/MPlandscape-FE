@@ -29,10 +29,10 @@ export const Contact = () => {
           <Breadcrumb items={[{ label: 'Contact' }]} />
           <div className="max-w-3xl mt-4 space-y-3">
             <span className="badge-burgundy">Reach Out to Our Specialists</span>
-            <h1 className="text-3xl sm:text-4xl lg:text-5xl font-extrabold text-burgundy font-sans tracking-tight">
+            <h1 className="text-2xl xs:text-3xl sm:text-4xl lg:text-5xl font-extrabold text-burgundy font-sans tracking-tight break-words">
               Get in Touch with Our Team
             </h1>
-            <p className="text-base sm:text-lg text-brand-muted leading-relaxed">
+            <p className="text-sm sm:text-base md:text-lg text-brand-muted leading-relaxed">
               Whether you are planning an agricultural orchard, a commercial campus redesign, or a luxury villa garden, our agronomists and landscape architects are ready to assist.
             </p>
           </div>

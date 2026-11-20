@@ -24,21 +24,8 @@ import ConfirmationDialog from '../../components/common/ConfirmationDialog';
 import Pagination from '../../components/common/Pagination';
 import Button from '../../components/common/Button';
 
-const CATEGORY_OPTIONS = [
-  'Commercial',
-  'Residential',
-  'Irrigation',
-  'Lawn & Turf',
-  'Tree Care',
-  'Hardscaping',
-  'Agriculture',
-  'Other',
-];
-
 const GalleryManagement = () => {
   const [items, setItems] = useState([]);
-  const [categories, setCategories] = useState([]);
-  const [selectedCategory, setSelectedCategory] = useState('All');
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
   const [refreshing, setRefreshing] = useState(false);
@@ -53,8 +40,6 @@ const GalleryManagement = () => {
   const [uploadFiles, setUploadFiles] = useState([]);
   const [previewUrls, setPreviewUrls] = useState([]);
   const [uploadTitle, setUploadTitle] = useState('');
-  const [uploadCategory, setUploadCategory] = useState('Commercial');
-  const [customCategory, setCustomCategory] = useState('');
   const [uploadDescription, setUploadDescription] = useState('');
   const [uploadOrder, setUploadOrder] = useState(0);
   const [uploadUrl, setUploadUrl] = useState('');
@@ -78,14 +63,8 @@ const GalleryManagement = () => {
     try {
       setError(null);
       const params = { all: 'true', limit: 100 };
-      if (selectedCategory !== 'All') {
-        params.category = selectedCategory;
-      }
       const res = await galleryService.getGallery(params);
       setItems(res.data || []);
-      if (res.categories && res.categories.length > 0) {
-        setCategories(res.categories);
-      }
     } catch (err) {
       setError(err.response?.data?.message || 'Failed to fetch gallery items');
     } finally {
@@ -96,7 +75,7 @@ const GalleryManagement = () => {
 
   useEffect(() => {
     fetchGallery();
-  }, [selectedCategory]);
+  }, []);
 
   const handleRefresh = async () => {
     if (refreshing) return;
@@ -131,8 +110,6 @@ const GalleryManagement = () => {
     setUploadFiles([]);
     setPreviewUrls([]);
     setUploadTitle('');
-    setUploadCategory('Commercial');
-    setCustomCategory('');
     setUploadDescription('');
     setUploadOrder(0);
     setUploadUrl('');
@@ -144,11 +121,6 @@ const GalleryManagement = () => {
   const handleUploadSubmit = async (e) => {
     e.preventDefault();
     setUploadError('');
-
-    const finalCategory =
-      uploadCategory === 'Other' && customCategory.trim()
-        ? customCategory.trim()
-        : uploadCategory;
 
     if (!uploadTitle.trim()) {
       setUploadError('Title is required');
@@ -164,7 +136,6 @@ const GalleryManagement = () => {
       setIsUploading(true);
       const payload = new FormData();
       payload.append('title', uploadTitle.trim());
-      payload.append('category', finalCategory);
       payload.append('description', uploadDescription.trim());
       payload.append('displayOrder', String(uploadOrder));
       payload.append('isActive', String(uploadActive));
@@ -209,7 +180,6 @@ const GalleryManagement = () => {
       setIsEditing(true);
       const payload = new FormData();
       payload.append('title', editingItem.title.trim());
-      payload.append('category', editingItem.category);
       payload.append('description', editingItem.description || '');
       payload.append('displayOrder', String(editingItem.displayOrder ?? 0));
       payload.append('isActive', String(editingItem.isActive));
@@ -280,7 +250,7 @@ const GalleryManagement = () => {
               Upload, organize, preview, and maintain portfolio showcase imagery.
             </p>
           </div>
-          <div className="flex items-center gap-3">
+          <div className="flex flex-wrap items-center gap-2 sm:gap-3">
             <Button
               type="button"
               variant="outline"
@@ -328,43 +298,6 @@ const GalleryManagement = () => {
           </div>
         )}
 
-        {/* Category Filters */}
-        <div className="flex flex-wrap items-center gap-2">
-          <button
-            type="button"
-            onClick={() => {
-              setSelectedCategory('All');
-              setCurrentPage(1);
-            }}
-            className={`px-3.5 py-1.5 rounded-full text-xs font-semibold transition-all ${
-              selectedCategory === 'All'
-                ? 'bg-burgundy-900 text-white shadow-xs'
-                : 'bg-white border border-sand-300 text-charcoal hover:bg-sand-100'
-            }`}
-          >
-            All Categories ({items.length})
-          </button>
-          {Array.from(new Set([...CATEGORY_OPTIONS.filter((c) => c !== 'Other'), ...categories])).map(
-            (cat) => (
-              <button
-                key={cat}
-                type="button"
-                onClick={() => {
-                  setSelectedCategory(cat);
-                  setCurrentPage(1);
-                }}
-                className={`px-3.5 py-1.5 rounded-full text-xs font-semibold transition-all ${
-                  selectedCategory === cat
-                    ? 'bg-burgundy-900 text-white shadow-xs'
-                    : 'bg-white border border-sand-300 text-charcoal hover:bg-sand-100'
-                }`}
-              >
-                {cat}
-              </button>
-            )
-          )}
-        </div>
-
         {/* Gallery Content */}
         {loading ? (
           <div className="py-20 flex justify-center">
@@ -375,9 +308,7 @@ const GalleryManagement = () => {
         ) : items.length === 0 ? (
           <EmptyState
             title="No gallery items found"
-            message={`There are no items currently in the ${
-              selectedCategory === 'All' ? 'gallery' : `"${selectedCategory}" category`
-            }.`}
+            message="There are no items currently in the gallery."
             actionText="Upload Images"
             onAction={openUploadModal}
           />
@@ -398,11 +329,6 @@ const GalleryManagement = () => {
                         e.target.src = '/mp-logo.png';
                       }}
                     />
-                    <div className="absolute top-2 left-2 flex items-center gap-1.5">
-                      <span className="px-2 py-0.5 rounded-md bg-burgundy-900/90 text-white text-[10px] font-bold tracking-wide uppercase shadow-xs backdrop-blur-xs">
-                        {item.category}
-                      </span>
-                    </div>
                     <div className="absolute top-2 right-2">
                       <button
                         type="button"
@@ -503,51 +429,18 @@ const GalleryManagement = () => {
               />
             </div>
 
-            <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-              <div>
-                <label className="block text-xs font-semibold text-charcoal mb-1">
-                  Category *
-                </label>
-                <select
-                  value={uploadCategory}
-                  onChange={(e) => setUploadCategory(e.target.value)}
-                  className="w-full px-3 py-2 border border-sand-300 rounded-lg text-sm focus:ring-2 focus:ring-burgundy-600 focus:outline-none bg-white"
-                >
-                  {CATEGORY_OPTIONS.map((c) => (
-                    <option key={c} value={c}>
-                      {c}
-                    </option>
-                  ))}
-                </select>
-              </div>
-
-              {uploadCategory === 'Other' && (
-                <div>
-                  <label className="block text-xs font-semibold text-charcoal mb-1">
-                    Custom Category Name *
-                  </label>
-                  <input
-                    type="text"
-                    required
-                    value={customCategory}
-                    onChange={(e) => setCustomCategory(e.target.value)}
-                    placeholder="e.g. Zen Gardens"
-                    className="w-full px-3 py-2 border border-sand-300 rounded-lg text-sm focus:ring-2 focus:ring-burgundy-600 focus:outline-none"
-                  />
-                </div>
-              )}
-
-              <div>
-                <label className="block text-xs font-semibold text-charcoal mb-1">
-                  Display Order
-                </label>
-                <input
-                  type="number"
-                  value={uploadOrder}
-                  onChange={(e) => setUploadOrder(parseInt(e.target.value, 10) || 0)}
-                  className="w-full px-3 py-2 border border-sand-300 rounded-lg text-sm focus:ring-2 focus:ring-burgundy-600 focus:outline-none"
-                />
-              </div>
+            <div>
+              <label className="block text-xs font-semibold text-charcoal mb-1">
+                Display Order
+              </label>
+              <input
+                type="number"
+                min="0"
+                value={uploadOrder}
+                onChange={(e) => setUploadOrder(parseInt(e.target.value, 10) || 0)}
+                placeholder="0"
+                className="w-full px-3 py-2 border border-sand-300 rounded-lg text-sm focus:ring-2 focus:ring-burgundy-600 focus:outline-none"
+              />
             </div>
 
             <div>
@@ -634,13 +527,14 @@ const GalleryManagement = () => {
               </label>
             </div>
 
-            <div className="flex justify-end gap-3 pt-4 border-t border-sand-200">
+            <div className="flex flex-col-reverse xs:flex-row justify-end gap-2 sm:gap-3 pt-4 border-t border-sand-200">
               <Button
                 type="button"
                 variant="outline"
                 size="md"
                 onClick={() => setIsUploadModalOpen(false)}
                 disabled={isUploading}
+                className="w-full xs:w-auto justify-center"
               >
                 Cancel
               </Button>
@@ -649,6 +543,7 @@ const GalleryManagement = () => {
                 variant="primary"
                 size="md"
                 disabled={isUploading}
+                className="w-full xs:w-auto justify-center"
               >
                 {isUploading ? 'Uploading...' : `Upload ${uploadFiles.length > 1 ? `${uploadFiles.length} Photos` : 'Image'}`}
               </Button>
@@ -683,33 +578,20 @@ const GalleryManagement = () => {
                 />
               </div>
 
-              <div className="grid grid-cols-2 gap-3">
-                <div>
-                  <label className="block text-xs font-semibold text-charcoal mb-1">Category</label>
-                  <select
-                    value={editingItem.category}
-                    onChange={(e) => setEditingItem({ ...editingItem, category: e.target.value })}
-                    className="w-full px-3 py-2 border border-sand-300 rounded-lg text-sm focus:ring-2 focus:ring-burgundy-600 focus:outline-none bg-white"
-                  >
-                    {CATEGORY_OPTIONS.map((c) => (
-                      <option key={c} value={c}>{c}</option>
-                    ))}
-                  </select>
-                </div>
-                <div>
-                  <label className="block text-xs font-semibold text-charcoal mb-1">Display Order</label>
-                  <input
-                    type="number"
-                    value={editingItem.displayOrder ?? 0}
-                    onChange={(e) =>
-                      setEditingItem({
-                        ...editingItem,
-                        displayOrder: parseInt(e.target.value, 10) || 0,
-                      })
-                    }
-                    className="w-full px-3 py-2 border border-sand-300 rounded-lg text-sm focus:ring-2 focus:ring-burgundy-600 focus:outline-none"
-                  />
-                </div>
+              <div>
+                <label className="block text-xs font-semibold text-charcoal mb-1">Display Order</label>
+                <input
+                  type="number"
+                  min="0"
+                  value={editingItem.displayOrder ?? 0}
+                  onChange={(e) =>
+                    setEditingItem({
+                      ...editingItem,
+                      displayOrder: parseInt(e.target.value, 10) || 0,
+                    })
+                  }
+                  className="w-full px-3 py-2 border border-sand-300 rounded-lg text-sm focus:ring-2 focus:ring-burgundy-600 focus:outline-none"
+                />
               </div>
 
               <div>
@@ -758,13 +640,14 @@ const GalleryManagement = () => {
                 </label>
               </div>
 
-              <div className="flex justify-end gap-3 pt-4 border-t border-sand-200">
+              <div className="flex flex-col-reverse xs:flex-row justify-end gap-2 sm:gap-3 pt-4 border-t border-sand-200">
                 <Button
                   type="button"
                   variant="outline"
                   size="md"
                   onClick={() => setIsEditModalOpen(false)}
                   disabled={isEditing}
+                  className="w-full xs:w-auto justify-center"
                 >
                   Cancel
                 </Button>
@@ -773,6 +656,7 @@ const GalleryManagement = () => {
                   variant="primary"
                   size="md"
                   disabled={isEditing}
+                  className="w-full xs:w-auto justify-center"
                 >
                   {isEditing ? 'Updating...' : 'Save Changes'}
                 </Button>

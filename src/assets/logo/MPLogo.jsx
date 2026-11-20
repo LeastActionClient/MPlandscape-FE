@@ -39,14 +39,14 @@ export const MPLogo = ({
       {showText && (
         <div className="flex flex-col justify-center text-left select-none">
           <span
-            className={`font-serif font-bold text-sm sm:text-base lg:text-lg tracking-tight leading-none transition-colors ${
+            className={`font-serif font-bold text-xs sm:text-base lg:text-lg tracking-tight leading-none transition-colors ${
               isDarkBg ? 'text-cream' : 'text-burgundy group-hover:text-burgundy-dark'
             } ${textClassName}`}
           >
             MP Landscape
           </span>
           <span
-            className={`font-sans text-[9px] sm:text-[10px] font-semibold tracking-[0.2em] uppercase leading-none mt-0.5 sm:mt-1 ${
+            className={`font-sans text-[8px] sm:text-[10px] font-semibold tracking-[0.2em] uppercase leading-none mt-0.5 sm:mt-1 ${
               isDarkBg ? 'text-sand-300' : 'text-charcoal/80'
             }`}
           >

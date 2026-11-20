@@ -96,6 +96,11 @@
 }
 
 /* Global Elements */
+html {
+  overflow-x: hidden;
+  scroll-behavior: smooth;
+}
+
 body {
   background-color: var(--bg-main);
   color: var(--text-dark);
@@ -103,6 +108,7 @@ body {
   margin: 0;
   padding: 0;
   overflow-x: hidden;
+  width: 100%;
 }
 
 /* Reusable UI Utility Classes adhering strictly to Burgundy & Sand (No Green) */
@@ -116,15 +122,38 @@ body {
   font-weight: 500;
   padding: 0.75rem 1.5rem;
   border-radius: 0.5rem;
-  transition: all 0.25s ease-in-out;
+  transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
   border: 1px solid #542B32;
+  position: relative;
+  overflow: hidden;
+}
+
+.btn-primary::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: -100%;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(
+    90deg,
+    transparent 0%,
+    rgba(255, 255, 255, 0.15) 50%,
+    transparent 100%
+  );
+  transition: transform 0.6s ease;
+  pointer-events: none;
 }
 
 .btn-primary:hover {
   background-color: #3D1E24;
   border-color: #B68B55;
-  box-shadow: 0 4px 14px rgba(84, 43, 50, 0.25);
-  transform: translateY(-1px);
+  box-shadow: 0 8px 20px rgba(84, 43, 50, 0.28);
+  transform: translateY(-2px);
+}
+
+.btn-primary:hover::before {
+  transform: translateX(200%);
 }
 
 .btn-accent {
@@ -132,19 +161,43 @@ body {
   align-items: center;
   justify-content: center;
   gap: 0.5rem;
-  background-color: #B68B55;
+  background: linear-gradient(135deg, #B68B55 0%, #A07442 100%);
   color: #FFFFFF;
   font-weight: 500;
   padding: 0.75rem 1.5rem;
   border-radius: 0.5rem;
-  transition: all 0.25s ease-in-out;
+  transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
   border: 1px solid #B68B55;
+  position: relative;
+  overflow: hidden;
+}
+
+.btn-accent::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: -100%;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(
+    90deg,
+    transparent 0%,
+    rgba(255, 255, 255, 0.25) 50%,
+    transparent 100%
+  );
+  transition: transform 0.6s ease;
+  pointer-events: none;
 }
 
 .btn-accent:hover {
-  background-color: #8F693A;
-  box-shadow: 0 4px 14px rgba(182, 139, 85, 0.3);
-  transform: translateY(-1px);
+  background: linear-gradient(135deg, #C49F6E 0%, #8F693A 100%);
+  box-shadow: 0 8px 22px rgba(182, 139, 85, 0.35);
+  transform: translateY(-2px);
+  border-color: #C49F6E;
+}
+
+.btn-accent:hover::before {
+  transform: translateX(200%);
 }
 
 .btn-outline {
@@ -158,57 +211,161 @@ body {
   padding: 0.75rem 1.5rem;
   border-radius: 0.5rem;
   border: 1.5px solid #542B32;
-  transition: all 0.25s ease-in-out;
+  transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+  position: relative;
+  overflow: hidden;
 }
 
 .btn-outline:hover {
   background-color: #542B32;
   color: #FFFFFF;
   border-color: #542B32;
+  transform: translateY(-2px);
+  box-shadow: 0 6px 16px rgba(84, 43, 50, 0.2);
 }
 
 .card-luxury {
   background-color: #FAF7F2;
   border: 1px solid #E7D8C4;
-  border-radius: 0.75rem;
-  transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
-  box-shadow: 0 2px 8px rgba(41, 38, 38, 0.04);
+  border-radius: 1rem;
+  transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+  box-shadow: 0 4px 12px rgba(41, 38, 38, 0.04);
 }
 
 .card-luxury:hover {
-  transform: translateY(-3px);
-  box-shadow: 0 12px 24px rgba(84, 43, 50, 0.08);
+  transform: translateY(-5px);
+  box-shadow: 0 16px 32px rgba(84, 43, 50, 0.1);
   border-color: #B68B55;
 }
 
 .badge-burgundy {
   display: inline-flex;
   align-items: center;
-  gap: 0.25rem;
-  padding: 0.25rem 0.75rem;
+  gap: 0.35rem;
+  padding: 0.3rem 0.85rem;
   font-size: 0.75rem;
   font-weight: 600;
   text-transform: uppercase;
-  letter-spacing: 0.05em;
+  letter-spacing: 0.06em;
   background-color: #F5EDEE;
   color: #542B32;
-  border: 1px solid #542B32/20;
+  border: 1px solid rgba(84, 43, 50, 0.2);
   border-radius: 9999px;
+  transition: all 0.25s ease;
+}
+
+.badge-burgundy:hover {
+  border-color: rgba(84, 43, 50, 0.4);
+  background-color: #E6CBD0;
 }
 
 .badge-bronze {
   display: inline-flex;
   align-items: center;
-  gap: 0.25rem;
-  padding: 0.25rem 0.75rem;
+  gap: 0.35rem;
+  padding: 0.3rem 0.85rem;
   font-size: 0.75rem;
   font-weight: 600;
   text-transform: uppercase;
-  letter-spacing: 0.05em;
+  letter-spacing: 0.06em;
   background-color: #F7F1E8;
   color: #8F693A;
-  border: 1px solid #B68B55/30;
+  border: 1px solid rgba(182, 139, 85, 0.35);
   border-radius: 9999px;
+  transition: all 0.25s ease;
+}
+
+.badge-bronze:hover {
+  border-color: #B68B55;
+  background-color: #E6D7BE;
+}
+
+/* Animations & Keyframes */
+@keyframes float {
+  0%, 100% {
+    transform: translateY(0px);
+  }
+  50% {
+    transform: translateY(-8px);
+  }
+}
+
+@keyframes floatSlow {
+  0%, 100% {
+    transform: translateY(0px) rotate(0deg);
+  }
+  50% {
+    transform: translateY(-12px) rotate(1deg);
+  }
+}
+
+@keyframes pulseGlow {
+  0%, 100% {
+    box-shadow: 0 0 15px rgba(182, 139, 85, 0.15);
+  }
+  50% {
+    box-shadow: 0 0 25px rgba(182, 139, 85, 0.4);
+  }
+}
+
+@keyframes shimmerSweep {
+  0% {
+    transform: translateX(-100%);
+  }
+  100% {
+    transform: translateX(200%);
+  }
+}
+
+@keyframes fadeInUp {
+  from {
+    opacity: 0;
+    transform: translateY(24px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes fadeInScale {
+  from {
+    opacity: 0;
+    transform: scale(0.96) translateY(12px);
+  }
+  to {
+    opacity: 1;
+    transform: scale(1) translateY(0);
+  }
+}
+
+.animate-float {
+  animation: float 4s ease-in-out infinite;
+}
+
+.animate-float-slow {
+  animation: floatSlow 6s ease-in-out infinite;
+}
+
+.animate-pulse-glow {
+  animation: pulseGlow 3s ease-in-out infinite;
+}
+
+.animate-fade-in-up {
+  animation: fadeInUp 0.7s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+}
+
+.animate-fade-in-scale {
+  animation: fadeInScale 0.6s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+}
+
+/* Modern Card Glow Utilities */
+.hover-glow-bronze:hover {
+  box-shadow: 0 12px 30px -5px rgba(182, 139, 85, 0.25);
+}
+
+.hover-glow-burgundy:hover {
+  box-shadow: 0 12px 30px -5px rgba(84, 43, 50, 0.25);
 }
 
 /* Custom Scrollbar */

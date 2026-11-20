@@ -15,7 +15,8 @@ import {
   ArrowRight,
 } from 'lucide-react';
 import SectionHeading from '../components/common/SectionHeading';
-import Breadcrumb from '../components/common/Breadcrumb';
+import aboutHeroBg from '../assets/about-hero-bg.jpg';
+import aboutLegacyImg from '../assets/about-legacy.jpg';
 
 export const About = () => {
   const { settings } = useOutletContext() || {};
@@ -41,16 +42,42 @@ export const About = () => {
         />
       </Helmet>
 
-      {/* Page Banner */}
-      <section className="bg-gradient-to-b from-cream via-cream to-sand/20 border-b border-sand py-12 lg:py-16">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <Breadcrumb items={[{ label: 'About Us' }]} />
-          <div className="max-w-3xl mt-4 space-y-3">
-            <span className="badge-burgundy">About Our Organization</span>
-            <h1 className="text-3xl sm:text-4xl lg:text-5xl font-extrabold text-burgundy font-sans tracking-tight">
-              Cultivating Natural Splendor with Architectural Precision
+      {/* Page Hero Banner with Botanical Background */}
+      <section
+        className="relative min-h-[calc(100vh-72px)] min-h-[calc(100dvh-72px)] flex items-center bg-cream border-b border-sand/60 overflow-hidden select-none py-10 sm:py-14 lg:py-16"
+        style={{
+          backgroundImage: `url(${aboutHeroBg})`,
+          backgroundPosition: 'right center',
+          backgroundSize: 'cover',
+          backgroundRepeat: 'no-repeat',
+        }}
+        aria-label="About MP Landscape Services"
+      >
+        {/* Soft subtle gradient scrim to ensure perfect text contrast while floral branch blooms on the right */}
+        <div className="absolute inset-0 bg-gradient-to-r from-cream/95 via-cream/85 sm:via-cream/70 md:via-cream/45 to-transparent pointer-events-none" />
+
+        {/* Hero Content Container - Positioned to fill the highlighted safe canvas without colliding with the floral branch */}
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10 w-full flex items-center">
+          <div className="w-full lg:w-[68%] xl:w-[65%] flex flex-col items-center justify-center text-center mx-auto lg:mx-0 py-4 sm:py-6">
+            {/* Top Eyebrow with Flanking Accent Lines */}
+            <div className="flex items-center justify-center gap-3 sm:gap-4 lg:gap-5 mb-5 sm:mb-7 lg:mb-8">
+              <span className="h-px w-10 sm:w-16 lg:w-20 bg-bronze/70" />
+              <span className="text-xs sm:text-[13px] lg:text-sm font-semibold tracking-[0.25em] sm:tracking-[0.28em] text-burgundy uppercase">
+                About Our Organization
+              </span>
+              <span className="h-px w-10 sm:w-16 lg:w-20 bg-bronze/70" />
+            </div>
+
+            {/* Main Headline with Prominent Highlighted Subtitle */}
+            <h1 className="font-serif text-2xl xs:text-3xl sm:text-4xl md:text-5xl lg:text-[3.25rem] xl:text-[3.65rem] font-semibold text-burgundy tracking-tight leading-[1.16] sm:leading-[1.14] text-balance mb-5 sm:mb-7 lg:mb-8">
+              Cultivating Natural Splendor
+              <span className="block font-serif italic text-bronze font-medium sm:font-semibold mt-2 sm:mt-3.5 lg:mt-4 text-xl xs:text-2xl sm:text-3xl md:text-4xl lg:text-[2.75rem] xl:text-[3.15rem]">
+                with Architectural Precision
+              </span>
             </h1>
-            <p className="text-base sm:text-lg text-brand-muted leading-relaxed">
+
+            {/* Enhanced Description with Balanced Line Spacing and Width */}
+            <p className="text-sm sm:text-base md:text-lg lg:text-[1.15rem] xl:text-[1.2rem] text-brand-muted max-w-xl sm:max-w-2xl lg:max-w-2xl leading-relaxed sm:leading-[1.8] font-normal text-balance">
               For over a decade and a half, {companyName} has redefined outdoor architecture across residential, agricultural, and commercial sectors.
             </p>
           </div>
@@ -66,7 +93,6 @@ export const About = () => {
                 align="left"
                 badge="Who We Are"
                 title="A Legacy of Sustainable Landscape Engineering"
-                subtitle="Merging horticultural biology with civil craftsmanship."
               />
 
               <div className="space-y-4 text-sm sm:text-base text-brand-muted leading-relaxed">
@@ -91,7 +117,7 @@ export const About = () => {
             <div className="lg:col-span-6 relative">
               <div className="aspect-4/3 rounded-2xl overflow-hidden shadow-2xl border border-sand">
                 <img
-                  src="https://images.unsplash.com/photo-1558904541-efa8c4a5af9b?auto=format&fit=crop&w=1200&q=80"
+                  src={aboutLegacyImg}
                   alt="Landscaped Estate Grounds"
                   className="w-full h-full object-cover"
                 />

@@ -84,7 +84,7 @@ export const Pagination = ({
       {/* Page navigation controls */}
       {totalPages > 1 && (
         <nav
-          className="inline-flex items-center gap-1 self-center sm:self-auto"
+          className="inline-flex flex-wrap items-center justify-center gap-1 self-center sm:self-auto"
           aria-label="Pagination"
         >
           {/* Previous Button */}

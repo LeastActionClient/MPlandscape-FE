@@ -107,11 +107,11 @@ export const ServiceDetails = () => {
 
           <div className="max-w-4xl mt-4 space-y-3">
             <span className="badge-burgundy">Specialized Division</span>
-            <h1 className="text-3xl sm:text-4xl lg:text-5xl font-extrabold text-burgundy font-sans tracking-tight leading-tight">
+            <h1 className="text-2xl xs:text-3xl sm:text-4xl lg:text-5xl font-extrabold text-burgundy font-sans tracking-tight leading-tight break-words">
               {service.title}
             </h1>
             {service.subtitle && (
-              <p className="text-base sm:text-lg text-bronze font-semibold">
+              <p className="text-sm sm:text-base md:text-lg text-bronze font-semibold">
                 {service.subtitle}
               </p>
             )}

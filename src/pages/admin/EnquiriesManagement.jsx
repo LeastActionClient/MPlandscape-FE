@@ -271,7 +271,7 @@ const EnquiriesManagement = () => {
               Track customer prospect pipelines, change stages, record internal notes, and export reports.
             </p>
           </div>
-          <div className="flex items-center gap-3">
+          <div className="flex flex-wrap items-center gap-2 sm:gap-3">
             <Button
               type="button"
               variant="outline"
@@ -382,12 +382,12 @@ const EnquiriesManagement = () => {
           </div>
 
           {/* Date range filters */}
-          <div className="flex flex-wrap items-center gap-3 pt-3 border-t border-sand-200 text-xs">
-            <span className="font-semibold text-charcoal/70 flex items-center gap-1.5">
+          <div className="flex flex-wrap items-center gap-2 sm:gap-3 pt-3 border-t border-sand-200 text-xs">
+            <span className="font-semibold text-charcoal/70 flex items-center gap-1.5 shrink-0">
               <Calendar className="w-3.5 h-3.5 text-burgundy-800" />
               Date Range:
             </span>
-            <div className="flex items-center gap-2">
+            <div className="flex flex-wrap items-center gap-2">
               <input
                 type="date"
                 value={startDate}
@@ -402,13 +402,13 @@ const EnquiriesManagement = () => {
                 className="px-2.5 py-1 bg-sand-50 border border-sand-300 rounded-md text-xs focus:ring-1 focus:ring-burgundy-600 focus:outline-none"
               />
             </div>
-            <span className="text-charcoal/50 ml-auto font-medium">
+            <span className="text-charcoal/50 w-full sm:w-auto sm:ml-auto font-medium text-xs mt-1 sm:mt-0">
               Showing {enquiries.length} of {totalCount} total enquiries
             </span>
           </div>
         </div>
 
-        {/* Data Table */}
+        {/* Data Presentation (Mobile Card List + Desktop Table) */}
         {loading ? (
           <div className="py-20 flex justify-center">
             <LoadingSpinner text="Retrieving enquiry records..." size="lg" />
@@ -428,16 +428,16 @@ const EnquiriesManagement = () => {
           />
         ) : (
           <div className="bg-white rounded-2xl border border-sand-300 shadow-xs overflow-hidden">
-            <div className="overflow-x-auto">
-              <table className="w-full text-left text-sm text-charcoal">
+            <div className="overflow-x-auto w-full">
+              <table className="min-w-full text-left text-sm text-charcoal">
                 <thead className="bg-sand-50/70 text-xs font-semibold text-charcoal/70 uppercase tracking-wider border-b border-sand-200">
                   <tr>
-                    <th scope="col" className="px-5 py-3.5">Customer</th>
-                    <th scope="col" className="px-5 py-3.5">Contact</th>
-                    <th scope="col" className="px-5 py-3.5">Service Requested</th>
-                    <th scope="col" className="px-5 py-3.5">Status</th>
-                    <th scope="col" className="px-5 py-3.5">Submitted</th>
-                    <th scope="col" className="px-5 py-3.5 text-right">Actions</th>
+                    <th scope="col" className="px-3 sm:px-5 py-3.5">Customer</th>
+                    <th scope="col" className="px-3 sm:px-5 py-3.5">Contact</th>
+                    <th scope="col" className="px-3 sm:px-5 py-3.5">Service Requested</th>
+                    <th scope="col" className="px-3 sm:px-5 py-3.5">Status</th>
+                    <th scope="col" className="px-3 sm:px-5 py-3.5">Submitted</th>
+                    <th scope="col" className="px-3 sm:px-5 py-3.5 text-right">Actions</th>
                   </tr>
                 </thead>
                 <tbody className="divide-y divide-sand-200">
@@ -446,35 +446,35 @@ const EnquiriesManagement = () => {
                       key={enquiry._id}
                       className="hover:bg-sand-50/60 transition-colors"
                     >
-                      <td className="px-5 py-4">
-                        <div className="font-semibold text-burgundy-950">
+                      <td className="px-3 sm:px-5 py-4">
+                        <div className="font-semibold text-burgundy-950 text-xs sm:text-sm">
                           {enquiry.customerName}
                         </div>
                         {enquiry.location && (
-                          <div className="text-xs text-charcoal/60 flex items-center gap-1 mt-0.5">
+                          <div className="text-[11px] sm:text-xs text-charcoal/60 flex items-center gap-1 mt-0.5">
                             <MapPin className="w-3 h-3 text-burgundy-700 flex-shrink-0" />
-                            <span className="truncate max-w-[180px]">{enquiry.location}</span>
+                            <span className="truncate max-w-[140px] sm:max-w-[180px]">{enquiry.location}</span>
                           </div>
                         )}
                       </td>
-                      <td className="px-5 py-4 text-xs space-y-1">
+                      <td className="px-3 sm:px-5 py-4 text-xs space-y-1">
                         <div className="flex items-center gap-1.5 font-medium text-charcoal">
-                          <Phone className="w-3.5 h-3.5 text-burgundy-700" />
+                          <Phone className="w-3.5 h-3.5 text-burgundy-700 shrink-0" />
                           <a href={`tel:${enquiry.phone}`} className="hover:underline">
                             {enquiry.phone}
                           </a>
                         </div>
                         <div className="flex items-center gap-1.5 text-charcoal/70">
-                          <Mail className="w-3.5 h-3.5 text-sand-500" />
+                          <Mail className="w-3.5 h-3.5 text-sand-500 shrink-0" />
                           <a
                             href={`mailto:${enquiry.email}`}
-                            className="hover:underline truncate max-w-[160px]"
+                            className="hover:underline truncate max-w-[130px] sm:max-w-[160px]"
                           >
                             {enquiry.email}
                           </a>
                         </div>
                       </td>
-                      <td className="px-5 py-4 text-xs font-medium text-charcoal max-w-[200px]">
+                      <td className="px-3 sm:px-5 py-4 text-xs font-medium text-charcoal max-w-[160px] sm:max-w-[200px]">
                         <span className="truncate block font-semibold text-burgundy-900">
                           {enquiry.serviceId?.title || 'General Consultation'}
                         </span>
@@ -482,11 +482,11 @@ const EnquiriesManagement = () => {
                           {enquiry.message}
                         </p>
                       </td>
-                      <td className="px-5 py-4 whitespace-nowrap">
+                      <td className="px-3 sm:px-5 py-4 whitespace-nowrap">
                         <select
                           value={enquiry.status}
                           onChange={(e) => handleStatusChange(enquiry._id, e.target.value)}
-                          className={`text-xs font-semibold px-2.5 py-1 rounded-full border cursor-pointer focus:outline-none focus:ring-2 focus:ring-burgundy-600 ${
+                          className={`text-xs font-semibold px-2 sm:px-2.5 py-1 rounded-full border cursor-pointer focus:outline-none focus:ring-2 focus:ring-burgundy-600 ${
                             STATUS_BADGE_CLASSES[enquiry.status] || STATUS_BADGE_CLASSES.NEW
                           }`}
                         >
@@ -497,9 +497,9 @@ const EnquiriesManagement = () => {
                           ))}
                         </select>
                       </td>
-                      <td className="px-5 py-4 whitespace-nowrap text-xs text-charcoal/70">
+                      <td className="px-3 sm:px-5 py-4 whitespace-nowrap text-xs text-charcoal/70">
                         <div className="flex items-center gap-1">
-                          <Clock className="w-3.5 h-3.5 text-charcoal/40" />
+                          <Clock className="w-3.5 h-3.5 text-charcoal/40 shrink-0" />
                           {new Date(enquiry.createdAt).toLocaleDateString('en-IN', {
                             day: 'numeric',
                             month: 'short',
@@ -507,8 +507,8 @@ const EnquiriesManagement = () => {
                           })}
                         </div>
                       </td>
-                      <td className="px-5 py-4 whitespace-nowrap text-right text-xs">
-                        <div className="flex items-center justify-end gap-2">
+                      <td className="px-3 sm:px-5 py-4 whitespace-nowrap text-right text-xs">
+                        <div className="flex items-center justify-end gap-1.5 sm:gap-2">
                           <button
                             type="button"
                             onClick={() => openDetailModal(enquiry)}

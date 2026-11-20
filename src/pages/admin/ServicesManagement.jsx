@@ -310,7 +310,7 @@ const ServicesManagement = () => {
               Create, update, reorder, and configure company service offerings.
             </p>
           </div>
-          <div className="flex items-center gap-3">
+          <div className="flex flex-wrap items-center gap-2 sm:gap-3">
             <Button
               type="button"
               variant="outline"
@@ -359,7 +359,7 @@ const ServicesManagement = () => {
         )}
 
         {/* Search bar */}
-        <div className="bg-white p-4 rounded-xl border border-sand-300 shadow-xs flex items-center justify-between gap-4">
+        <div className="bg-white p-3.5 sm:p-4 rounded-xl border border-sand-300 shadow-xs flex flex-col sm:flex-row items-stretch sm:items-center justify-between gap-3 sm:gap-4">
           <div className="relative flex-1 max-w-md">
             <Search className="absolute left-3.5 top-1/2 -translate-y-1/2 w-4 h-4 text-charcoal/40" />
             <input
@@ -373,12 +373,12 @@ const ServicesManagement = () => {
               className="w-full pl-10 pr-4 py-2 text-sm bg-sand-50/50 border border-sand-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-burgundy-600 focus:bg-white transition-colors"
             />
           </div>
-          <span className="text-xs text-charcoal/60 font-medium hidden sm:inline">
+          <span className="text-xs text-charcoal/60 font-medium">
             Showing {filteredServices.length} of {services.length} services
           </span>
         </div>
 
-        {/* Main Content */}
+        {/* Main Content (Mobile Cards + Desktop Table) */}
         {loading ? (
           <div className="py-20 flex justify-center">
             <LoadingSpinner text="Loading services..." size="lg" />
@@ -398,47 +398,47 @@ const ServicesManagement = () => {
           />
         ) : (
           <div className="bg-white rounded-2xl border border-sand-300 shadow-xs overflow-hidden">
-            <div className="overflow-x-auto">
-              <table className="w-full text-left text-sm text-charcoal">
+            <div className="overflow-x-auto w-full">
+              <table className="min-w-full text-left text-sm text-charcoal">
                 <thead className="bg-sand-50/70 text-xs font-semibold text-charcoal/70 uppercase tracking-wider border-b border-sand-200">
                   <tr>
-                    <th scope="col" className="px-5 py-3.5">Service</th>
-                    <th scope="col" className="px-5 py-3.5">Order</th>
-                    <th scope="col" className="px-5 py-3.5">Status</th>
-                    <th scope="col" className="px-5 py-3.5 text-right">Actions</th>
+                    <th scope="col" className="px-3 sm:px-5 py-3.5">Service</th>
+                    <th scope="col" className="px-3 sm:px-5 py-3.5">Order</th>
+                    <th scope="col" className="px-3 sm:px-5 py-3.5">Status</th>
+                    <th scope="col" className="px-3 sm:px-5 py-3.5 text-right">Actions</th>
                   </tr>
                 </thead>
                 <tbody className="divide-y divide-sand-200">
                   {paginatedServices.map((service) => (
                     <tr key={service._id} className="hover:bg-sand-50/60 transition-colors">
-                      <td className="px-5 py-4">
-                        <div className="flex items-center gap-3.5">
+                      <td className="px-3 sm:px-5 py-4">
+                        <div className="flex items-center gap-2.5 sm:gap-3.5">
                           <img
                             src={service.imageUrl || '/mp-logo.png'}
                             alt={service.title}
-                            className={`w-14 h-12 rounded-lg border border-sand-300 bg-sand-100 flex-shrink-0 ${
+                            className={`w-12 h-10 sm:w-14 sm:h-12 rounded-lg border border-sand-300 bg-sand-100 flex-shrink-0 ${
                               service.imageUrl ? 'object-cover' : 'object-contain p-1'
                             }`}
                             onError={(e) => {
                               e.currentTarget.onerror = null;
                               e.currentTarget.src = '/mp-logo.png';
-                              e.currentTarget.className = 'w-14 h-12 object-contain p-1 rounded-lg border border-sand-300 bg-sand-100 flex-shrink-0';
+                              e.currentTarget.className = 'w-12 h-10 sm:w-14 sm:h-12 object-contain p-1 rounded-lg border border-sand-300 bg-sand-100 flex-shrink-0';
                             }}
                           />
                           <div className="min-w-0">
-                            <p className="font-semibold text-burgundy-950 truncate max-w-xs sm:max-w-md">
+                            <p className="font-semibold text-burgundy-950 truncate max-w-[160px] sm:max-w-xs md:max-w-md text-xs sm:text-sm">
                               {service.title}
                             </p>
-                            <p className="text-xs text-charcoal/60 truncate max-w-xs">
+                            <p className="text-[11px] sm:text-xs text-charcoal/60 truncate max-w-[140px] sm:max-w-xs">
                               {service.subtitle || service.slug}
                             </p>
                           </div>
                         </div>
                       </td>
-                      <td className="px-5 py-4 whitespace-nowrap text-xs font-semibold text-charcoal/70">
+                      <td className="px-3 sm:px-5 py-4 whitespace-nowrap text-xs font-semibold text-charcoal/70">
                         #{service.displayOrder ?? 0}
                       </td>
-                      <td className="px-5 py-4 whitespace-nowrap">
+                      <td className="px-3 sm:px-5 py-4 whitespace-nowrap">
                         <button
                           type="button"
                           onClick={() => handleToggleActive(service)}
@@ -451,10 +451,9 @@ const ServicesManagement = () => {
                           <span className={`w-1.5 h-1.5 rounded-full ${service.isActive ? 'bg-bronze' : 'bg-gray-400'}`} />
                           {service.isActive ? 'Active' : 'Inactive'}
                         </button>
-
                       </td>
-                      <td className="px-5 py-4 whitespace-nowrap text-right text-xs">
-                        <div className="flex items-center justify-end gap-2">
+                      <td className="px-3 sm:px-5 py-4 whitespace-nowrap text-right text-xs">
+                        <div className="flex items-center justify-end gap-1.5 sm:gap-2">
                           <a
                             href={`/services/${service.slug}`}
                             target="_blank"
@@ -784,13 +783,14 @@ const ServicesManagement = () => {
               </div>
             </div>
 
-            <div className="flex justify-end gap-3 pt-4 border-t border-sand-200">
+            <div className="flex flex-col-reverse xs:flex-row justify-end gap-2 sm:gap-3 pt-4 border-t border-sand-200">
               <Button
                 type="button"
                 variant="outline"
                 size="md"
                 onClick={() => setIsModalOpen(false)}
                 disabled={isSaving}
+                className="w-full xs:w-auto justify-center"
               >
                 Cancel
               </Button>
@@ -799,6 +799,7 @@ const ServicesManagement = () => {
                 variant="primary"
                 size="md"
                 disabled={isSaving}
+                className="w-full xs:w-auto justify-center"
               >
                 {isSaving ? 'Saving Service...' : editingId ? 'Update Service' : 'Create Service'}
               </Button>

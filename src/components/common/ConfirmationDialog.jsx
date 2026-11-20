@@ -24,8 +24,8 @@ export const ConfirmationDialog = ({
           <p className="text-sm text-brand-muted leading-relaxed pt-1">{message}</p>
         </div>
 
-        <div className="flex items-center justify-end gap-3 pt-4 border-t border-sand">
-          <Button variant="ghost" size="sm" onClick={onClose} disabled={loading}>
+        <div className="flex flex-col-reverse xs:flex-row items-center justify-end gap-2 sm:gap-3 pt-4 border-t border-sand">
+          <Button variant="ghost" size="sm" onClick={onClose} disabled={loading} className="w-full xs:w-auto justify-center">
             {cancelText}
           </Button>
           <Button
@@ -33,6 +33,7 @@ export const ConfirmationDialog = ({
             size="sm"
             onClick={onConfirm}
             loading={loading}
+            className="w-full xs:w-auto justify-center"
           >
             {confirmText}
           </Button>
