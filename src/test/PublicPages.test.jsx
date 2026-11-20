@@ -105,7 +105,7 @@ describe('Public Website Pages & Forms (Task 8.2)', () => {
     });
   });
 
-  it('renders Gallery page with category filter buttons and images', async () => {
+  it('renders Gallery page with project showcase and images', async () => {
     render(
       <HelmetProvider>
         <BrowserRouter>
@@ -117,7 +117,6 @@ describe('Public Website Pages & Forms (Task 8.2)', () => {
     await waitFor(() => {
       expect(screen.getAllByText('Estate Garden Showcase')[0]).toBeInTheDocument();
     });
-    expect(screen.getByRole('button', { name: /^All/i })).toBeInTheDocument();
   });
 
   it('renders Contact page with contact details and enquiry form', async () => {

@@ -30,17 +30,17 @@ export const MobileNavigation = ({ isOpen, onClose, settings }) => {
       />
 
       {/* Drawer Menu */}
-      <div className="fixed inset-y-0 right-0 w-full max-w-xs bg-cream-light border-l border-sand shadow-2xl flex flex-col justify-between overflow-y-auto">
-        <div className="p-6">
+      <div className="fixed inset-y-0 right-0 w-full max-w-[85vw] sm:max-w-xs bg-cream-light border-l border-sand shadow-2xl flex flex-col justify-between overflow-y-auto">
+        <div className="p-4 sm:p-6">
           {/* Header row */}
-          <div className="flex items-center justify-between pb-6 border-b border-sand">
-            <MPLogo imgClassName="h-14 w-auto" />
+          <div className="flex items-center justify-between pb-4 sm:pb-6 border-b border-sand gap-2">
+            <MPLogo imgClassName="h-9 sm:h-11 w-auto object-contain" showText={true} />
             <button
               onClick={onClose}
-              className="p-2 rounded-lg text-brand-dark hover:bg-sand/30 transition-colors"
+              className="p-1.5 sm:p-2 rounded-lg text-brand-dark hover:bg-sand/30 transition-colors shrink-0"
               aria-label="Close menu"
             >
-              <X className="w-6 h-6 text-burgundy" />
+              <X className="w-5 h-5 sm:w-6 sm:h-6 text-burgundy" />
             </button>
           </div>
 

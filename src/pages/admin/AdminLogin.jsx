@@ -82,7 +82,7 @@ const AdminLogin = () => {
         <div className="sm:mx-auto sm:w-full sm:max-w-md relative z-10 px-4">
           <div className="flex justify-center mb-6">
             <Link to="/" className="inline-block focus:outline-none focus:ring-2 focus:ring-burgundy-600 rounded-lg p-1">
-              <MPLogo className="h-16 w-auto" />
+              <MPLogo imgClassName="h-16 w-auto object-contain" showText={true} />
             </Link>
           </div>
 

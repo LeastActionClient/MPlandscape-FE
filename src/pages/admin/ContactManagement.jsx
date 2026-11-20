@@ -18,6 +18,7 @@ import {
 import settingsService from '../../services/settingsService';
 import LoadingSpinner from '../../components/common/LoadingSpinner';
 import ErrorMessage from '../../components/common/ErrorMessage';
+import ConfirmationDialog from '../../components/common/ConfirmationDialog';
 import Button from '../../components/common/Button';
 
 const ContactManagement = () => {
@@ -43,6 +44,9 @@ const ContactManagement = () => {
   const [isSaving, setIsSaving] = useState(false);
   const [saveSuccess, setSaveSuccess] = useState(false);
   const [saveError, setSaveError] = useState('');
+  const [refreshing, setRefreshing] = useState(false);
+  const [reloadToast, setReloadToast] = useState(null);
+  const [showReloadConfirm, setShowReloadConfirm] = useState(false);
 
   const fetchSettings = async () => {
     try {
@@ -75,12 +79,59 @@ const ContactManagement = () => {
       setError(err.response?.data?.message || 'Failed to load contact settings');
     } finally {
       setLoading(false);
+      setRefreshing(false);
     }
   };
 
   useEffect(() => {
     fetchSettings();
   }, []);
+
+  const isFormDirty = () => {
+    if (!settings) return false;
+    const initialPhones = Array.isArray(settings.phoneNumbers) && settings.phoneNumbers.length > 0 ? settings.phoneNumbers : [''];
+    const initialEmails = Array.isArray(settings.emailAddresses) && settings.emailAddresses.length > 0 ? settings.emailAddresses : [''];
+    if (JSON.stringify(phoneNumbers) !== JSON.stringify(initialPhones)) return true;
+    if (JSON.stringify(emailAddresses) !== JSON.stringify(initialEmails)) return true;
+    if (whatsappNumber !== (settings.whatsappNumber || '')) return true;
+    if (address !== (settings.address || '')) return true;
+    if (workingHours !== (settings.workingHours || '')) return true;
+    if (mapUrl !== (settings.mapUrl || '')) return true;
+    const initialSocial = {
+      facebook: settings.socialLinks?.facebook || '',
+      instagram: settings.socialLinks?.instagram || '',
+      linkedin: settings.socialLinks?.linkedin || '',
+      youtube: settings.socialLinks?.youtube || '',
+      twitter: settings.socialLinks?.twitter || '',
+    };
+    if (JSON.stringify(socialLinks) !== JSON.stringify(initialSocial)) return true;
+    return false;
+  };
+
+  const handleReloadClick = () => {
+    if (refreshing) return;
+    if (isFormDirty()) {
+      setShowReloadConfirm(true);
+    } else {
+      performReload();
+    }
+  };
+
+  const performReload = async () => {
+    setShowReloadConfirm(false);
+    if (refreshing) return;
+    try {
+      setRefreshing(true);
+      await fetchSettings();
+      setReloadToast({ type: 'success', message: 'Contact information reloaded successfully.' });
+      setTimeout(() => setReloadToast(null), 3000);
+    } catch (err) {
+      setReloadToast({ type: 'error', message: 'Failed to reload contact settings.' });
+      setTimeout(() => setReloadToast(null), 4000);
+    } finally {
+      setRefreshing(false);
+    }
+  };
 
   const handlePhoneChange = (index, value) => {
     const updated = [...phoneNumbers];
@@ -194,13 +245,37 @@ const ContactManagement = () => {
             type="button"
             variant="outline"
             size="sm"
-            onClick={fetchSettings}
-            className="gap-2 self-start sm:self-auto"
+            onClick={handleReloadClick}
+            disabled={refreshing}
+            className="gap-2 self-start sm:self-auto shrink-0"
           >
-            <RefreshCw className="w-3.5 h-3.5" />
-            Reload
+            <RefreshCw className={`w-3.5 h-3.5 shrink-0 ${refreshing ? 'animate-spin text-burgundy-900' : ''}`} />
+            <span>Reload</span>
           </Button>
         </div>
+
+        {/* Reload Toast Notification */}
+        {reloadToast && (
+          <div
+            className={`p-3.5 rounded-xl border text-xs font-semibold flex items-center justify-between gap-3 animate-fade-in shadow-xs ${
+              reloadToast.type === 'success'
+                ? 'bg-sand-100 border-sand-300 text-burgundy-950'
+                : 'bg-red-50 border-red-200 text-red-800'
+            }`}
+          >
+            <div className="flex items-center gap-2">
+              <CheckCircle className="w-4 h-4 text-bronze shrink-0" />
+              <span>{reloadToast.message}</span>
+            </div>
+            <button
+              type="button"
+              onClick={() => setReloadToast(null)}
+              className="p-1 hover:opacity-75 text-charcoal/60"
+            >
+              &times;
+            </button>
+          </div>
+        )}
 
         {/* Notifications */}
         {saveSuccess && (
@@ -469,14 +544,25 @@ const ContactManagement = () => {
               variant="primary"
               size="lg"
               disabled={isSaving}
-              className="gap-2 shadow-sm"
+              className="gap-2 shadow-sm w-full sm:w-auto justify-center"
             >
-              <Save className="w-4 h-4" />
-              {isSaving ? 'Saving Changes...' : 'Save Contact Information'}
+              <Save className="w-4 h-4 shrink-0" />
+              <span>{isSaving ? 'Saving Changes...' : 'Save Contact Information'}</span>
             </Button>
           </div>
         </form>
       </div>
+
+      {/* Reload Confirmation Dialog for Dirty Form */}
+      <ConfirmationDialog
+        isOpen={showReloadConfirm}
+        onClose={() => setShowReloadConfirm(false)}
+        onConfirm={performReload}
+        title="Discard Unsaved Changes?"
+        message="You have unsaved changes in the contact information form. Reloading from the database will overwrite your current changes. Are you sure you want to proceed?"
+        confirmText="Reload & Discard"
+        confirmVariant="danger"
+      />
     </>
   );
 };

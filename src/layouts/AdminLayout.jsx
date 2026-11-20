@@ -50,25 +50,25 @@ const AdminLayout = () => {
 
       {/* Sidebar (Desktop fixed + Mobile slide-over) */}
       <aside
-        className={`fixed inset-y-0 left-0 z-50 w-64 bg-burgundy-900 text-white flex flex-col transition-transform duration-300 ease-in-out md:translate-x-0 md:static md:inset-auto md:min-h-screen ${
+        className={`fixed inset-y-0 left-0 z-40 w-64 bg-burgundy-900 text-white flex flex-col transition-transform duration-300 ease-in-out md:translate-x-0 ${
           mobileSidebarOpen ? 'translate-x-0' : '-translate-x-full'
         }`}
       >
         {/* Sidebar Header */}
-        <div className="h-20 flex items-center justify-between px-6 border-b border-burgundy-800 bg-burgundy-950/40">
+        <div className="h-20 flex items-center justify-between px-6 border-b border-burgundy-800 bg-burgundy-950/40 shrink-0">
           <Link
             to="/admin/dashboard"
             onClick={() => setMobileSidebarOpen(false)}
             className="flex items-center gap-3 group"
           >
-            <div className="bg-white p-1 rounded-md shadow-sm">
-              <MPLogo className="h-9 w-auto" />
+            <div className="w-12 h-12 bg-white rounded-xl shadow-xs p-1.5 flex items-center justify-center shrink-0">
+              <MPLogo imgClassName="h-9 w-9 object-contain" />
             </div>
-            <div>
-              <span className="block font-serif text-sm font-bold text-sand-100 tracking-wide">
+            <div className="flex flex-col justify-center">
+              <span className="block font-serif text-sm font-bold text-sand-100 tracking-wide leading-tight">
                 MP LANDSCAPE
               </span>
-              <span className="block text-[10px] uppercase font-semibold text-sand-300 tracking-wider">
+              <span className="block text-[10px] uppercase font-semibold text-sand-300 tracking-wider leading-tight mt-0.5">
                 Admin Console
               </span>
             </div>
@@ -109,7 +109,7 @@ const AdminLayout = () => {
         </nav>
 
         {/* User Card & Logout in Sidebar Footer */}
-        <div className="p-4 border-t border-burgundy-800 bg-burgundy-950/50">
+        <div className="p-4 border-t border-burgundy-800 bg-burgundy-950/50 shrink-0">
           <div className="flex items-center gap-3 mb-3 px-2 py-1.5">
             <div className="w-9 h-9 rounded-full bg-sand-300 text-burgundy-950 font-bold flex items-center justify-center flex-shrink-0 text-sm">
               {user?.name ? user.name.charAt(0).toUpperCase() : 'A'}
@@ -135,45 +135,48 @@ const AdminLayout = () => {
       </aside>
 
       {/* Main Content Area */}
-      <div className="flex-1 flex flex-col min-w-0">
+      <div className="flex-1 flex flex-col min-w-0 md:pl-64">
         {/* Top Navigation Bar */}
-        <header className="h-16 bg-white border-b border-sand-300 px-4 sm:px-6 lg:px-8 flex items-center justify-between sticky top-0 z-30 shadow-xs">
-          <div className="flex items-center gap-4">
+        <header className="h-16 bg-white border-b border-sand-300 px-3 sm:px-6 lg:px-8 flex items-center justify-between sticky top-0 z-30 shadow-xs shrink-0 gap-2">
+          <div className="flex items-center gap-2 sm:gap-4 min-w-0">
             <button
               type="button"
               onClick={() => setMobileSidebarOpen(true)}
-              className="md:hidden p-2 rounded-lg text-charcoal hover:bg-sand-100 transition-colors"
+              className="md:hidden p-2 rounded-lg text-charcoal hover:bg-sand-100 transition-colors shrink-0"
               aria-label="Open navigation sidebar"
             >
               <Menu className="w-5 h-5" />
             </button>
-            <div className="flex items-center gap-2 text-xs sm:text-sm text-charcoal/70">
-              <Shield className="w-4 h-4 text-burgundy-800 hidden sm:inline" />
-              <span className="font-semibold text-charcoal">MP Landscape Admin Management</span>
+            <div className="flex items-center gap-1.5 sm:gap-2 text-xs sm:text-sm text-charcoal/70 min-w-0">
+              <Shield className="w-4 h-4 text-burgundy-800 hidden sm:inline shrink-0" />
+              <span className="font-semibold text-charcoal truncate">
+                <span className="hidden xs:inline">MP Landscape </span>Admin Console
+              </span>
             </div>
           </div>
 
-          <div className="flex items-center gap-3 sm:gap-4">
+          <div className="flex items-center gap-2 sm:gap-4 shrink-0">
             <a
               href="/"
               target="_blank"
               rel="noopener noreferrer"
-              className="inline-flex items-center gap-1.5 px-3 py-1.5 text-xs font-medium text-burgundy-900 bg-sand-100 hover:bg-sand-200 rounded-lg transition-colors border border-sand-300"
+              className="inline-flex items-center gap-1.5 px-2.5 py-1.5 text-xs font-medium text-burgundy-900 bg-sand-100 hover:bg-sand-200 rounded-lg transition-colors border border-sand-300"
+              title="Open public website in a new tab"
             >
               <ExternalLink className="w-3.5 h-3.5" />
               <span className="hidden sm:inline">View Website</span>
             </a>
 
-            <div className="h-6 w-px bg-sand-300" />
+            <div className="h-5 sm:h-6 w-px bg-sand-300" />
 
             <Link
               to="/admin/profile"
-              className="flex items-center gap-2.5 p-1 rounded-lg hover:bg-sand-100 transition-colors group"
+              className="flex items-center gap-2 p-1 rounded-lg hover:bg-sand-100 transition-colors group"
             >
-              <div className="w-8 h-8 rounded-full bg-burgundy-900 text-sand-100 flex items-center justify-center font-bold text-xs">
+              <div className="w-7 h-7 sm:w-8 sm:h-8 rounded-full bg-burgundy-900 text-sand-100 flex items-center justify-center font-bold text-xs shrink-0">
                 {user?.name ? user.name.charAt(0).toUpperCase() : 'A'}
               </div>
-              <span className="hidden sm:inline text-xs font-semibold text-charcoal group-hover:text-burgundy-900">
+              <span className="hidden sm:inline text-xs font-semibold text-charcoal group-hover:text-burgundy-900 truncate max-w-[120px]">
                 {user?.name || 'Admin'}
               </span>
             </Link>
@@ -181,7 +184,7 @@ const AdminLayout = () => {
         </header>
 
         {/* Page Content */}
-        <main className="flex-1 p-4 sm:p-6 lg:p-8">
+        <main className="flex-1 p-3 sm:p-6 lg:p-8 min-w-0">
           <Outlet />
         </main>
       </div>

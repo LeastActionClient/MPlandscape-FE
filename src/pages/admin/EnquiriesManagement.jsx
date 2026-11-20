@@ -53,6 +53,9 @@ const EnquiriesManagement = () => {
   const [currentPage, setCurrentPage] = useState(1);
   const [totalPages, setTotalPages] = useState(1);
   const [totalCount, setTotalCount] = useState(0);
+  const [pageSize, setPageSize] = useState(15);
+  const [refreshing, setRefreshing] = useState(false);
+  const [refreshToast, setRefreshToast] = useState(null);
 
   // Filters from URL or local
   const [search, setSearch] = useState(searchParams.get('search') || '');
@@ -89,14 +92,14 @@ const EnquiriesManagement = () => {
   }, []);
 
   // Fetch Enquiries
-  const fetchEnquiries = async (page = currentPage) => {
+  const fetchEnquiries = async (page = currentPage, limit = pageSize) => {
     try {
       setLoading(true);
       setError(null);
 
       const params = {
         page,
-        limit: 15,
+        limit,
       };
 
       if (search.trim()) params.search = search.trim();
@@ -123,12 +126,28 @@ const EnquiriesManagement = () => {
       setError(err.response?.data?.message || 'Failed to fetch enquiries');
     } finally {
       setLoading(false);
+      setRefreshing(false);
     }
   };
 
   useEffect(() => {
-    fetchEnquiries(1);
+    fetchEnquiries(1, pageSize);
   }, [statusFilter, serviceFilter, startDate, endDate]);
+
+  const handleRefresh = async () => {
+    if (refreshing) return;
+    try {
+      setRefreshing(true);
+      await fetchEnquiries(currentPage, pageSize);
+      setRefreshToast({ type: 'success', message: 'Enquiries refreshed successfully.' });
+      setTimeout(() => setRefreshToast(null), 3000);
+    } catch (err) {
+      setRefreshToast({ type: 'error', message: 'Failed to refresh enquiries.' });
+      setTimeout(() => setRefreshToast(null), 4000);
+    } finally {
+      setRefreshing(false);
+    }
+  };
 
   const handleSearchSubmit = (e) => {
     e.preventDefault();
@@ -210,6 +229,7 @@ const EnquiriesManagement = () => {
     try {
       setIsExporting(true);
       const params = {};
+      if (search.trim()) params.search = search.trim();
       if (statusFilter !== 'All') params.status = statusFilter;
       if (serviceFilter !== 'All') params.serviceId = serviceFilter;
       if (startDate) params.startDate = startDate;
@@ -251,16 +271,17 @@ const EnquiriesManagement = () => {
               Track customer prospect pipelines, change stages, record internal notes, and export reports.
             </p>
           </div>
-          <div className="flex items-center gap-3">
+          <div className="flex flex-wrap items-center gap-2 sm:gap-3">
             <Button
               type="button"
               variant="outline"
               size="sm"
-              onClick={() => fetchEnquiries(currentPage)}
-              className="gap-2"
+              onClick={handleRefresh}
+              disabled={refreshing}
+              className="gap-2 shrink-0"
             >
-              <RefreshCw className="w-3.5 h-3.5" />
-              Refresh
+              <RefreshCw className={`w-3.5 h-3.5 shrink-0 ${refreshing ? 'animate-spin text-burgundy-900' : ''}`} />
+              <span>Refresh</span>
             </Button>
             <Button
               type="button"
@@ -268,13 +289,36 @@ const EnquiriesManagement = () => {
               size="sm"
               onClick={handleExportCSV}
               disabled={isExporting}
-              className="gap-2 shadow-xs"
+              className="gap-2 shadow-xs shrink-0"
             >
-              <Download className="w-4 h-4" />
-              {isExporting ? 'Exporting...' : 'Export to CSV'}
+              <Download className="w-4 h-4 shrink-0" />
+              <span>{isExporting ? 'Exporting...' : 'Export to CSV'}</span>
             </Button>
           </div>
         </div>
+
+        {/* Refresh Toast Banner */}
+        {refreshToast && (
+          <div
+            className={`p-3.5 rounded-xl border text-xs font-semibold flex items-center justify-between gap-3 animate-fade-in shadow-xs ${
+              refreshToast.type === 'success'
+                ? 'bg-sand-100 border-sand-300 text-burgundy-950'
+                : 'bg-red-50 border-red-200 text-red-800'
+            }`}
+          >
+            <div className="flex items-center gap-2">
+              <CheckCircle className="w-4 h-4 text-bronze shrink-0" />
+              <span>{refreshToast.message}</span>
+            </div>
+            <button
+              type="button"
+              onClick={() => setRefreshToast(null)}
+              className="p-1 hover:opacity-75 text-charcoal/60"
+            >
+              &times;
+            </button>
+          </div>
+        )}
 
         {/* Filter Controls Bar */}
         <div className="bg-white p-4 rounded-2xl border border-sand-300 shadow-xs space-y-4">
@@ -338,12 +382,12 @@ const EnquiriesManagement = () => {
           </div>
 
           {/* Date range filters */}
-          <div className="flex flex-wrap items-center gap-3 pt-3 border-t border-sand-200 text-xs">
-            <span className="font-semibold text-charcoal/70 flex items-center gap-1.5">
+          <div className="flex flex-wrap items-center gap-2 sm:gap-3 pt-3 border-t border-sand-200 text-xs">
+            <span className="font-semibold text-charcoal/70 flex items-center gap-1.5 shrink-0">
               <Calendar className="w-3.5 h-3.5 text-burgundy-800" />
               Date Range:
             </span>
-            <div className="flex items-center gap-2">
+            <div className="flex flex-wrap items-center gap-2">
               <input
                 type="date"
                 value={startDate}
@@ -358,13 +402,13 @@ const EnquiriesManagement = () => {
                 className="px-2.5 py-1 bg-sand-50 border border-sand-300 rounded-md text-xs focus:ring-1 focus:ring-burgundy-600 focus:outline-none"
               />
             </div>
-            <span className="text-charcoal/50 ml-auto font-medium">
+            <span className="text-charcoal/50 w-full sm:w-auto sm:ml-auto font-medium text-xs mt-1 sm:mt-0">
               Showing {enquiries.length} of {totalCount} total enquiries
             </span>
           </div>
         </div>
 
-        {/* Data Table */}
+        {/* Data Presentation (Mobile Card List + Desktop Table) */}
         {loading ? (
           <div className="py-20 flex justify-center">
             <LoadingSpinner text="Retrieving enquiry records..." size="lg" />
@@ -384,16 +428,16 @@ const EnquiriesManagement = () => {
           />
         ) : (
           <div className="bg-white rounded-2xl border border-sand-300 shadow-xs overflow-hidden">
-            <div className="overflow-x-auto">
-              <table className="w-full text-left text-sm text-charcoal">
+            <div className="overflow-x-auto w-full">
+              <table className="min-w-full text-left text-sm text-charcoal">
                 <thead className="bg-sand-50/70 text-xs font-semibold text-charcoal/70 uppercase tracking-wider border-b border-sand-200">
                   <tr>
-                    <th scope="col" className="px-5 py-3.5">Customer</th>
-                    <th scope="col" className="px-5 py-3.5">Contact</th>
-                    <th scope="col" className="px-5 py-3.5">Service Requested</th>
-                    <th scope="col" className="px-5 py-3.5">Status</th>
-                    <th scope="col" className="px-5 py-3.5">Submitted</th>
-                    <th scope="col" className="px-5 py-3.5 text-right">Actions</th>
+                    <th scope="col" className="px-3 sm:px-5 py-3.5">Customer</th>
+                    <th scope="col" className="px-3 sm:px-5 py-3.5">Contact</th>
+                    <th scope="col" className="px-3 sm:px-5 py-3.5">Service Requested</th>
+                    <th scope="col" className="px-3 sm:px-5 py-3.5">Status</th>
+                    <th scope="col" className="px-3 sm:px-5 py-3.5">Submitted</th>
+                    <th scope="col" className="px-3 sm:px-5 py-3.5 text-right">Actions</th>
                   </tr>
                 </thead>
                 <tbody className="divide-y divide-sand-200">
@@ -402,35 +446,35 @@ const EnquiriesManagement = () => {
                       key={enquiry._id}
                       className="hover:bg-sand-50/60 transition-colors"
                     >
-                      <td className="px-5 py-4">
-                        <div className="font-semibold text-burgundy-950">
+                      <td className="px-3 sm:px-5 py-4">
+                        <div className="font-semibold text-burgundy-950 text-xs sm:text-sm">
                           {enquiry.customerName}
                         </div>
                         {enquiry.location && (
-                          <div className="text-xs text-charcoal/60 flex items-center gap-1 mt-0.5">
+                          <div className="text-[11px] sm:text-xs text-charcoal/60 flex items-center gap-1 mt-0.5">
                             <MapPin className="w-3 h-3 text-burgundy-700 flex-shrink-0" />
-                            <span className="truncate max-w-[180px]">{enquiry.location}</span>
+                            <span className="truncate max-w-[140px] sm:max-w-[180px]">{enquiry.location}</span>
                           </div>
                         )}
                       </td>
-                      <td className="px-5 py-4 text-xs space-y-1">
+                      <td className="px-3 sm:px-5 py-4 text-xs space-y-1">
                         <div className="flex items-center gap-1.5 font-medium text-charcoal">
-                          <Phone className="w-3.5 h-3.5 text-burgundy-700" />
+                          <Phone className="w-3.5 h-3.5 text-burgundy-700 shrink-0" />
                           <a href={`tel:${enquiry.phone}`} className="hover:underline">
                             {enquiry.phone}
                           </a>
                         </div>
                         <div className="flex items-center gap-1.5 text-charcoal/70">
-                          <Mail className="w-3.5 h-3.5 text-sand-500" />
+                          <Mail className="w-3.5 h-3.5 text-sand-500 shrink-0" />
                           <a
                             href={`mailto:${enquiry.email}`}
-                            className="hover:underline truncate max-w-[160px]"
+                            className="hover:underline truncate max-w-[130px] sm:max-w-[160px]"
                           >
                             {enquiry.email}
                           </a>
                         </div>
                       </td>
-                      <td className="px-5 py-4 text-xs font-medium text-charcoal max-w-[200px]">
+                      <td className="px-3 sm:px-5 py-4 text-xs font-medium text-charcoal max-w-[160px] sm:max-w-[200px]">
                         <span className="truncate block font-semibold text-burgundy-900">
                           {enquiry.serviceId?.title || 'General Consultation'}
                         </span>
@@ -438,11 +482,11 @@ const EnquiriesManagement = () => {
                           {enquiry.message}
                         </p>
                       </td>
-                      <td className="px-5 py-4 whitespace-nowrap">
+                      <td className="px-3 sm:px-5 py-4 whitespace-nowrap">
                         <select
                           value={enquiry.status}
                           onChange={(e) => handleStatusChange(enquiry._id, e.target.value)}
-                          className={`text-xs font-semibold px-2.5 py-1 rounded-full border cursor-pointer focus:outline-none focus:ring-2 focus:ring-burgundy-600 ${
+                          className={`text-xs font-semibold px-2 sm:px-2.5 py-1 rounded-full border cursor-pointer focus:outline-none focus:ring-2 focus:ring-burgundy-600 ${
                             STATUS_BADGE_CLASSES[enquiry.status] || STATUS_BADGE_CLASSES.NEW
                           }`}
                         >
@@ -453,9 +497,9 @@ const EnquiriesManagement = () => {
                           ))}
                         </select>
                       </td>
-                      <td className="px-5 py-4 whitespace-nowrap text-xs text-charcoal/70">
+                      <td className="px-3 sm:px-5 py-4 whitespace-nowrap text-xs text-charcoal/70">
                         <div className="flex items-center gap-1">
-                          <Clock className="w-3.5 h-3.5 text-charcoal/40" />
+                          <Clock className="w-3.5 h-3.5 text-charcoal/40 shrink-0" />
                           {new Date(enquiry.createdAt).toLocaleDateString('en-IN', {
                             day: 'numeric',
                             month: 'short',
@@ -463,8 +507,8 @@ const EnquiriesManagement = () => {
                           })}
                         </div>
                       </td>
-                      <td className="px-5 py-4 whitespace-nowrap text-right text-xs">
-                        <div className="flex items-center justify-end gap-2">
+                      <td className="px-3 sm:px-5 py-4 whitespace-nowrap text-right text-xs">
+                        <div className="flex items-center justify-end gap-1.5 sm:gap-2">
                           <button
                             type="button"
                             onClick={() => openDetailModal(enquiry)}
@@ -490,15 +534,20 @@ const EnquiriesManagement = () => {
             </div>
 
             {/* Pagination Controls */}
-            {totalPages > 1 && (
-              <div className="p-4 border-t border-sand-200">
-                <Pagination
-                  currentPage={currentPage}
-                  totalPages={totalPages}
-                  onPageChange={(p) => fetchEnquiries(p)}
-                />
-              </div>
-            )}
+            <div className="p-4 border-t border-sand-200">
+              <Pagination
+                currentPage={currentPage}
+                totalPages={totalPages}
+                totalRecords={totalCount}
+                pageSize={pageSize}
+                pageSizeOptions={[10, 15, 25, 50]}
+                onPageSizeChange={(newSize) => {
+                  setPageSize(newSize);
+                  fetchEnquiries(1, newSize);
+                }}
+                onPageChange={(p) => fetchEnquiries(p, pageSize)}
+              />
+            </div>
           </div>
         )}
 

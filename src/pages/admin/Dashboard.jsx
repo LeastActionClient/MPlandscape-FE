@@ -43,6 +43,7 @@ const Dashboard = () => {
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
   const [refreshing, setRefreshing] = useState(false);
+  const [refreshToast, setRefreshToast] = useState(null);
 
   const fetchData = async () => {
     try {
@@ -68,9 +69,19 @@ const Dashboard = () => {
     fetchData();
   }, []);
 
-  const handleRefresh = () => {
-    setRefreshing(true);
-    fetchData();
+  const handleRefresh = async () => {
+    if (refreshing) return;
+    try {
+      setRefreshing(true);
+      await fetchData();
+      setRefreshToast({ type: 'success', message: 'Dashboard analytics refreshed successfully.' });
+      setTimeout(() => setRefreshToast(null), 3000);
+    } catch (err) {
+      setRefreshToast({ type: 'error', message: 'Failed to refresh dashboard metrics.' });
+      setTimeout(() => setRefreshToast(null), 4000);
+    } finally {
+      setRefreshing(false);
+    }
   };
 
   if (loading) {
@@ -174,25 +185,48 @@ const Dashboard = () => {
               Live statistics, customer enquiry pipelines, and portfolio activities.
             </p>
           </div>
-          <div className="flex items-center gap-3">
+          <div className="flex flex-wrap items-center gap-2 sm:gap-3">
             <button
               type="button"
               onClick={handleRefresh}
               disabled={refreshing}
-              className="inline-flex items-center gap-2 px-3.5 py-2 text-xs font-semibold rounded-lg bg-white border border-sand-300 text-charcoal hover:bg-sand-100 transition-colors shadow-xs"
+              className="inline-flex flex-row items-center justify-center gap-2 px-3 py-1.5 sm:px-3.5 sm:py-2 text-xs font-semibold rounded-lg bg-white border border-sand-300 text-charcoal hover:bg-sand-100 transition-colors shadow-xs whitespace-nowrap shrink-0 disabled:opacity-50 disabled:cursor-not-allowed cursor-pointer"
             >
-              <RefreshCw className={`w-3.5 h-3.5 ${refreshing ? 'animate-spin text-burgundy-900' : ''}`} />
-              Refresh
+              <RefreshCw className={`w-3.5 h-3.5 shrink-0 ${refreshing ? 'animate-spin text-burgundy-900' : ''}`} />
+              <span>Refresh</span>
             </button>
             <Link
               to="/admin/enquiries"
-              className="inline-flex items-center gap-1.5 px-3.5 py-2 text-xs font-semibold rounded-lg bg-burgundy-900 text-white hover:bg-burgundy-800 transition-colors shadow-xs"
+              className="inline-flex flex-row items-center justify-center gap-2 px-3 py-1.5 sm:px-3.5 sm:py-2 text-xs font-semibold rounded-lg bg-burgundy-900 text-white hover:bg-burgundy-800 transition-colors shadow-xs whitespace-nowrap shrink-0"
             >
               <span>Manage Enquiries</span>
-              <ArrowRight className="w-3.5 h-3.5" />
+              <ArrowRight className="w-3.5 h-3.5 shrink-0" />
             </Link>
           </div>
         </div>
+
+        {/* Toast Alert Banner */}
+        {refreshToast && (
+          <div
+            className={`p-3.5 rounded-xl border text-xs font-semibold flex items-center justify-between gap-3 animate-fade-in shadow-xs ${
+              refreshToast.type === 'success'
+                ? 'bg-sand-100 border-sand-300 text-burgundy-950'
+                : 'bg-red-50 border-red-200 text-red-800'
+            }`}
+          >
+            <div className="flex items-center gap-2">
+              <CheckCircle2 className="w-4 h-4 text-bronze shrink-0" />
+              <span>{refreshToast.message}</span>
+            </div>
+            <button
+              type="button"
+              onClick={() => setRefreshToast(null)}
+              className="p-1 hover:opacity-75 text-charcoal/60"
+            >
+              &times;
+            </button>
+          </div>
+        )}
 
         {/* Dynamic KPI Cards */}
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-5">
@@ -379,8 +413,8 @@ const Dashboard = () => {
               />
             </div>
           ) : (
-            <div className="overflow-x-auto">
-              <table className="w-full text-left text-sm text-charcoal">
+            <div className="overflow-x-auto w-full">
+              <table className="min-w-full text-left text-sm text-charcoal">
                 <thead className="bg-sand-50/70 text-xs font-semibold text-charcoal/70 uppercase tracking-wider border-b border-sand-200">
                   <tr>
                     <th scope="col" className="px-6 py-3.5">Customer</th>
@@ -458,10 +492,10 @@ const Dashboard = () => {
               </table>
             </div>
           )}
-        </div>
       </div>
-    </>
-  );
+    </div>
+  </>
+);
 };
 
 export default Dashboard;

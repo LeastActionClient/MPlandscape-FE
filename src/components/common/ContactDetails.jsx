@@ -69,10 +69,10 @@ export const ContactDetails = ({ settings, className = '' }) => {
               href={`https://wa.me/${cleanWhatsapp}?text=Hello%20MP%20Landscape%20Services,%20I%20would%20like%20to%20enquire%20about%20your%20services.`}
               target="_blank"
               rel="noopener noreferrer"
-              className="mt-1 inline-flex items-center gap-1.5 text-sm font-semibold text-brand-dark hover:text-burgundy transition-colors"
+              className="mt-1 inline-flex flex-wrap items-center gap-1.5 text-sm font-semibold text-brand-dark hover:text-burgundy transition-colors"
             >
-              <span>{whatsapp}</span>
-              <span className="text-[10px] bg-sand/60 px-2 py-0.5 rounded-full font-medium text-brand-dark">Chat Now</span>
+              <span className="break-all">{whatsapp}</span>
+              <span className="text-[10px] bg-sand/60 px-2 py-0.5 rounded-full font-medium text-brand-dark shrink-0">Chat Now</span>
             </a>
           </div>
         </div>
@@ -90,7 +90,7 @@ export const ContactDetails = ({ settings, className = '' }) => {
               <a
                 key={idx}
                 href={`mailto:${email}`}
-                className="block text-sm font-semibold text-brand-dark hover:text-burgundy transition-colors"
+                className="block text-sm font-semibold text-brand-dark hover:text-burgundy transition-colors break-all"
               >
                 {email}
               </a>

@@ -46,7 +46,7 @@ export const EnquiryForm = ({
     },
   });
 
-  // Load available services for dropdown
+  // Load available active services dynamically from the API for dropdown
   useEffect(() => {
     let isMounted = true;
     const fetchServices = async () => {
@@ -68,17 +68,27 @@ export const EnquiryForm = ({
   // Update default value if preselectedServiceId changes
   useEffect(() => {
     if (preselectedServiceId) {
-      setValue('serviceId', preselectedServiceId);
+      const match = services.find(
+        (s) => s._id === preselectedServiceId || s.slug === preselectedServiceId
+      );
+      if (match) {
+        setValue('serviceId', match._id);
+      } else {
+        setValue('serviceId', preselectedServiceId);
+      }
     }
-  }, [preselectedServiceId, setValue]);
+  }, [preselectedServiceId, services, setValue]);
 
   const onSubmit = async (data) => {
     setSubmitting(true);
     try {
-      // If serviceId is empty string, send null
       const payload = {
-        ...data,
+        customerName: data.customerName,
+        phone: data.phone,
+        email: data.email,
         serviceId: data.serviceId || null,
+        location: data.location || '',
+        message: data.message,
       };
 
       await enquiryService.createEnquiry(payload);
@@ -206,7 +216,7 @@ export const EnquiryForm = ({
           </label>
           <select
             {...register('serviceId')}
-            className="w-full px-3.5 py-2.5 rounded-lg border border-sand text-sm text-brand-dark bg-white focus:outline-hidden focus:border-bronze focus:ring-1 focus:ring-bronze transition-all"
+            className="w-full px-3.5 py-2.5 rounded-lg border border-sand text-sm text-brand-dark bg-white focus:outline-hidden focus:border-bronze focus:ring-1 focus:ring-bronze transition-all cursor-pointer"
           >
             <option value="">General Landscaping & Consultation</option>
             {services.map((svc) => (

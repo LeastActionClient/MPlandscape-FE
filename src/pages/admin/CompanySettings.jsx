@@ -30,6 +30,8 @@ const CompanySettings = () => {
   const [isSaving, setIsSaving] = useState(false);
   const [saveSuccess, setSaveSuccess] = useState(false);
   const [saveError, setSaveError] = useState('');
+  const [refreshing, setRefreshing] = useState(false);
+  const [reloadToast, setReloadToast] = useState(null);
 
   const fetchSettings = async () => {
     try {
@@ -45,12 +47,28 @@ const CompanySettings = () => {
       setError(err.response?.data?.message || 'Failed to load company settings');
     } finally {
       setLoading(false);
+      setRefreshing(false);
     }
   };
 
   useEffect(() => {
     fetchSettings();
   }, []);
+
+  const handleReload = async () => {
+    if (refreshing) return;
+    try {
+      setRefreshing(true);
+      await fetchSettings();
+      setReloadToast({ type: 'success', message: 'Company settings reloaded successfully.' });
+      setTimeout(() => setReloadToast(null), 3000);
+    } catch (err) {
+      setReloadToast({ type: 'error', message: 'Failed to reload company settings.' });
+      setTimeout(() => setReloadToast(null), 4000);
+    } finally {
+      setRefreshing(false);
+    }
+  };
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -123,13 +141,37 @@ const CompanySettings = () => {
             type="button"
             variant="outline"
             size="sm"
-            onClick={fetchSettings}
-            className="gap-2 self-start sm:self-auto"
+            onClick={handleReload}
+            disabled={refreshing}
+            className="gap-2 self-start sm:self-auto shrink-0"
           >
-            <RefreshCw className="w-3.5 h-3.5" />
-            Reload
+            <RefreshCw className={`w-3.5 h-3.5 shrink-0 ${refreshing ? 'animate-spin text-burgundy-900' : ''}`} />
+            <span>Reload</span>
           </Button>
         </div>
+
+        {/* Reload Toast Alert */}
+        {reloadToast && (
+          <div
+            className={`p-3.5 rounded-xl border text-xs font-semibold flex items-center justify-between gap-3 animate-fade-in shadow-xs ${
+              reloadToast.type === 'success'
+                ? 'bg-sand-100 border-sand-300 text-burgundy-950'
+                : 'bg-red-50 border-red-200 text-red-800'
+            }`}
+          >
+            <div className="flex items-center gap-2">
+              <CheckCircle className="w-4 h-4 text-bronze shrink-0" />
+              <span>{reloadToast.message}</span>
+            </div>
+            <button
+              type="button"
+              onClick={() => setReloadToast(null)}
+              className="p-1 hover:opacity-75 text-charcoal/60"
+            >
+              &times;
+            </button>
+          </div>
+        )}
 
         {/* Notifications */}
         {saveSuccess && (
@@ -157,8 +199,8 @@ const CompanySettings = () => {
 
             {/* Official Logo Display */}
             <div className="flex items-center gap-5 p-4 rounded-xl bg-sand-50 border border-sand-200">
-              <div className="bg-white p-2 rounded-lg border border-sand-300 shadow-2xs">
-                <MPLogo className="h-14 w-auto" />
+              <div className="w-16 h-16 bg-white p-2 rounded-xl border border-sand-300 shadow-2xs flex items-center justify-center shrink-0">
+                <MPLogo imgClassName="h-12 w-12 object-contain" />
               </div>
               <div>
                 <p className="text-xs font-bold text-burgundy-900 uppercase tracking-wider">
@@ -258,10 +300,10 @@ const CompanySettings = () => {
               variant="primary"
               size="lg"
               disabled={isSaving}
-              className="gap-2 shadow-sm"
+              className="gap-2 shadow-sm w-full sm:w-auto justify-center"
             >
-              <Save className="w-4 h-4" />
-              {isSaving ? 'Saving Settings...' : 'Save Company Settings'}
+              <Save className="w-4 h-4 shrink-0" />
+              <span>{isSaving ? 'Saving Settings...' : 'Save Company Settings'}</span>
             </Button>
           </div>
         </form>

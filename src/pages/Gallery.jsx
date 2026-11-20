@@ -1,10 +1,9 @@
 import React, { useState, useEffect } from 'react';
 import { Helmet } from 'react-helmet-async';
 import { Link } from 'react-router-dom';
-import { Filter, ZoomIn, ArrowRight } from 'lucide-react';
+import { ArrowRight } from 'lucide-react';
 import SectionHeading from '../components/common/SectionHeading';
 import GalleryCard from '../components/common/GalleryCard';
-import Breadcrumb from '../components/common/Breadcrumb';
 import LoadingSpinner from '../components/common/LoadingSpinner';
 import ErrorMessage from '../components/common/ErrorMessage';
 import EmptyState from '../components/common/EmptyState';
@@ -12,32 +11,19 @@ import Pagination from '../components/common/Pagination';
 import Modal from '../components/common/Modal';
 import galleryService from '../services/galleryService';
 
-const CATEGORIES = [
-  'All',
-  'Landscape Design',
-  'Agriculture & Farm Development',
-  'Irrigation Systems',
-  'Landscape Architecture',
-  'Garden Maintenance',
-  'Plant Supply & Nursery',
-  'Plant Trading',
-];
-
 export const Gallery = () => {
   const [items, setItems] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
-  const [selectedCategory, setSelectedCategory] = useState('All');
   const [currentPage, setCurrentPage] = useState(1);
   const [totalPages, setTotalPages] = useState(1);
   const [selectedImage, setSelectedImage] = useState(null);
 
-  const fetchGallery = async (category = 'All', page = 1) => {
+  const fetchGallery = async (page = 1) => {
     setLoading(true);
     setError(null);
     try {
       const res = await galleryService.getGallery({
-        category: category !== 'All' ? category : undefined,
         page,
         limit: 12,
       });
@@ -52,13 +38,8 @@ export const Gallery = () => {
   };
 
   useEffect(() => {
-    fetchGallery(selectedCategory, currentPage);
-  }, [selectedCategory, currentPage]);
-
-  const handleCategoryChange = (cat) => {
-    setSelectedCategory(cat);
-    setCurrentPage(1);
-  };
+    fetchGallery(currentPage);
+  }, [currentPage]);
 
   return (
     <>
@@ -70,42 +51,26 @@ export const Gallery = () => {
         />
       </Helmet>
 
-      {/* Header Banner */}
-      <section className="bg-gradient-to-b from-cream via-cream to-sand/20 border-b border-sand py-12 lg:py-16">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <Breadcrumb items={[{ label: 'Projects Gallery' }]} />
-          <div className="max-w-3xl mt-4 space-y-3">
-            <span className="badge-burgundy">Project Showcase</span>
-            <h1 className="text-3xl sm:text-4xl lg:text-5xl font-extrabold text-burgundy font-sans tracking-tight">
+      {/* Header Banner - Burgundy Dark */}
+      <section className="bg-burgundy-dark text-white border-b border-burgundy-900/80 py-6 sm:py-8 md:py-9 relative overflow-hidden">
+        {/* Subtle decorative glow */}
+        <div className="absolute top-0 right-1/4 w-72 h-72 bg-bronze/10 rounded-full blur-3xl pointer-events-none" />
+        <div className="absolute bottom-0 left-1/4 w-60 h-60 bg-burgundy/30 rounded-full blur-2xl pointer-events-none" />
+
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
+          <div className="max-w-2xl mx-auto text-center space-y-1.5 sm:space-y-2">
+            <h1 className="text-xl sm:text-2xl md:text-3xl lg:text-[2rem] font-bold text-white font-sans tracking-tight break-words leading-snug">
               Curated Portfolio of Completed Works
             </h1>
-            <p className="text-base sm:text-lg text-brand-muted leading-relaxed">
+            <p className="text-xs sm:text-sm md:text-[15px] text-sand-200/90 leading-relaxed max-w-xl mx-auto font-light">
               Browse our dynamic visual archive showcasing bespoke residential estates, agro-forestry plantations, commercial courtyards, and smart irrigation networks.
             </p>
-          </div>
-
-          {/* Category Filter Pills */}
-          <div className="mt-8 flex flex-wrap gap-2 pt-2">
-            {CATEGORIES.map((cat) => (
-              <button
-                key={cat}
-                type="button"
-                onClick={() => handleCategoryChange(cat)}
-                className={`px-4 py-2 rounded-full text-xs font-semibold tracking-wide transition-all cursor-pointer ${
-                  selectedCategory === cat
-                    ? 'bg-burgundy text-white shadow-xs'
-                    : 'bg-white border border-sand text-brand-dark hover:border-bronze hover:text-burgundy'
-                }`}
-              >
-                {cat}
-              </button>
-            ))}
           </div>
         </div>
       </section>
 
       {/* Gallery Grid Section */}
-      <section className="py-16 sm:py-20 bg-cream">
+      <section className="pt-6 sm:pt-8 md:pt-10 pb-16 sm:pb-20 bg-cream">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           {loading ? (
             <LoadingSpinner text="Loading gallery projects..." fullPage />
@@ -113,14 +78,12 @@ export const Gallery = () => {
             <ErrorMessage
               title="Unable to Load Gallery"
               message={error}
-              onRetry={() => fetchGallery(selectedCategory, currentPage)}
+              onRetry={() => fetchGallery(currentPage)}
             />
           ) : items.length === 0 ? (
             <EmptyState
-              title="No Gallery Projects in this Category"
-              description={`There are currently no items under "${selectedCategory}". Choose another category or view all.`}
-              actionText="View All Projects"
-              onAction={() => handleCategoryChange('All')}
+              title="No Gallery Projects Available"
+              description="There are currently no items in our project portfolio showcase."
             />
           ) : (
             <>
@@ -165,7 +128,6 @@ export const Gallery = () => {
             </div>
             <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 pt-2">
               <div>
-                <span className="badge-bronze">{selectedImage.category}</span>
                 <h4 className="text-xl font-bold text-brand-dark font-sans mt-1">
                   {selectedImage.title}
                 </h4>

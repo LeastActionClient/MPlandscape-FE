@@ -46,8 +46,8 @@ const Profile = () => {
         {/* Profile Card */}
         <div className="bg-white rounded-2xl border border-sand-300 shadow-xs overflow-hidden">
           {/* Header Banner */}
-          <div className="h-28 bg-gradient-to-r from-burgundy-900 via-burgundy-800 to-burgundy-950 p-6 flex items-end relative">
-            <div className="absolute -bottom-10 left-6">
+          <div className="h-28 bg-gradient-to-r from-burgundy-900 via-burgundy-800 to-burgundy-950 p-4 sm:p-6 flex items-end relative">
+            <div className="absolute -bottom-10 left-4 sm:left-6">
               <div className="w-20 h-20 rounded-2xl bg-sand-300 border-4 border-white shadow-md flex items-center justify-center text-burgundy-950 font-bold text-3xl font-serif">
                 {user?.name ? user.name.charAt(0).toUpperCase() : 'A'}
               </div>
@@ -55,20 +55,19 @@ const Profile = () => {
           </div>
 
           {/* User Details */}
-          <div className="pt-14 p-6 sm:p-8 space-y-6">
+          <div className="pt-14 p-4 sm:p-8 space-y-6">
             <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">
-              <div>
-                <div className="flex items-center gap-2.5">
-                  <h2 className="text-xl font-serif font-bold text-burgundy-950">
+              <div className="min-w-0">
+                <div className="flex flex-wrap items-center gap-2">
+                  <h2 className="text-xl font-serif font-bold text-burgundy-950 truncate">
                     {user?.name || 'Administrator'}
                   </h2>
-                  <span className="px-2.5 py-0.5 rounded-full text-xs font-semibold bg-sand-200 text-burgundy-950 border border-sand-300 flex items-center gap-1">
+                  <span className="px-2.5 py-0.5 rounded-full text-xs font-semibold bg-sand-200 text-burgundy-950 border border-sand-300 flex items-center gap-1 shrink-0">
                     <CheckCircle2 className="w-3 h-3 text-bronze" />
                     Active Account
                   </span>
-
                 </div>
-                <p className="text-sm text-charcoal/60 mt-0.5">{user?.email}</p>
+                <p className="text-sm text-charcoal/60 mt-0.5 truncate">{user?.email}</p>
               </div>
 
               <div className="flex items-center gap-2">
@@ -77,10 +76,10 @@ const Profile = () => {
                   variant="outline"
                   size="sm"
                   onClick={() => setShowLogoutConfirm(true)}
-                  className="gap-1.5 text-xs text-red-600 hover:text-red-700 hover:bg-red-50"
+                  className="gap-2 text-xs text-red-600 hover:text-red-700 hover:bg-red-50 w-full sm:w-auto justify-center"
                 >
-                  <LogOut className="w-3.5 h-3.5" />
-                  Sign Out
+                  <LogOut className="w-3.5 h-3.5 shrink-0" />
+                  <span>Sign Out</span>
                 </Button>
               </div>
             </div>
