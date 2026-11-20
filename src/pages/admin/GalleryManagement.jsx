@@ -47,6 +47,8 @@ const GalleryManagement = () => {
   const [uploadActive, setUploadActive] = useState(true);
   const [uploadError, setUploadError] = useState('');
   const [isUploading, setIsUploading] = useState(false);
+  const [uploadProgress, setUploadProgress] = useState('');
+  const [isDragging, setIsDragging] = useState(false);
 
   // Edit Single Item Modal State
   const [isEditModalOpen, setIsEditModalOpen] = useState(false);
@@ -93,22 +95,29 @@ const GalleryManagement = () => {
     }
   };
 
+  const processFiles = async (fileList) => {
+    const validImageFiles = fileList.filter((f) => f && f.type && f.type.startsWith('image/'));
+    if (validImageFiles.length === 0) return;
+
+    // Automatically compress images client-side to guarantee < 800 KB per image
+    const optimizedFiles = await Promise.all(
+      validImageFiles.map(async (file) => {
+        try {
+          return await compressImageFile(file);
+        } catch {
+          return file;
+        }
+      })
+    );
+    setUploadFiles((prev) => [...prev, ...optimizedFiles]);
+    const newPreviews = optimizedFiles.map((f) => URL.createObjectURL(f));
+    setPreviewUrls((prev) => [...prev, ...newPreviews]);
+  };
+
   const handleFilesSelect = async (e) => {
-    const files = Array.from(e.target.files);
-    if (files.length > 0) {
-      // Automatically compress images client-side to prevent Vercel 4.5MB payload limit errors
-      const optimizedFiles = await Promise.all(
-        files.map(async (file) => {
-          try {
-            return await compressImageFile(file);
-          } catch {
-            return file;
-          }
-        })
-      );
-      setUploadFiles((prev) => [...prev, ...optimizedFiles]);
-      const newPreviews = optimizedFiles.map((f) => URL.createObjectURL(f));
-      setPreviewUrls((prev) => [...prev, ...newPreviews]);
+    if (e.target.files) {
+      await processFiles(Array.from(e.target.files));
+      e.target.value = ''; // Reset input to allow selecting same file again if desired
     }
   };
 
@@ -126,12 +135,15 @@ const GalleryManagement = () => {
     setUploadUrl('');
     setUploadActive(true);
     setUploadError('');
+    setUploadProgress('');
+    setIsDragging(false);
     setIsUploadModalOpen(true);
   };
 
   const handleUploadSubmit = async (e) => {
     e.preventDefault();
     setUploadError('');
+    setUploadProgress('');
 
     if (!uploadTitle.trim()) {
       setUploadError('Title is required');
@@ -145,27 +157,52 @@ const GalleryManagement = () => {
 
     try {
       setIsUploading(true);
-      const payload = new FormData();
-      payload.append('title', uploadTitle.trim());
-      payload.append('description', uploadDescription.trim());
-      payload.append('displayOrder', String(uploadOrder));
-      payload.append('isActive', String(uploadActive));
 
       if (uploadFiles.length > 0) {
-        uploadFiles.forEach((f) => {
-          payload.append('images', f);
-        });
+        // Upload images one-by-one to guarantee each payload is under 600KB and never triggers Vercel's 4.5MB limit
+        for (let i = 0; i < uploadFiles.length; i++) {
+          const file = uploadFiles[i];
+          setUploadProgress(
+            uploadFiles.length > 1
+              ? `Uploading image ${i + 1} of ${uploadFiles.length}...`
+              : 'Uploading image...'
+          );
+
+          const payload = new FormData();
+          const itemTitle =
+            uploadFiles.length === 1
+              ? uploadTitle.trim()
+              : `${uploadTitle.trim()} - Part ${i + 1}`;
+          payload.append('title', itemTitle);
+          payload.append('description', uploadDescription.trim());
+          payload.append('displayOrder', String(Number(uploadOrder) + i));
+          payload.append('isActive', String(uploadActive));
+          payload.append('images', file);
+
+          await galleryService.createGallery(payload);
+        }
       } else if (uploadUrl.trim()) {
+        setUploadProgress('Saving image URL...');
+        const payload = new FormData();
+        payload.append('title', uploadTitle.trim());
+        payload.append('description', uploadDescription.trim());
+        payload.append('displayOrder', String(uploadOrder));
+        payload.append('isActive', String(uploadActive));
         payload.append('imageUrl', uploadUrl.trim());
+
+        await galleryService.createGallery(payload);
       }
 
-      await galleryService.createGallery(payload);
       setIsUploadModalOpen(false);
       await fetchGallery();
     } catch (err) {
-      setUploadError(err.response?.data?.message || 'Failed to upload gallery images');
+      setUploadError(
+        err.response?.data?.message ||
+          'Failed to upload gallery images. Please verify your connection or try uploading fewer photos at a time.'
+      );
     } finally {
       setIsUploading(false);
+      setUploadProgress('');
     }
   };
 
@@ -472,22 +509,48 @@ const GalleryManagement = () => {
               <label className="block text-xs font-semibold text-charcoal mb-1">
                 Select Photo(s) (Single or Multi-select)
               </label>
-              <label className="flex flex-col items-center justify-center border-2 border-dashed border-sand-300 hover:border-burgundy-600 rounded-xl p-5 cursor-pointer bg-sand-50/50 hover:bg-sand-50 transition-colors">
-                <Upload className="w-8 h-8 text-burgundy-700 mb-1" />
-                <span className="text-xs font-semibold text-charcoal">
-                  Click to select images or drag and drop
-                </span>
-                <span className="text-[10px] text-charcoal/50 mt-0.5">
-                  Supports multiple JPG, PNG, WEBP files
-                </span>
-                <input
-                  type="file"
-                  multiple
-                  accept="image/*"
-                  onChange={handleFilesSelect}
-                  className="hidden"
-                />
-              </label>
+              <div
+                onDragOver={(e) => {
+                  e.preventDefault();
+                  e.stopPropagation();
+                  setIsDragging(true);
+                }}
+                onDragLeave={(e) => {
+                  e.preventDefault();
+                  e.stopPropagation();
+                  setIsDragging(false);
+                }}
+                onDrop={async (e) => {
+                  e.preventDefault();
+                  e.stopPropagation();
+                  setIsDragging(false);
+                  if (e.dataTransfer.files && e.dataTransfer.files.length > 0) {
+                    await processFiles(Array.from(e.dataTransfer.files));
+                  }
+                }}
+                className={`relative flex flex-col items-center justify-center border-2 border-dashed rounded-xl p-5 cursor-pointer transition-colors ${
+                  isDragging
+                    ? 'border-burgundy-600 bg-sand-100 ring-2 ring-burgundy-600/20'
+                    : 'border-sand-300 hover:border-burgundy-600 bg-sand-50/50 hover:bg-sand-50'
+                }`}
+              >
+                <label className="flex flex-col items-center justify-center w-full h-full cursor-pointer">
+                  <Upload className="w-8 h-8 text-burgundy-700 mb-1" />
+                  <span className="text-xs font-semibold text-charcoal">
+                    Click to select images or drag and drop
+                  </span>
+                  <span className="text-[10px] text-charcoal/50 mt-0.5">
+                    Supports JPG, PNG, WEBP files (Auto-compressed)
+                  </span>
+                  <input
+                    type="file"
+                    multiple
+                    accept="image/*"
+                    onChange={handleFilesSelect}
+                    className="hidden"
+                  />
+                </label>
+              </div>
 
               {/* Previews */}
               {previewUrls.length > 0 && (
@@ -556,7 +619,7 @@ const GalleryManagement = () => {
                 disabled={isUploading}
                 className="w-full xs:w-auto justify-center"
               >
-                {isUploading ? 'Uploading...' : `Upload ${uploadFiles.length > 1 ? `${uploadFiles.length} Photos` : 'Image'}`}
+                {isUploading ? (uploadProgress || 'Uploading...') : `Upload ${uploadFiles.length > 1 ? `${uploadFiles.length} Photos` : 'Image'}`}
               </Button>
             </div>
           </form>
