@@ -1,66 +1,73 @@
 import React, { useState } from 'react';
-import { ZoomIn, Image as ImageIcon } from 'lucide-react';
+import {
+  ZoomIn,
+  Image as ImageIcon,
+  Leaf,
+  Sprout,
+  Droplets,
+  Layers,
+  Scissors,
+  Trees,
+  RefreshCw,
+  Building2,
+} from 'lucide-react';
+
+const getCardIcon = (title = '', category = '') => {
+  const text = `${title} ${category}`.toLowerCase();
+  if (text.includes('irrig') || text.includes('water')) return Droplets;
+  if (text.includes('farm') || text.includes('agri')) return Sprout;
+  if (text.includes('arch') || text.includes('hardscape') || text.includes('stone')) return Layers;
+  if (text.includes('maint') || text.includes('prun') || text.includes('care') || text.includes('lawn')) return Scissors;
+  if (text.includes('nursery') || text.includes('tree') || text.includes('plant supply')) return Trees;
+  if (text.includes('trad')) return RefreshCw;
+  if (text.includes('court') || text.includes('commercial') || text.includes('estate') || text.includes('villa')) return Building2;
+  return Leaf;
+};
 
 export const GalleryCard = ({ item, onSelect, className = '' }) => {
   const [imageError, setImageError] = useState(!item?.imageUrl);
 
   if (!item) return null;
 
+  const IconComponent = getCardIcon(item.title, item.category);
+
   return (
     <div
       onClick={() => onSelect && onSelect(item)}
-      className={`group relative overflow-hidden rounded-2xl border border-sand/80 bg-cream-light cursor-pointer shadow-sm hover:shadow-2xl hover:shadow-burgundy/15 transition-all duration-500 transform hover:-translate-y-2 hover:border-bronze ${className}`}
+      className={`group relative overflow-hidden rounded-2xl border border-sand/60 bg-brand-charcoal cursor-pointer shadow-md hover:shadow-xl transition-all duration-300 transform hover:-translate-y-1 aspect-4/3 w-full select-none ${className}`}
     >
-      {/* Sliding Top Accent Highlight on Hover */}
-      <div className="absolute top-0 left-0 right-0 h-1 bg-gradient-to-r from-burgundy via-bronze to-burgundy scale-x-0 group-hover:scale-x-100 transition-transform duration-500 origin-left z-20" />
-
-      {/* Image Container */}
-      <div className="relative aspect-4/3 w-full overflow-hidden bg-sand/25">
-        {!imageError && item.imageUrl ? (
-          <img
-            src={item.imageUrl}
-            alt={item.title}
-            className="w-full h-full object-cover transition-transform duration-700 ease-out group-hover:scale-110"
-            loading="lazy"
-            onError={() => setImageError(true)}
-          />
-        ) : (
-          <div className="w-full h-full flex flex-col items-center justify-center bg-sand/30 text-brand-muted p-4 text-center">
-            <ImageIcon className="w-8 h-8 text-bronze/60 mb-1" />
-            <span className="text-xs font-medium text-brand-muted line-clamp-1">{item.title}</span>
-          </div>
-        )}
-
-        {/* Hover Gradient Overlay with Sliding Content Animation */}
-        <div className="absolute inset-0 bg-gradient-to-t from-brand-charcoal/90 via-brand-charcoal/45 to-transparent opacity-0 group-hover:opacity-100 transition-all duration-300 flex flex-col justify-end p-5 text-white">
-          <div className="transform translate-y-3 group-hover:translate-y-0 transition-transform duration-300 ease-out">
-            <h4 className="text-base font-bold text-white font-sans leading-tight line-clamp-1">
-              {item.title}
-            </h4>
-            {item.description && (
-              <p className="text-xs text-cream/90 line-clamp-2 mt-1 font-light">
-                {item.description}
-              </p>
-            )}
-          </div>
+      {/* Background Image */}
+      {!imageError && item.imageUrl ? (
+        <img
+          src={item.imageUrl}
+          alt={item.title}
+          className="w-full h-full object-cover transition-transform duration-500 ease-out group-hover:scale-105"
+          loading="lazy"
+          onError={() => setImageError(true)}
+        />
+      ) : (
+        <div className="w-full h-full flex flex-col items-center justify-center bg-sand/20 text-cream p-4 text-center">
+          <ImageIcon className="w-8 h-8 text-bronze/70 mb-1" />
+          <span className="text-xs font-medium text-cream/80 line-clamp-1">{item.title}</span>
         </div>
+      )}
 
-        {/* Zoom Icon Pill with Scale & Rotate Animation */}
-        <div className="absolute top-3 right-3 w-9 h-9 rounded-full bg-cream/95 backdrop-blur-md text-burgundy flex items-center justify-center opacity-0 group-hover:opacity-100 transform scale-75 group-hover:scale-100 group-hover:rotate-45 transition-all duration-300 shadow-md border border-white/30">
-          <ZoomIn className="w-4 h-4" />
-        </div>
+      {/* Permanent Dark Gradient Overlay for Maximum Title Legibility */}
+      <div className="absolute inset-0 bg-gradient-to-t from-black/85 via-black/25 to-transparent pointer-events-none transition-opacity duration-300 group-hover:from-black/90 group-hover:via-black/35" />
+
+      {/* Subtle Zoom Indicator on Hover */}
+      <div className="absolute top-2.5 right-2.5 w-7 h-7 sm:w-8 sm:h-8 rounded-full bg-black/45 backdrop-blur-md text-white flex items-center justify-center opacity-0 group-hover:opacity-100 transition-all duration-300 shadow-md border border-white/20">
+        <ZoomIn className="w-3.5 h-3.5 sm:w-4 sm:h-4 text-white" />
       </div>
 
-      {/* Visible Bottom Caption Bar */}
-      <div className="p-3 sm:p-3.5 bg-cream-light border-t border-sand/40 flex items-center justify-between gap-2 group-hover:bg-sand/15 transition-colors duration-300">
-        <h4 className="text-xs font-semibold text-brand-dark truncate flex-1 group-hover:text-burgundy transition-colors duration-300">
+      {/* Bottom Title Overlay with Small Elegant Icon */}
+      <div className="absolute bottom-0 inset-x-0 p-3 sm:p-3.5 z-10 flex items-center gap-2 sm:gap-2.5 min-w-0">
+        <div className="w-5 h-5 sm:w-6 sm:h-6 rounded-full bg-black/40 border border-white/20 flex items-center justify-center shrink-0">
+          <IconComponent className="w-3 h-3 sm:w-3.5 sm:h-3.5 text-bronze-light" />
+        </div>
+        <h4 className="text-xs sm:text-sm font-semibold text-white tracking-wide truncate drop-shadow-sm font-sans flex-1">
           {item.title}
         </h4>
-        {item.category && (
-          <span className="text-[10px] font-medium text-bronze uppercase tracking-wider truncate px-2 py-0.5 rounded-full bg-bronze/10 border border-bronze/20 shrink-0">
-            {item.category}
-          </span>
-        )}
       </div>
     </div>
   );

@@ -52,7 +52,7 @@ export const Services = () => {
 
       {/* Full-Width Edge-to-Edge Services Hero Banner */}
       <section
-        className="relative w-full bg-cream border-b border-sand/60 overflow-hidden select-none min-h-[460px] sm:min-h-[500px] lg:min-h-[540px] xl:min-h-[570px] flex flex-col justify-center"
+        className="relative w-full bg-cream border-b border-sand/60 overflow-hidden select-none min-h-[400px] sm:min-h-[440px] lg:min-h-[480px] xl:min-h-[510px] flex flex-col justify-center"
         aria-label="Our Services Overview"
       >
         {/* Full-Width Landscape Background Image (Prominently displayed on the right) */}
@@ -81,15 +81,10 @@ export const Services = () => {
           aria-hidden="true"
         />
 
-        {/* Hero Content Container */}
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10 w-full py-12 sm:py-16 lg:py-20">
-          {/* Breadcrumb Navigation */}
-          <div className="mb-4 sm:mb-6 opacity-85 hover:opacity-100 transition-opacity">
-            <Breadcrumb items={[{ label: 'Services' }]} />
-          </div>
-
+        {/* Hero Content Container - Vertically Aligned & Moved Upward */}
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10 w-full py-8 sm:py-10 lg:py-12">
           {/* Left-Aligned Headline & Controls */}
-          <div className="max-w-xl lg:max-w-2xl space-y-3.5 sm:space-y-4">
+          <div className="max-w-xl lg:max-w-2xl space-y-3 sm:space-y-3.5">
             {/* Eyebrow with Flanking Accent Lines matching reference */}
             <div className="flex items-center gap-3">
               <span className="h-px w-8 sm:w-12 bg-bronze/60" />
