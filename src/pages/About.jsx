@@ -21,6 +21,7 @@ import {
   Check,
 } from 'lucide-react';
 import SectionHeading from '../components/common/SectionHeading';
+import ScrollReveal from '../components/common/ScrollReveal';
 import aboutHeroBg from '../assets/about-hero-bg.jpg';
 import aboutLegacyImg from '../assets/about-legacy.jpg';
 
@@ -140,52 +141,58 @@ export const About = () => {
 
               {/* Enhanced Interactive Stat Cards with Hover Lift & Shimmer */}
               <div className="pt-3 grid grid-cols-2 sm:grid-cols-3 gap-3.5 sm:gap-4">
-                <div className="group relative p-4 sm:p-5 rounded-2xl bg-cream-light border border-sand hover:border-bronze hover:shadow-xl hover:-translate-y-1.5 transition-all duration-400 overflow-hidden cursor-default">
-                  <div className="absolute top-0 right-0 w-20 h-20 bg-bronze/10 rounded-full blur-xl group-hover:scale-150 transition-transform duration-500 pointer-events-none" />
-                  <div className="flex items-center justify-between mb-1">
-                    <p className="text-3xl sm:text-4xl font-extrabold text-burgundy group-hover:text-burgundy-950 transition-colors">
-                      15+
+                <ScrollReveal animation="fade-up" delay={50}>
+                  <div className="group relative p-4 sm:p-5 rounded-2xl bg-cream-light border border-sand hover:border-bronze hover:shadow-xl hover:-translate-y-1.5 transition-all duration-400 overflow-hidden cursor-default h-full">
+                    <div className="absolute top-0 right-0 w-20 h-20 bg-bronze/10 rounded-full blur-xl group-hover:scale-150 transition-transform duration-500 pointer-events-none" />
+                    <div className="flex items-center justify-between mb-1">
+                      <p className="text-3xl sm:text-4xl font-extrabold text-burgundy group-hover:text-burgundy-950 transition-colors">
+                        15+
+                      </p>
+                      <Calendar className="w-5 h-5 text-bronze group-hover:scale-110 transition-transform duration-300" />
+                    </div>
+                    <p className="text-xs sm:text-[11px] font-bold text-brand-muted uppercase tracking-wider mt-1">
+                      Years of Practice
                     </p>
-                    <Calendar className="w-5 h-5 text-bronze group-hover:scale-110 transition-transform duration-300" />
+                    <div className="w-8 group-hover:w-full h-0.5 bg-gradient-to-r from-bronze to-burgundy transition-all duration-500 rounded-full mt-3" />
                   </div>
-                  <p className="text-xs sm:text-[11px] font-bold text-brand-muted uppercase tracking-wider mt-1">
-                    Years of Practice
-                  </p>
-                  <div className="w-8 group-hover:w-full h-0.5 bg-gradient-to-r from-bronze to-burgundy transition-all duration-500 rounded-full mt-3" />
-                </div>
+                </ScrollReveal>
 
-                <div className="group relative p-4 sm:p-5 rounded-2xl bg-cream-light border border-sand hover:border-bronze hover:shadow-xl hover:-translate-y-1.5 transition-all duration-400 overflow-hidden cursor-default">
-                  <div className="absolute top-0 right-0 w-20 h-20 bg-bronze/10 rounded-full blur-xl group-hover:scale-150 transition-transform duration-500 pointer-events-none" />
-                  <div className="flex items-center justify-between mb-1">
-                    <p className="text-3xl sm:text-4xl font-extrabold text-burgundy group-hover:text-burgundy-950 transition-colors">
-                      350+
+                <ScrollReveal animation="fade-up" delay={150}>
+                  <div className="group relative p-4 sm:p-5 rounded-2xl bg-cream-light border border-sand hover:border-bronze hover:shadow-xl hover:-translate-y-1.5 transition-all duration-400 overflow-hidden cursor-default h-full">
+                    <div className="absolute top-0 right-0 w-20 h-20 bg-bronze/10 rounded-full blur-xl group-hover:scale-150 transition-transform duration-500 pointer-events-none" />
+                    <div className="flex items-center justify-between mb-1">
+                      <p className="text-3xl sm:text-4xl font-extrabold text-burgundy group-hover:text-burgundy-950 transition-colors">
+                        350+
+                      </p>
+                      <Trees className="w-5 h-5 text-bronze group-hover:scale-110 transition-transform duration-300" />
+                    </div>
+                    <p className="text-xs sm:text-[11px] font-bold text-brand-muted uppercase tracking-wider mt-1">
+                      Projects Delivered
                     </p>
-                    <Trees className="w-5 h-5 text-bronze group-hover:scale-110 transition-transform duration-300" />
+                    <div className="w-8 group-hover:w-full h-0.5 bg-gradient-to-r from-bronze to-burgundy transition-all duration-500 rounded-full mt-3" />
                   </div>
-                  <p className="text-xs sm:text-[11px] font-bold text-brand-muted uppercase tracking-wider mt-1">
-                    Projects Delivered
-                  </p>
-                  <div className="w-8 group-hover:w-full h-0.5 bg-gradient-to-r from-bronze to-burgundy transition-all duration-500 rounded-full mt-3" />
-                </div>
+                </ScrollReveal>
 
-                <div className="col-span-2 sm:col-span-1 group relative p-4 sm:p-5 rounded-2xl bg-cream-light border border-sand hover:border-bronze hover:shadow-xl hover:-translate-y-1.5 transition-all duration-400 overflow-hidden cursor-default">
-                  <div className="absolute top-0 right-0 w-20 h-20 bg-bronze/10 rounded-full blur-xl group-hover:scale-150 transition-transform duration-500 pointer-events-none" />
-                  <div className="flex items-center justify-between mb-1">
-                    <p className="text-3xl sm:text-4xl font-extrabold text-burgundy group-hover:text-burgundy-950 transition-colors">
-                      100%
+                <ScrollReveal animation="fade-up" delay={250} className="col-span-2 sm:col-span-1">
+                  <div className="group relative p-4 sm:p-5 rounded-2xl bg-cream-light border border-sand hover:border-bronze hover:shadow-xl hover:-translate-y-1.5 transition-all duration-400 overflow-hidden cursor-default h-full">
+                    <div className="absolute top-0 right-0 w-20 h-20 bg-bronze/10 rounded-full blur-xl group-hover:scale-150 transition-transform duration-500 pointer-events-none" />
+                    <div className="flex items-center justify-between mb-1">
+                      <p className="text-3xl sm:text-4xl font-extrabold text-burgundy group-hover:text-burgundy-950 transition-colors">
+                        100%
+                      </p>
+                      <Award className="w-5 h-5 text-bronze group-hover:scale-110 transition-transform duration-300" />
+                    </div>
+                    <p className="text-xs sm:text-[11px] font-bold text-brand-muted uppercase tracking-wider mt-1">
+                      Quality Guaranteed
                     </p>
-                    <Award className="w-5 h-5 text-bronze group-hover:scale-110 transition-transform duration-300" />
+                    <div className="w-8 group-hover:w-full h-0.5 bg-gradient-to-r from-bronze to-burgundy transition-all duration-500 rounded-full mt-3" />
                   </div>
-                  <p className="text-xs sm:text-[11px] font-bold text-brand-muted uppercase tracking-wider mt-1">
-                    Quality Guaranteed
-                  </p>
-                  <div className="w-8 group-hover:w-full h-0.5 bg-gradient-to-r from-bronze to-burgundy transition-all duration-500 rounded-full mt-3" />
-                </div>
+                </ScrollReveal>
               </div>
             </div>
 
             {/* Right Image Showcase with Depth Layering & Floating Assurance Badge */}
-            <div className="lg:col-span-6 relative group">
+            <ScrollReveal animation="zoom-in" duration={800} className="lg:col-span-6 relative group">
               {/* Soft Ambient Depth Halo */}
               <div className="absolute -inset-3 bg-gradient-to-tr from-burgundy/25 via-bronze/20 to-sand/40 rounded-3xl blur-xl opacity-60 group-hover:opacity-100 transition-opacity duration-700 -z-1" />
 
@@ -208,7 +215,7 @@ export const About = () => {
                   Every sapling, boulder, and irrigation emitter is calibrated for regional climate tolerance and long-term durability.
                 </p>
               </div>
-            </div>
+            </ScrollReveal>
           </div>
         </div>
       </section>
@@ -227,54 +234,58 @@ export const About = () => {
 
           <div className="mt-14 grid grid-cols-1 md:grid-cols-2 gap-8 lg:gap-10">
             {/* Vision Card */}
-            <div className="group relative card-luxury p-8 sm:p-10 border border-sand bg-cream hover:border-bronze hover:shadow-2xl hover:-translate-y-2 transition-all duration-500 overflow-hidden flex flex-col justify-between">
-              {/* Background Watermark Icon that Rotates & Scales on Hover */}
-              <Target className="absolute -bottom-8 -right-8 w-44 h-44 text-burgundy/5 group-hover:text-burgundy/10 group-hover:scale-115 group-hover:rotate-12 transition-all duration-700 pointer-events-none" />
+            <ScrollReveal animation="fade-right" delay={0}>
+              <div className="group relative card-luxury p-8 sm:p-10 border border-sand bg-cream hover:border-bronze hover:shadow-2xl hover:-translate-y-2 transition-all duration-500 overflow-hidden flex flex-col justify-between h-full">
+                {/* Background Watermark Icon that Rotates & Scales on Hover */}
+                <Target className="absolute -bottom-8 -right-8 w-44 h-44 text-burgundy/5 group-hover:text-burgundy/10 group-hover:scale-115 group-hover:rotate-12 transition-all duration-700 pointer-events-none" />
 
-              <div>
-                <div className="w-14 h-14 rounded-2xl bg-burgundy/10 text-burgundy flex items-center justify-center mb-6 group-hover:bg-burgundy group-hover:text-white group-hover:scale-110 group-hover:rotate-3 transition-all duration-400 shadow-xs">
-                  <Target className="w-7 h-7" />
+                <div>
+                  <div className="w-14 h-14 rounded-2xl bg-burgundy/10 text-burgundy flex items-center justify-center mb-6 group-hover:bg-burgundy group-hover:text-white group-hover:scale-110 group-hover:rotate-3 transition-all duration-400 shadow-xs">
+                    <Target className="w-7 h-7" />
+                  </div>
+                  <span className="text-xs font-bold uppercase tracking-widest text-bronze flex items-center gap-2">
+                    <span className="w-2 h-2 rounded-full bg-bronze inline-block" />
+                    Our Vision
+                  </span>
+                  <h3 className="text-2xl font-bold font-sans text-brand-dark mt-2 mb-4 group-hover:text-burgundy transition-colors">
+                    Inspiring Living Environments
+                  </h3>
+                  <p className="text-sm sm:text-base text-brand-muted leading-relaxed">
+                    {vision}
+                  </p>
                 </div>
-                <span className="text-xs font-bold uppercase tracking-widest text-bronze flex items-center gap-2">
-                  <span className="w-2 h-2 rounded-full bg-bronze inline-block" />
-                  Our Vision
-                </span>
-                <h3 className="text-2xl font-bold font-sans text-brand-dark mt-2 mb-4 group-hover:text-burgundy transition-colors">
-                  Inspiring Living Environments
-                </h3>
-                <p className="text-sm sm:text-base text-brand-muted leading-relaxed">
-                  {vision}
-                </p>
-              </div>
 
-              {/* Bottom Expanding Accent Bar */}
-              <div className="w-12 group-hover:w-full h-1 bg-gradient-to-r from-burgundy via-bronze to-burgundy transition-all duration-500 rounded-full mt-6" />
-            </div>
+                {/* Bottom Expanding Accent Bar */}
+                <div className="w-12 group-hover:w-full h-1 bg-gradient-to-r from-burgundy via-bronze to-burgundy transition-all duration-500 rounded-full mt-6" />
+              </div>
+            </ScrollReveal>
 
             {/* Mission Card */}
-            <div className="group relative card-luxury p-8 sm:p-10 border border-sand bg-cream hover:border-bronze hover:shadow-2xl hover:-translate-y-2 transition-all duration-500 overflow-hidden flex flex-col justify-between">
-              {/* Background Watermark Icon that Rotates & Scales on Hover */}
-              <Compass className="absolute -bottom-8 -right-8 w-44 h-44 text-bronze/5 group-hover:text-bronze/10 group-hover:scale-115 group-hover:-rotate-12 transition-all duration-700 pointer-events-none" />
+            <ScrollReveal animation="fade-left" delay={150}>
+              <div className="group relative card-luxury p-8 sm:p-10 border border-sand bg-cream hover:border-bronze hover:shadow-2xl hover:-translate-y-2 transition-all duration-500 overflow-hidden flex flex-col justify-between h-full">
+                {/* Background Watermark Icon that Rotates & Scales on Hover */}
+                <Compass className="absolute -bottom-8 -right-8 w-44 h-44 text-bronze/5 group-hover:text-bronze/10 group-hover:scale-115 group-hover:-rotate-12 transition-all duration-700 pointer-events-none" />
 
-              <div>
-                <div className="w-14 h-14 rounded-2xl bg-bronze/15 text-bronze flex items-center justify-center mb-6 group-hover:bg-bronze group-hover:text-white group-hover:scale-110 group-hover:-rotate-3 transition-all duration-400 shadow-xs">
-                  <Compass className="w-7 h-7" />
+                <div>
+                  <div className="w-14 h-14 rounded-2xl bg-bronze/15 text-bronze flex items-center justify-center mb-6 group-hover:bg-bronze group-hover:text-white group-hover:scale-110 group-hover:-rotate-3 transition-all duration-400 shadow-xs">
+                    <Compass className="w-7 h-7" />
+                  </div>
+                  <span className="text-xs font-bold uppercase tracking-widest text-bronze flex items-center gap-2">
+                    <span className="w-2 h-2 rounded-full bg-bronze inline-block" />
+                    Our Mission
+                  </span>
+                  <h3 className="text-2xl font-bold font-sans text-brand-dark mt-2 mb-4 group-hover:text-burgundy transition-colors">
+                    Mastery in Execution & Agronomy
+                  </h3>
+                  <p className="text-sm sm:text-base text-brand-muted leading-relaxed">
+                    {mission}
+                  </p>
                 </div>
-                <span className="text-xs font-bold uppercase tracking-widest text-bronze flex items-center gap-2">
-                  <span className="w-2 h-2 rounded-full bg-bronze inline-block" />
-                  Our Mission
-                </span>
-                <h3 className="text-2xl font-bold font-sans text-brand-dark mt-2 mb-4 group-hover:text-burgundy transition-colors">
-                  Mastery in Execution & Agronomy
-                </h3>
-                <p className="text-sm sm:text-base text-brand-muted leading-relaxed">
-                  {mission}
-                </p>
-              </div>
 
-              {/* Bottom Expanding Accent Bar */}
-              <div className="w-12 group-hover:w-full h-1 bg-gradient-to-r from-bronze via-sand-600 to-bronze transition-all duration-500 rounded-full mt-6" />
-            </div>
+                {/* Bottom Expanding Accent Bar */}
+                <div className="w-12 group-hover:w-full h-1 bg-gradient-to-r from-bronze via-sand-600 to-bronze transition-all duration-500 rounded-full mt-6" />
+              </div>
+            </ScrollReveal>
           </div>
         </div>
       </section>
@@ -295,92 +306,100 @@ export const About = () => {
             <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 sm:gap-7 relative z-10">
               
               {/* Stage 01 */}
-              <div className="group relative p-6 sm:p-7 rounded-2xl bg-cream-light border border-sand hover:border-bronze hover:shadow-2xl hover:-translate-y-3 transition-all duration-400 flex flex-col justify-between overflow-hidden cursor-default">
-                <div>
-                  <div className="flex items-center justify-between mb-4">
-                    <span className="font-serif text-3xl sm:text-4xl font-extrabold text-sand-400 group-hover:text-bronze transition-colors duration-300">
-                      01
-                    </span>
-                    <div className="w-10 h-10 rounded-xl bg-burgundy/10 text-burgundy flex items-center justify-center group-hover:bg-burgundy group-hover:text-white group-hover:scale-110 transition-all duration-300 shadow-xs">
-                      <Search className="w-5 h-5" />
+              <ScrollReveal animation="fade-up" delay={0}>
+                <div className="group relative p-6 sm:p-7 rounded-2xl bg-cream-light border border-sand hover:border-bronze hover:shadow-2xl hover:-translate-y-3 transition-all duration-400 flex flex-col justify-between overflow-hidden cursor-default h-full">
+                  <div>
+                    <div className="flex items-center justify-between mb-4">
+                      <span className="font-serif text-3xl sm:text-4xl font-extrabold text-sand-400 group-hover:text-bronze transition-colors duration-300">
+                        01
+                      </span>
+                      <div className="w-10 h-10 rounded-xl bg-burgundy/10 text-burgundy flex items-center justify-center group-hover:bg-burgundy group-hover:text-white group-hover:scale-110 transition-all duration-300 shadow-xs">
+                        <Search className="w-5 h-5" />
+                      </div>
                     </div>
+                    <span className="text-[10px] uppercase font-bold tracking-widest text-bronze">Phase 1</span>
+                    <h4 className="text-lg font-bold text-burgundy mt-1 mb-2.5 group-hover:text-burgundy-950 transition-colors">
+                      Discovery & Soil Science
+                    </h4>
+                    <p className="text-sm sm:text-xs text-brand-muted leading-relaxed">
+                      Comprehensive site surveying, sunlight path tracing, topographical grading, and soil nutrient chemical profiling.
+                    </p>
                   </div>
-                  <span className="text-[10px] uppercase font-bold tracking-widest text-bronze">Phase 1</span>
-                  <h4 className="text-lg font-bold text-burgundy mt-1 mb-2.5 group-hover:text-burgundy-950 transition-colors">
-                    Discovery & Soil Science
-                  </h4>
-                  <p className="text-sm sm:text-xs text-brand-muted leading-relaxed">
-                    Comprehensive site surveying, sunlight path tracing, topographical grading, and soil nutrient chemical profiling.
-                  </p>
+                  <div className="absolute bottom-0 left-0 right-0 h-1 bg-gradient-to-r from-bronze to-burgundy scale-x-0 group-hover:scale-x-100 transition-transform duration-500 origin-left" />
                 </div>
-                <div className="absolute bottom-0 left-0 right-0 h-1 bg-gradient-to-r from-bronze to-burgundy scale-x-0 group-hover:scale-x-100 transition-transform duration-500 origin-left" />
-              </div>
+              </ScrollReveal>
 
               {/* Stage 02 */}
-              <div className="group relative p-6 sm:p-7 rounded-2xl bg-cream-light border border-sand hover:border-bronze hover:shadow-2xl hover:-translate-y-3 transition-all duration-400 flex flex-col justify-between overflow-hidden cursor-default">
-                <div>
-                  <div className="flex items-center justify-between mb-4">
-                    <span className="font-serif text-3xl sm:text-4xl font-extrabold text-sand-400 group-hover:text-bronze transition-colors duration-300">
-                      02
-                    </span>
-                    <div className="w-10 h-10 rounded-xl bg-burgundy/10 text-burgundy flex items-center justify-center group-hover:bg-burgundy group-hover:text-white group-hover:scale-110 transition-all duration-300 shadow-xs">
-                      <Layers className="w-5 h-5" />
+              <ScrollReveal animation="fade-up" delay={120}>
+                <div className="group relative p-6 sm:p-7 rounded-2xl bg-cream-light border border-sand hover:border-bronze hover:shadow-2xl hover:-translate-y-3 transition-all duration-400 flex flex-col justify-between overflow-hidden cursor-default h-full">
+                  <div>
+                    <div className="flex items-center justify-between mb-4">
+                      <span className="font-serif text-3xl sm:text-4xl font-extrabold text-sand-400 group-hover:text-bronze transition-colors duration-300">
+                        02
+                      </span>
+                      <div className="w-10 h-10 rounded-xl bg-burgundy/10 text-burgundy flex items-center justify-center group-hover:bg-burgundy group-hover:text-white group-hover:scale-110 transition-all duration-300 shadow-xs">
+                        <Layers className="w-5 h-5" />
+                      </div>
                     </div>
+                    <span className="text-[10px] uppercase font-bold tracking-widest text-bronze">Phase 2</span>
+                    <h4 className="text-lg font-bold text-burgundy mt-1 mb-2.5 group-hover:text-burgundy-950 transition-colors">
+                      Architectural Master Plan
+                    </h4>
+                    <p className="text-sm sm:text-xs text-brand-muted leading-relaxed">
+                      2D CAD and 3D realistic rendering detailing hardscape pathways, planting palettes, hydraulic irrigation diagrams, and nighttime lighting.
+                    </p>
                   </div>
-                  <span className="text-[10px] uppercase font-bold tracking-widest text-bronze">Phase 2</span>
-                  <h4 className="text-lg font-bold text-burgundy mt-1 mb-2.5 group-hover:text-burgundy-950 transition-colors">
-                    Architectural Master Plan
-                  </h4>
-                  <p className="text-sm sm:text-xs text-brand-muted leading-relaxed">
-                    2D CAD and 3D realistic rendering detailing hardscape pathways, planting palettes, hydraulic irrigation diagrams, and nighttime lighting.
-                  </p>
+                  <div className="absolute bottom-0 left-0 right-0 h-1 bg-gradient-to-r from-bronze to-burgundy scale-x-0 group-hover:scale-x-100 transition-transform duration-500 origin-left" />
                 </div>
-                <div className="absolute bottom-0 left-0 right-0 h-1 bg-gradient-to-r from-bronze to-burgundy scale-x-0 group-hover:scale-x-100 transition-transform duration-500 origin-left" />
-              </div>
+              </ScrollReveal>
 
               {/* Stage 03 */}
-              <div className="group relative p-6 sm:p-7 rounded-2xl bg-cream-light border border-sand hover:border-bronze hover:shadow-2xl hover:-translate-y-3 transition-all duration-400 flex flex-col justify-between overflow-hidden cursor-default">
-                <div>
-                  <div className="flex items-center justify-between mb-4">
-                    <span className="font-serif text-3xl sm:text-4xl font-extrabold text-sand-400 group-hover:text-bronze transition-colors duration-300">
-                      03
-                    </span>
-                    <div className="w-10 h-10 rounded-xl bg-burgundy/10 text-burgundy flex items-center justify-center group-hover:bg-burgundy group-hover:text-white group-hover:scale-110 transition-all duration-300 shadow-xs">
-                      <Sprout className="w-5 h-5" />
+              <ScrollReveal animation="fade-up" delay={240}>
+                <div className="group relative p-6 sm:p-7 rounded-2xl bg-cream-light border border-sand hover:border-bronze hover:shadow-2xl hover:-translate-y-3 transition-all duration-400 flex flex-col justify-between overflow-hidden cursor-default h-full">
+                  <div>
+                    <div className="flex items-center justify-between mb-4">
+                      <span className="font-serif text-3xl sm:text-4xl font-extrabold text-sand-400 group-hover:text-bronze transition-colors duration-300">
+                        03
+                      </span>
+                      <div className="w-10 h-10 rounded-xl bg-burgundy/10 text-burgundy flex items-center justify-center group-hover:bg-burgundy group-hover:text-white group-hover:scale-110 transition-all duration-300 shadow-xs">
+                        <Sprout className="w-5 h-5" />
+                      </div>
                     </div>
+                    <span className="text-[10px] uppercase font-bold tracking-widest text-bronze">Phase 3</span>
+                    <h4 className="text-lg font-bold text-burgundy mt-1 mb-2.5 group-hover:text-burgundy-950 transition-colors">
+                      Turnkey Construction
+                    </h4>
+                    <p className="text-sm sm:text-xs text-brand-muted leading-relaxed">
+                      Excavation, drainage pipes, masonry construction, automated pump stations, organic soil mixing, and specimen tree installation.
+                    </p>
                   </div>
-                  <span className="text-[10px] uppercase font-bold tracking-widest text-bronze">Phase 3</span>
-                  <h4 className="text-lg font-bold text-burgundy mt-1 mb-2.5 group-hover:text-burgundy-950 transition-colors">
-                    Turnkey Construction
-                  </h4>
-                  <p className="text-sm sm:text-xs text-brand-muted leading-relaxed">
-                    Excavation, drainage pipes, masonry construction, automated pump stations, organic soil mixing, and specimen tree installation.
-                  </p>
+                  <div className="absolute bottom-0 left-0 right-0 h-1 bg-gradient-to-r from-bronze to-burgundy scale-x-0 group-hover:scale-x-100 transition-transform duration-500 origin-left" />
                 </div>
-                <div className="absolute bottom-0 left-0 right-0 h-1 bg-gradient-to-r from-bronze to-burgundy scale-x-0 group-hover:scale-x-100 transition-transform duration-500 origin-left" />
-              </div>
+              </ScrollReveal>
 
               {/* Stage 04 */}
-              <div className="group relative p-6 sm:p-7 rounded-2xl bg-cream-light border border-sand hover:border-bronze hover:shadow-2xl hover:-translate-y-3 transition-all duration-400 flex flex-col justify-between overflow-hidden cursor-default">
-                <div>
-                  <div className="flex items-center justify-between mb-4">
-                    <span className="font-serif text-3xl sm:text-4xl font-extrabold text-sand-400 group-hover:text-bronze transition-colors duration-300">
-                      04
-                    </span>
-                    <div className="w-10 h-10 rounded-xl bg-burgundy/10 text-burgundy flex items-center justify-center group-hover:bg-burgundy group-hover:text-white group-hover:scale-110 transition-all duration-300 shadow-xs">
-                      <Trees className="w-5 h-5" />
+              <ScrollReveal animation="fade-up" delay={360}>
+                <div className="group relative p-6 sm:p-7 rounded-2xl bg-cream-light border border-sand hover:border-bronze hover:shadow-2xl hover:-translate-y-3 transition-all duration-400 flex flex-col justify-between overflow-hidden cursor-default h-full">
+                  <div>
+                    <div className="flex items-center justify-between mb-4">
+                      <span className="font-serif text-3xl sm:text-4xl font-extrabold text-sand-400 group-hover:text-bronze transition-colors duration-300">
+                        04
+                      </span>
+                      <div className="w-10 h-10 rounded-xl bg-burgundy/10 text-burgundy flex items-center justify-center group-hover:bg-burgundy group-hover:text-white group-hover:scale-110 transition-all duration-300 shadow-xs">
+                        <Trees className="w-5 h-5" />
+                      </div>
                     </div>
+                    <span className="text-[10px] uppercase font-bold tracking-widest text-bronze">Phase 4</span>
+                    <h4 className="text-lg font-bold text-burgundy mt-1 mb-2.5 group-hover:text-burgundy-950 transition-colors">
+                      Perpetual Stewardship
+                    </h4>
+                    <p className="text-sm sm:text-xs text-brand-muted leading-relaxed">
+                      Long-term grounds maintenance, routine horticultural check-ups, lawn aeration, organic fertilization, and seasonal replanting.
+                    </p>
                   </div>
-                  <span className="text-[10px] uppercase font-bold tracking-widest text-bronze">Phase 4</span>
-                  <h4 className="text-lg font-bold text-burgundy mt-1 mb-2.5 group-hover:text-burgundy-950 transition-colors">
-                    Perpetual Stewardship
-                  </h4>
-                  <p className="text-sm sm:text-xs text-brand-muted leading-relaxed">
-                    Long-term grounds maintenance, routine horticultural check-ups, lawn aeration, organic fertilization, and seasonal replanting.
-                  </p>
+                  <div className="absolute bottom-0 left-0 right-0 h-1 bg-gradient-to-r from-bronze to-burgundy scale-x-0 group-hover:scale-x-100 transition-transform duration-500 origin-left" />
                 </div>
-                <div className="absolute bottom-0 left-0 right-0 h-1 bg-gradient-to-r from-bronze to-burgundy scale-x-0 group-hover:scale-x-100 transition-transform duration-500 origin-left" />
-              </div>
+              </ScrollReveal>
             </div>
           </div>
         </div>
@@ -396,53 +415,61 @@ export const About = () => {
           />
 
           <div className="mt-14 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
-            <div className="group p-6 rounded-2xl bg-white border border-sand hover:border-bronze hover:shadow-xl hover:-translate-y-2 transition-all duration-400">
-              <div className="w-12 h-12 rounded-xl bg-bronze/10 text-bronze flex items-center justify-center mb-4 group-hover:bg-bronze group-hover:text-white transition-all duration-300">
-                <Sprout className="w-6 h-6" />
+            <ScrollReveal animation="fade-up" delay={0}>
+              <div className="group p-6 rounded-2xl bg-white border border-sand hover:border-bronze hover:shadow-xl hover:-translate-y-2 transition-all duration-400 h-full">
+                <div className="w-12 h-12 rounded-xl bg-bronze/10 text-bronze flex items-center justify-center mb-4 group-hover:bg-bronze group-hover:text-white transition-all duration-300">
+                  <Sprout className="w-6 h-6" />
+                </div>
+                <h4 className="text-base font-bold text-burgundy mb-2 group-hover:text-burgundy-950 transition-colors">
+                  Precision Soil Chemistry
+                </h4>
+                <p className="text-xs sm:text-xs text-brand-muted leading-relaxed font-normal">
+                  Laboratory nutrient mapping, customized organic enrichment, and pH balance calibrated specifically for root health.
+                </p>
               </div>
-              <h4 className="text-base font-bold text-burgundy mb-2 group-hover:text-burgundy-950 transition-colors">
-                Precision Soil Chemistry
-              </h4>
-              <p className="text-xs sm:text-xs text-brand-muted leading-relaxed font-normal">
-                Laboratory nutrient mapping, customized organic enrichment, and pH balance calibrated specifically for root health.
-              </p>
-            </div>
+            </ScrollReveal>
 
-            <div className="group p-6 rounded-2xl bg-white border border-sand hover:border-bronze hover:shadow-xl hover:-translate-y-2 transition-all duration-400">
-              <div className="w-12 h-12 rounded-xl bg-bronze/10 text-bronze flex items-center justify-center mb-4 group-hover:bg-bronze group-hover:text-white transition-all duration-300">
-                <Droplets className="w-6 h-6" />
+            <ScrollReveal animation="fade-up" delay={100}>
+              <div className="group p-6 rounded-2xl bg-white border border-sand hover:border-bronze hover:shadow-xl hover:-translate-y-2 transition-all duration-400 h-full">
+                <div className="w-12 h-12 rounded-xl bg-bronze/10 text-bronze flex items-center justify-center mb-4 group-hover:bg-bronze group-hover:text-white transition-all duration-300">
+                  <Droplets className="w-6 h-6" />
+                </div>
+                <h4 className="text-base font-bold text-burgundy mb-2 group-hover:text-burgundy-950 transition-colors">
+                  Hydraulic Conservation
+                </h4>
+                <p className="text-xs sm:text-xs text-brand-muted leading-relaxed font-normal">
+                  Smart micro-drip networks and weather-responsive controllers engineered to conserve up to 40% more water.
+                </p>
               </div>
-              <h4 className="text-base font-bold text-burgundy mb-2 group-hover:text-burgundy-950 transition-colors">
-                Hydraulic Conservation
-              </h4>
-              <p className="text-xs sm:text-xs text-brand-muted leading-relaxed font-normal">
-                Smart micro-drip networks and weather-responsive controllers engineered to conserve up to 40% more water.
-              </p>
-            </div>
+            </ScrollReveal>
 
-            <div className="group p-6 rounded-2xl bg-white border border-sand hover:border-bronze hover:shadow-xl hover:-translate-y-2 transition-all duration-400">
-              <div className="w-12 h-12 rounded-xl bg-bronze/10 text-bronze flex items-center justify-center mb-4 group-hover:bg-bronze group-hover:text-white transition-all duration-300">
-                <Trees className="w-6 h-6" />
+            <ScrollReveal animation="fade-up" delay={200}>
+              <div className="group p-6 rounded-2xl bg-white border border-sand hover:border-bronze hover:shadow-xl hover:-translate-y-2 transition-all duration-400 h-full">
+                <div className="w-12 h-12 rounded-xl bg-bronze/10 text-bronze flex items-center justify-center mb-4 group-hover:bg-bronze group-hover:text-white transition-all duration-300">
+                  <Trees className="w-6 h-6" />
+                </div>
+                <h4 className="text-base font-bold text-burgundy mb-2 group-hover:text-burgundy-950 transition-colors">
+                  Native Biodiversity
+                </h4>
+                <p className="text-xs sm:text-xs text-brand-muted leading-relaxed font-normal">
+                  Carefully selected indigenous specimen flora that naturally resist pests and flourish in local climate extremes.
+                </p>
               </div>
-              <h4 className="text-base font-bold text-burgundy mb-2 group-hover:text-burgundy-950 transition-colors">
-                Native Biodiversity
-              </h4>
-              <p className="text-xs sm:text-xs text-brand-muted leading-relaxed font-normal">
-                Carefully selected indigenous specimen flora that naturally resist pests and flourish in local climate extremes.
-              </p>
-            </div>
+            </ScrollReveal>
 
-            <div className="group p-6 rounded-2xl bg-white border border-sand hover:border-bronze hover:shadow-xl hover:-translate-y-2 transition-all duration-400">
-              <div className="w-12 h-12 rounded-xl bg-bronze/10 text-bronze flex items-center justify-center mb-4 group-hover:bg-bronze group-hover:text-white transition-all duration-300">
-                <ShieldCheck className="w-6 h-6" />
+            <ScrollReveal animation="fade-up" delay={300}>
+              <div className="group p-6 rounded-2xl bg-white border border-sand hover:border-bronze hover:shadow-xl hover:-translate-y-2 transition-all duration-400 h-full">
+                <div className="w-12 h-12 rounded-xl bg-bronze/10 text-bronze flex items-center justify-center mb-4 group-hover:bg-bronze group-hover:text-white transition-all duration-300">
+                  <ShieldCheck className="w-6 h-6" />
+                </div>
+                <h4 className="text-base font-bold text-burgundy mb-2 group-hover:text-burgundy-950 transition-colors">
+                  Hardscape Durability
+                </h4>
+                <p className="text-xs sm:text-xs text-brand-muted leading-relaxed font-normal">
+                  Reinforced foundations, natural stone paving, and retaining walls built to withstand generational weathering.
+                </p>
               </div>
-              <h4 className="text-base font-bold text-burgundy mb-2 group-hover:text-burgundy-950 transition-colors">
-                Hardscape Durability
-              </h4>
-              <p className="text-xs sm:text-xs text-brand-muted leading-relaxed font-normal">
-                Reinforced foundations, natural stone paving, and retaining walls built to withstand generational weathering.
-              </p>
-            </div>
+            </ScrollReveal>
           </div>
         </div>
       </section>
@@ -462,63 +489,68 @@ export const About = () => {
           />
 
           <div className="mt-14 grid grid-cols-1 md:grid-cols-3 gap-7 lg:gap-8">
-            
             {/* Benefit 1 */}
-            <div className="group relative p-7 sm:p-8 rounded-2xl bg-white/5 hover:bg-white/10 border border-white/10 hover:border-bronze/50 backdrop-blur-xs transition-all duration-500 hover:-translate-y-2 hover:shadow-2xl hover:shadow-black/50 flex flex-col justify-between overflow-hidden cursor-default">
-              <div className="absolute -top-12 -right-12 w-32 h-32 bg-bronze/20 rounded-full blur-2xl opacity-0 group-hover:opacity-100 transition-opacity duration-500 pointer-events-none" />
-              
-              <div>
-                <div className="w-12 h-12 rounded-xl bg-bronze/15 border border-bronze/30 text-bronze flex items-center justify-center mb-5 group-hover:scale-110 group-hover:bg-bronze group-hover:text-white transition-all duration-300 shadow-md">
-                  <CheckCircle2 className="w-6 h-6" />
+            <ScrollReveal animation="fade-up" delay={0}>
+              <div className="group relative p-7 sm:p-8 rounded-2xl bg-white/5 hover:bg-white/10 border border-white/10 hover:border-bronze/50 backdrop-blur-xs transition-all duration-500 hover:-translate-y-2 hover:shadow-2xl hover:shadow-black/50 flex flex-col justify-between overflow-hidden cursor-default h-full">
+                <div className="absolute -top-12 -right-12 w-32 h-32 bg-bronze/20 rounded-full blur-2xl opacity-0 group-hover:opacity-100 transition-opacity duration-500 pointer-events-none" />
+                
+                <div>
+                  <div className="w-12 h-12 rounded-xl bg-bronze/15 border border-bronze/30 text-bronze flex items-center justify-center mb-5 group-hover:scale-110 group-hover:bg-bronze group-hover:text-white transition-all duration-300 shadow-md">
+                    <CheckCircle2 className="w-6 h-6" />
+                  </div>
+                  <h4 className="text-lg font-bold text-cream mb-2 group-hover:text-white transition-colors">
+                    Single-Point Responsibility
+                  </h4>
+                  <p className="text-sm sm:text-xs text-cream/85 leading-relaxed font-normal">
+                    No third-party subcontractors or finger-pointing. We manage earthworks, horticulture, electrical lighting, and plumbing under one clear contract.
+                  </p>
                 </div>
-                <h4 className="text-lg font-bold text-cream mb-2 group-hover:text-white transition-colors">
-                  Single-Point Responsibility
-                </h4>
-                <p className="text-sm sm:text-xs text-cream/85 leading-relaxed font-normal">
-                  No third-party subcontractors or finger-pointing. We manage earthworks, horticulture, electrical lighting, and plumbing under one clear contract.
-                </p>
-              </div>
 
-              <div className="w-8 group-hover:w-full h-0.5 bg-gradient-to-r from-bronze to-cream/40 transition-all duration-500 rounded-full mt-6" />
-            </div>
+                <div className="w-8 group-hover:w-full h-0.5 bg-gradient-to-r from-bronze to-cream/40 transition-all duration-500 rounded-full mt-6" />
+              </div>
+            </ScrollReveal>
 
             {/* Benefit 2 */}
-            <div className="group relative p-7 sm:p-8 rounded-2xl bg-white/5 hover:bg-white/10 border border-white/10 hover:border-bronze/50 backdrop-blur-xs transition-all duration-500 hover:-translate-y-2 hover:shadow-2xl hover:shadow-black/50 flex flex-col justify-between overflow-hidden cursor-default">
-              <div className="absolute -top-12 -right-12 w-32 h-32 bg-bronze/20 rounded-full blur-2xl opacity-0 group-hover:opacity-100 transition-opacity duration-500 pointer-events-none" />
-              
-              <div>
-                <div className="w-12 h-12 rounded-xl bg-bronze/15 border border-bronze/30 text-bronze flex items-center justify-center mb-5 group-hover:scale-110 group-hover:bg-bronze group-hover:text-white transition-all duration-300 shadow-md">
-                  <Droplets className="w-6 h-6" />
+            <ScrollReveal animation="fade-up" delay={150}>
+              <div className="group relative p-7 sm:p-8 rounded-2xl bg-white/5 hover:bg-white/10 border border-white/10 hover:border-bronze/50 backdrop-blur-xs transition-all duration-500 hover:-translate-y-2 hover:shadow-2xl hover:shadow-black/50 flex flex-col justify-between overflow-hidden cursor-default h-full">
+                <div className="absolute -top-12 -right-12 w-32 h-32 bg-bronze/20 rounded-full blur-2xl opacity-0 group-hover:opacity-100 transition-opacity duration-500 pointer-events-none" />
+                
+                <div>
+                  <div className="w-12 h-12 rounded-xl bg-bronze/15 border border-bronze/30 text-bronze flex items-center justify-center mb-5 group-hover:scale-110 group-hover:bg-bronze group-hover:text-white transition-all duration-300 shadow-md">
+                    <Droplets className="w-6 h-6" />
+                  </div>
+                  <h4 className="text-lg font-bold text-cream mb-2 group-hover:text-white transition-colors">
+                    Water-Conservation Engineering
+                  </h4>
+                  <p className="text-sm sm:text-xs text-cream/85 leading-relaxed font-normal">
+                    Advanced automated controllers and precision micro-drip networks engineered specifically for tropical and arid climate variations.
+                  </p>
                 </div>
-                <h4 className="text-lg font-bold text-cream mb-2 group-hover:text-white transition-colors">
-                  Water-Conservation Engineering
-                </h4>
-                <p className="text-sm sm:text-xs text-cream/85 leading-relaxed font-normal">
-                  Advanced automated controllers and precision micro-drip networks engineered specifically for tropical and arid climate variations.
-                </p>
-              </div>
 
-              <div className="w-8 group-hover:w-full h-0.5 bg-gradient-to-r from-bronze to-cream/40 transition-all duration-500 rounded-full mt-6" />
-            </div>
+                <div className="w-8 group-hover:w-full h-0.5 bg-gradient-to-r from-bronze to-cream/40 transition-all duration-500 rounded-full mt-6" />
+              </div>
+            </ScrollReveal>
 
             {/* Benefit 3 */}
-            <div className="group relative p-7 sm:p-8 rounded-2xl bg-white/5 hover:bg-white/10 border border-white/10 hover:border-bronze/50 backdrop-blur-xs transition-all duration-500 hover:-translate-y-2 hover:shadow-2xl hover:shadow-black/50 flex flex-col justify-between overflow-hidden cursor-default">
-              <div className="absolute -top-12 -right-12 w-32 h-32 bg-bronze/20 rounded-full blur-2xl opacity-0 group-hover:opacity-100 transition-opacity duration-500 pointer-events-none" />
-              
-              <div>
-                <div className="w-12 h-12 rounded-xl bg-bronze/15 border border-bronze/30 text-bronze flex items-center justify-center mb-5 group-hover:scale-110 group-hover:bg-bronze group-hover:text-white transition-all duration-300 shadow-md">
-                  <Trees className="w-6 h-6" />
+            <ScrollReveal animation="fade-up" delay={300}>
+              <div className="group relative p-7 sm:p-8 rounded-2xl bg-white/5 hover:bg-white/10 border border-white/10 hover:border-bronze/50 backdrop-blur-xs transition-all duration-500 hover:-translate-y-2 hover:shadow-2xl hover:shadow-black/50 flex flex-col justify-between overflow-hidden cursor-default h-full">
+                <div className="absolute -top-12 -right-12 w-32 h-32 bg-bronze/20 rounded-full blur-2xl opacity-0 group-hover:opacity-100 transition-opacity duration-500 pointer-events-none" />
+                
+                <div>
+                  <div className="w-12 h-12 rounded-xl bg-bronze/15 border border-bronze/30 text-bronze flex items-center justify-center mb-5 group-hover:scale-110 group-hover:bg-bronze group-hover:text-white transition-all duration-300 shadow-md">
+                    <Trees className="w-6 h-6" />
+                  </div>
+                  <h4 className="text-lg font-bold text-cream mb-2 group-hover:text-white transition-colors">
+                    Specimen Nursery Reserves
+                  </h4>
+                  <p className="text-sm sm:text-xs text-cream/85 leading-relaxed font-normal">
+                    Immediate access to healthy, mature specimen trees, palms, and exotic shrubs from our dedicated propagation centers.
+                  </p>
                 </div>
-                <h4 className="text-lg font-bold text-cream mb-2 group-hover:text-white transition-colors">
-                  Specimen Nursery Reserves
-                </h4>
-                <p className="text-sm sm:text-xs text-cream/85 leading-relaxed font-normal">
-                  Immediate access to healthy, mature specimen trees, palms, and exotic shrubs from our dedicated propagation centers.
-                </p>
-              </div>
 
-              <div className="w-8 group-hover:w-full h-0.5 bg-gradient-to-r from-bronze to-cream/40 transition-all duration-500 rounded-full mt-6" />
-            </div>
+                <div className="w-8 group-hover:w-full h-0.5 bg-gradient-to-r from-bronze to-cream/40 transition-all duration-500 rounded-full mt-6" />
+              </div>
+            </ScrollReveal>
           </div>
 
           {/* Interactive CTA Link */}

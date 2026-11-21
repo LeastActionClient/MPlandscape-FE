@@ -19,6 +19,7 @@ import {
 } from 'lucide-react';
 import SectionHeading from '../components/common/SectionHeading';
 import ServiceCard from '../components/common/ServiceCard';
+import ScrollReveal from '../components/common/ScrollReveal';
 import LoadingSpinner from '../components/common/LoadingSpinner';
 import ErrorMessage from '../components/common/ErrorMessage';
 import EmptyState from '../components/common/EmptyState';
@@ -274,16 +275,17 @@ export const Services = () => {
             ) : (
               <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-7 lg:gap-8">
                 {services.map((service, idx) => (
-                  <div
+                  <ScrollReveal
                     key={service._id}
-                    className="animate-fade-in-up"
-                    style={{ animationDelay: `${Math.min(idx * 75, 450)}ms` }}
+                    animation="fade-up"
+                    delay={Math.min((idx % 3) * 120, 360)}
+                    className="h-full"
                   >
                     <ServiceCard
                       service={service}
                       onEnquire={(svc) => setEnquiryModalService(svc)}
                     />
-                  </div>
+                  </ScrollReveal>
                 ))}
               </div>
             )}
@@ -307,72 +309,80 @@ export const Services = () => {
           <div className="mt-14 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 sm:gap-7">
             
             {/* Standard 1 */}
-            <div className="group relative p-6 sm:p-7 rounded-2xl bg-white border border-sand hover:border-bronze hover:shadow-xl hover:-translate-y-2.5 transition-all duration-400 flex flex-col justify-between overflow-hidden cursor-default">
-              <div>
-                <div className="w-12 h-12 rounded-xl bg-burgundy/10 text-burgundy flex items-center justify-center mb-5 group-hover:bg-burgundy group-hover:text-white group-hover:scale-110 group-hover:rotate-3 transition-all duration-300 shadow-xs">
-                  <Compass className="w-6 h-6" />
+            <ScrollReveal animation="fade-up" delay={0}>
+              <div className="group relative p-6 sm:p-7 rounded-2xl bg-white border border-sand hover:border-bronze hover:shadow-xl hover:-translate-y-2.5 transition-all duration-400 flex flex-col justify-between overflow-hidden cursor-default h-full">
+                <div>
+                  <div className="w-12 h-12 rounded-xl bg-burgundy/10 text-burgundy flex items-center justify-center mb-5 group-hover:bg-burgundy group-hover:text-white group-hover:scale-110 group-hover:rotate-3 transition-all duration-300 shadow-xs">
+                    <Compass className="w-6 h-6" />
+                  </div>
+                  <span className="text-[10px] font-bold uppercase tracking-widest text-bronze">Standard 01</span>
+                  <h4 className="text-base font-bold text-burgundy mt-1 mb-2 group-hover:text-burgundy-950 transition-colors">
+                    Topographical &amp; Soil Survey
+                  </h4>
+                  <p className="text-xs text-brand-muted leading-relaxed font-normal">
+                    In-depth analysis of site contours, water tables, sunlight gradients, and chemical soil composition prior to any physical work.
+                  </p>
                 </div>
-                <span className="text-[10px] font-bold uppercase tracking-widest text-bronze">Standard 01</span>
-                <h4 className="text-base font-bold text-burgundy mt-1 mb-2 group-hover:text-burgundy-950 transition-colors">
-                  Topographical &amp; Soil Survey
-                </h4>
-                <p className="text-xs text-brand-muted leading-relaxed font-normal">
-                  In-depth analysis of site contours, water tables, sunlight gradients, and chemical soil composition prior to any physical work.
-                </p>
+                <div className="w-8 group-hover:w-full h-0.5 bg-gradient-to-r from-bronze to-burgundy transition-all duration-500 rounded-full mt-6" />
               </div>
-              <div className="w-8 group-hover:w-full h-0.5 bg-gradient-to-r from-bronze to-burgundy transition-all duration-500 rounded-full mt-6" />
-            </div>
+            </ScrollReveal>
 
             {/* Standard 2 */}
-            <div className="group relative p-6 sm:p-7 rounded-2xl bg-white border border-sand hover:border-bronze hover:shadow-xl hover:-translate-y-2.5 transition-all duration-400 flex flex-col justify-between overflow-hidden cursor-default">
-              <div>
-                <div className="w-12 h-12 rounded-xl bg-bronze/15 text-bronze flex items-center justify-center mb-5 group-hover:bg-bronze group-hover:text-white group-hover:scale-110 group-hover:-rotate-3 transition-all duration-300 shadow-xs">
-                  <Droplets className="w-6 h-6" />
+            <ScrollReveal animation="fade-up" delay={120}>
+              <div className="group relative p-6 sm:p-7 rounded-2xl bg-white border border-sand hover:border-bronze hover:shadow-xl hover:-translate-y-2.5 transition-all duration-400 flex flex-col justify-between overflow-hidden cursor-default h-full">
+                <div>
+                  <div className="w-12 h-12 rounded-xl bg-bronze/15 text-bronze flex items-center justify-center mb-5 group-hover:bg-bronze group-hover:text-white group-hover:scale-110 group-hover:-rotate-3 transition-all duration-300 shadow-xs">
+                    <Droplets className="w-6 h-6" />
+                  </div>
+                  <span className="text-[10px] font-bold uppercase tracking-widest text-bronze">Standard 02</span>
+                  <h4 className="text-base font-bold text-burgundy mt-1 mb-2 group-hover:text-burgundy-950 transition-colors">
+                    Hydraulic Water Optimization
+                  </h4>
+                  <p className="text-xs text-brand-muted leading-relaxed font-normal">
+                    Custom-engineered micro-irrigation schemes with automatic timers, pressure regulators, and weather-responsive drip emitters.
+                  </p>
                 </div>
-                <span className="text-[10px] font-bold uppercase tracking-widest text-bronze">Standard 02</span>
-                <h4 className="text-base font-bold text-burgundy mt-1 mb-2 group-hover:text-burgundy-950 transition-colors">
-                  Hydraulic Water Optimization
-                </h4>
-                <p className="text-xs text-brand-muted leading-relaxed font-normal">
-                  Custom-engineered micro-irrigation schemes with automatic timers, pressure regulators, and weather-responsive drip emitters.
-                </p>
+                <div className="w-8 group-hover:w-full h-0.5 bg-gradient-to-r from-bronze to-burgundy transition-all duration-500 rounded-full mt-6" />
               </div>
-              <div className="w-8 group-hover:w-full h-0.5 bg-gradient-to-r from-bronze to-burgundy transition-all duration-500 rounded-full mt-6" />
-            </div>
+            </ScrollReveal>
 
             {/* Standard 3 */}
-            <div className="group relative p-6 sm:p-7 rounded-2xl bg-white border border-sand hover:border-bronze hover:shadow-xl hover:-translate-y-2.5 transition-all duration-400 flex flex-col justify-between overflow-hidden cursor-default">
-              <div>
-                <div className="w-12 h-12 rounded-xl bg-burgundy/10 text-burgundy flex items-center justify-center mb-5 group-hover:bg-burgundy group-hover:text-white group-hover:scale-110 group-hover:rotate-3 transition-all duration-300 shadow-xs">
-                  <Sprout className="w-6 h-6" />
+            <ScrollReveal animation="fade-up" delay={240}>
+              <div className="group relative p-6 sm:p-7 rounded-2xl bg-white border border-sand hover:border-bronze hover:shadow-xl hover:-translate-y-2.5 transition-all duration-400 flex flex-col justify-between overflow-hidden cursor-default h-full">
+                <div>
+                  <div className="w-12 h-12 rounded-xl bg-burgundy/10 text-burgundy flex items-center justify-center mb-5 group-hover:bg-burgundy group-hover:text-white group-hover:scale-110 group-hover:rotate-3 transition-all duration-300 shadow-xs">
+                    <Sprout className="w-6 h-6" />
+                  </div>
+                  <span className="text-[10px] font-bold uppercase tracking-widest text-bronze">Standard 03</span>
+                  <h4 className="text-base font-bold text-burgundy mt-1 mb-2 group-hover:text-burgundy-950 transition-colors">
+                    Acclimatized Specimen Flora
+                  </h4>
+                  <p className="text-xs text-brand-muted leading-relaxed font-normal">
+                    Carefully sourced specimen trees, palms, and ground covers propagated for tropical resilience and high transplant survival rates.
+                  </p>
                 </div>
-                <span className="text-[10px] font-bold uppercase tracking-widest text-bronze">Standard 03</span>
-                <h4 className="text-base font-bold text-burgundy mt-1 mb-2 group-hover:text-burgundy-950 transition-colors">
-                  Acclimatized Specimen Flora
-                </h4>
-                <p className="text-xs text-brand-muted leading-relaxed font-normal">
-                  Carefully sourced specimen trees, palms, and ground covers propagated for tropical resilience and high transplant survival rates.
-                </p>
+                <div className="w-8 group-hover:w-full h-0.5 bg-gradient-to-r from-bronze to-burgundy transition-all duration-500 rounded-full mt-6" />
               </div>
-              <div className="w-8 group-hover:w-full h-0.5 bg-gradient-to-r from-bronze to-burgundy transition-all duration-500 rounded-full mt-6" />
-            </div>
+            </ScrollReveal>
 
             {/* Standard 4 */}
-            <div className="group relative p-6 sm:p-7 rounded-2xl bg-white border border-sand hover:border-bronze hover:shadow-xl hover:-translate-y-2.5 transition-all duration-400 flex flex-col justify-between overflow-hidden cursor-default">
-              <div>
-                <div className="w-12 h-12 rounded-xl bg-bronze/15 text-bronze flex items-center justify-center mb-5 group-hover:bg-bronze group-hover:text-white group-hover:scale-110 group-hover:-rotate-3 transition-all duration-300 shadow-xs">
-                  <ShieldCheck className="w-6 h-6" />
+            <ScrollReveal animation="fade-up" delay={360}>
+              <div className="group relative p-6 sm:p-7 rounded-2xl bg-white border border-sand hover:border-bronze hover:shadow-xl hover:-translate-y-2.5 transition-all duration-400 flex flex-col justify-between overflow-hidden cursor-default h-full">
+                <div>
+                  <div className="w-12 h-12 rounded-xl bg-bronze/15 text-bronze flex items-center justify-center mb-5 group-hover:bg-bronze group-hover:text-white group-hover:scale-110 group-hover:-rotate-3 transition-all duration-300 shadow-xs">
+                    <ShieldCheck className="w-6 h-6" />
+                  </div>
+                  <span className="text-[10px] font-bold uppercase tracking-widest text-bronze">Standard 04</span>
+                  <h4 className="text-base font-bold text-burgundy mt-1 mb-2 group-hover:text-burgundy-950 transition-colors">
+                    Continuous Stewardship
+                  </h4>
+                  <p className="text-xs text-brand-muted leading-relaxed font-normal">
+                    Optional long-term grounds maintenance contracts, seasonal pruning, nutrient top-dressing, and structural care protocols.
+                  </p>
                 </div>
-                <span className="text-[10px] font-bold uppercase tracking-widest text-bronze">Standard 04</span>
-                <h4 className="text-base font-bold text-burgundy mt-1 mb-2 group-hover:text-burgundy-950 transition-colors">
-                  Continuous Stewardship
-                </h4>
-                <p className="text-xs text-brand-muted leading-relaxed font-normal">
-                  Optional long-term grounds maintenance contracts, seasonal pruning, nutrient top-dressing, and structural care protocols.
-                </p>
+                <div className="w-8 group-hover:w-full h-0.5 bg-gradient-to-r from-bronze to-burgundy transition-all duration-500 rounded-full mt-6" />
               </div>
-              <div className="w-8 group-hover:w-full h-0.5 bg-gradient-to-r from-bronze to-burgundy transition-all duration-500 rounded-full mt-6" />
-            </div>
+            </ScrollReveal>
 
           </div>
         </div>
@@ -384,7 +394,7 @@ export const Services = () => {
         <div className="absolute top-0 right-1/4 w-96 h-96 bg-bronze/15 rounded-full blur-3xl pointer-events-none" />
         <div className="absolute bottom-0 left-10 w-80 h-80 bg-burgundy/30 rounded-full blur-3xl pointer-events-none" />
 
-        <div className="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10 text-center space-y-6">
+        <ScrollReveal animation="fade-up" delay={150} className="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10 text-center space-y-6">
           <div className="inline-flex items-center gap-2 text-xs font-bold uppercase tracking-widest text-bronze px-4 py-1.5 rounded-full bg-white/5 border border-white/10 backdrop-blur-xs">
             <Sparkles className="w-3.5 h-3.5 text-bronze" />
             <span>Project Estimation &amp; Site Surveys</span>
@@ -415,7 +425,7 @@ export const Services = () => {
               <span>Call +91 8838548402</span>
             </a>
           </div>
-        </div>
+        </ScrollReveal>
       </section>
 
       {/* Direct Enquiry Modal */}

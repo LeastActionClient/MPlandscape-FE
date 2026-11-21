@@ -1,4 +1,5 @@
 import React from 'react';
+import ScrollReveal from './ScrollReveal';
 
 export const SectionHeading = ({
   badge,
@@ -15,7 +16,7 @@ export const SectionHeading = ({
   }[align];
 
   return (
-    <div className={`flex flex-col max-w-3xl animate-fade-in-up ${alignment} ${className}`}>
+    <ScrollReveal animation="fade-up" duration={700} className={`flex flex-col max-w-3xl ${alignment} ${className}`}>
       {badge && (
         <span
           className={`inline-flex items-center gap-1.5 px-3.5 py-1 rounded-full text-xs sm:text-xs font-semibold tracking-wider uppercase mb-3 border transition-all duration-300 shadow-2xs hover:scale-105 hover:shadow-xs ${
@@ -55,7 +56,7 @@ export const SectionHeading = ({
           {subtitle}
         </p>
       )}
-    </div>
+    </ScrollReveal>
   );
 };
 

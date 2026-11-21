@@ -19,6 +19,7 @@ import {
 } from 'lucide-react';
 import SectionHeading from '../components/common/SectionHeading';
 import GalleryCard from '../components/common/GalleryCard';
+import ScrollReveal from '../components/common/ScrollReveal';
 import LoadingSpinner from '../components/common/LoadingSpinner';
 import ErrorMessage from '../components/common/ErrorMessage';
 import EmptyState from '../components/common/EmptyState';
@@ -224,16 +225,17 @@ export const Gallery = () => {
               <>
                 <div className="grid grid-cols-1 min-[380px]:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4 sm:gap-5 md:gap-6">
                   {items.map((item, idx) => (
-                    <div
+                    <ScrollReveal
                       key={item._id}
-                      className="animate-fade-in-up"
-                      style={{ animationDelay: `${Math.min(idx * 60, 420)}ms` }}
+                      animation="fade-up"
+                      delay={Math.min((idx % 4) * 80, 240)}
+                      className="h-full"
                     >
                       <GalleryCard
                         item={item}
                         onSelect={(img) => setSelectedImage(img)}
                       />
-                    </div>
+                    </ScrollReveal>
                   ))}
                 </div>
 
@@ -268,65 +270,73 @@ export const Gallery = () => {
 
           <div className="mt-14 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 sm:gap-7">
             
-            <div className="group relative p-6 sm:p-7 rounded-2xl bg-white border border-sand hover:border-bronze hover:shadow-xl hover:-translate-y-2.5 transition-all duration-400 flex flex-col justify-between overflow-hidden cursor-default">
-              <div>
-                <div className="w-12 h-12 rounded-xl bg-burgundy/10 text-burgundy flex items-center justify-center mb-5 group-hover:bg-burgundy group-hover:text-white group-hover:scale-110 group-hover:rotate-3 transition-all duration-300 shadow-xs">
-                  <Camera className="w-6 h-6" />
+            <ScrollReveal animation="fade-up" delay={0}>
+              <div className="group relative p-6 sm:p-7 rounded-2xl bg-white border border-sand hover:border-bronze hover:shadow-xl hover:-translate-y-2.5 transition-all duration-400 flex flex-col justify-between overflow-hidden cursor-default h-full">
+                <div>
+                  <div className="w-12 h-12 rounded-xl bg-burgundy/10 text-burgundy flex items-center justify-center mb-5 group-hover:bg-burgundy group-hover:text-white group-hover:scale-110 group-hover:rotate-3 transition-all duration-300 shadow-xs">
+                    <Camera className="w-6 h-6" />
+                  </div>
+                  <h4 className="text-base font-bold text-burgundy mb-2 group-hover:text-burgundy-950 transition-colors">
+                    Photographic Authenticity
+                  </h4>
+                  <p className="text-xs text-brand-muted leading-relaxed font-normal">
+                    Zero artificial rendering—all photographs depict living, completed installations across residential villas, farmlands, and commercial campuses.
+                  </p>
                 </div>
-                <h4 className="text-base font-bold text-burgundy mb-2 group-hover:text-burgundy-950 transition-colors">
-                  Photographic Authenticity
-                </h4>
-                <p className="text-xs text-brand-muted leading-relaxed font-normal">
-                  Zero artificial rendering—all photographs depict living, completed installations across residential villas, farmlands, and commercial campuses.
-                </p>
+                <div className="w-8 group-hover:w-full h-0.5 bg-gradient-to-r from-bronze to-burgundy transition-all duration-500 rounded-full mt-6" />
               </div>
-              <div className="w-8 group-hover:w-full h-0.5 bg-gradient-to-r from-bronze to-burgundy transition-all duration-500 rounded-full mt-6" />
-            </div>
+            </ScrollReveal>
 
-            <div className="group relative p-6 sm:p-7 rounded-2xl bg-white border border-sand hover:border-bronze hover:shadow-xl hover:-translate-y-2.5 transition-all duration-400 flex flex-col justify-between overflow-hidden cursor-default">
-              <div>
-                <div className="w-12 h-12 rounded-xl bg-bronze/15 text-bronze flex items-center justify-center mb-5 group-hover:bg-bronze group-hover:text-white group-hover:scale-110 group-hover:-rotate-3 transition-all duration-300 shadow-xs">
-                  <Trees className="w-6 h-6" />
+            <ScrollReveal animation="fade-up" delay={120}>
+              <div className="group relative p-6 sm:p-7 rounded-2xl bg-white border border-sand hover:border-bronze hover:shadow-xl hover:-translate-y-2.5 transition-all duration-400 flex flex-col justify-between overflow-hidden cursor-default h-full">
+                <div>
+                  <div className="w-12 h-12 rounded-xl bg-bronze/15 text-bronze flex items-center justify-center mb-5 group-hover:bg-bronze group-hover:text-white group-hover:scale-110 group-hover:-rotate-3 transition-all duration-300 shadow-xs">
+                    <Trees className="w-6 h-6" />
+                  </div>
+                  <h4 className="text-base font-bold text-burgundy mb-2 group-hover:text-burgundy-950 transition-colors">
+                    Botanical Longevity
+                  </h4>
+                  <p className="text-xs text-brand-muted leading-relaxed font-normal">
+                    Our specimen plantings are selected with generous root allowances and organic soil blends, ensuring grounds grow denser and more valuable with time.
+                  </p>
                 </div>
-                <h4 className="text-base font-bold text-burgundy mb-2 group-hover:text-burgundy-950 transition-colors">
-                  Botanical Longevity
-                </h4>
-                <p className="text-xs text-brand-muted leading-relaxed font-normal">
-                  Our specimen plantings are selected with generous root allowances and organic soil blends, ensuring grounds grow denser and more valuable with time.
-                </p>
+                <div className="w-8 group-hover:w-full h-0.5 bg-gradient-to-r from-bronze to-burgundy transition-all duration-500 rounded-full mt-6" />
               </div>
-              <div className="w-8 group-hover:w-full h-0.5 bg-gradient-to-r from-bronze to-burgundy transition-all duration-500 rounded-full mt-6" />
-            </div>
+            </ScrollReveal>
 
-            <div className="group relative p-6 sm:p-7 rounded-2xl bg-white border border-sand hover:border-bronze hover:shadow-xl hover:-translate-y-2.5 transition-all duration-400 flex flex-col justify-between overflow-hidden cursor-default">
-              <div>
-                <div className="w-12 h-12 rounded-xl bg-burgundy/10 text-burgundy flex items-center justify-center mb-5 group-hover:bg-burgundy group-hover:text-white group-hover:scale-110 group-hover:rotate-3 transition-all duration-300 shadow-xs">
-                  <Droplets className="w-6 h-6" />
+            <ScrollReveal animation="fade-up" delay={240}>
+              <div className="group relative p-6 sm:p-7 rounded-2xl bg-white border border-sand hover:border-bronze hover:shadow-xl hover:-translate-y-2.5 transition-all duration-400 flex flex-col justify-between overflow-hidden cursor-default h-full">
+                <div>
+                  <div className="w-12 h-12 rounded-xl bg-burgundy/10 text-burgundy flex items-center justify-center mb-5 group-hover:bg-burgundy group-hover:text-white group-hover:scale-110 group-hover:rotate-3 transition-all duration-300 shadow-xs">
+                    <Droplets className="w-6 h-6" />
+                  </div>
+                  <h4 className="text-base font-bold text-burgundy mb-2 group-hover:text-burgundy-950 transition-colors">
+                    Precision Hydraulics
+                  </h4>
+                  <p className="text-xs text-brand-muted leading-relaxed font-normal">
+                    Beneath each lawn lies an invisible network of pressure-regulated drip and rotary irrigation lines preventing root rot and water waste.
+                  </p>
                 </div>
-                <h4 className="text-base font-bold text-burgundy mb-2 group-hover:text-burgundy-950 transition-colors">
-                  Precision Hydraulics
-                </h4>
-                <p className="text-xs text-brand-muted leading-relaxed font-normal">
-                  Beneath each lawn lies an invisible network of pressure-regulated drip and rotary irrigation lines preventing root rot and water waste.
-                </p>
+                <div className="w-8 group-hover:w-full h-0.5 bg-gradient-to-r from-bronze to-burgundy transition-all duration-500 rounded-full mt-6" />
               </div>
-              <div className="w-8 group-hover:w-full h-0.5 bg-gradient-to-r from-bronze to-burgundy transition-all duration-500 rounded-full mt-6" />
-            </div>
+            </ScrollReveal>
 
-            <div className="group relative p-6 sm:p-7 rounded-2xl bg-white border border-sand hover:border-bronze hover:shadow-xl hover:-translate-y-2.5 transition-all duration-400 flex flex-col justify-between overflow-hidden cursor-default">
-              <div>
-                <div className="w-12 h-12 rounded-xl bg-bronze/15 text-bronze flex items-center justify-center mb-5 group-hover:bg-bronze group-hover:text-white group-hover:scale-110 group-hover:-rotate-3 transition-all duration-300 shadow-xs">
-                  <ShieldCheck className="w-6 h-6" />
+            <ScrollReveal animation="fade-up" delay={360}>
+              <div className="group relative p-6 sm:p-7 rounded-2xl bg-white border border-sand hover:border-bronze hover:shadow-xl hover:-translate-y-2.5 transition-all duration-400 flex flex-col justify-between overflow-hidden cursor-default h-full">
+                <div>
+                  <div className="w-12 h-12 rounded-xl bg-bronze/15 text-bronze flex items-center justify-center mb-5 group-hover:bg-bronze group-hover:text-white group-hover:scale-110 group-hover:-rotate-3 transition-all duration-300 shadow-xs">
+                    <ShieldCheck className="w-6 h-6" />
+                  </div>
+                  <h4 className="text-base font-bold text-burgundy mb-2 group-hover:text-burgundy-950 transition-colors">
+                    Architectural Hardscaping
+                  </h4>
+                  <p className="text-xs text-brand-muted leading-relaxed font-normal">
+                    Natural stone walkways, pergolas, retaining masonry, and illuminated garden paths engineered against subsoil settling and erosion.
+                  </p>
                 </div>
-                <h4 className="text-base font-bold text-burgundy mb-2 group-hover:text-burgundy-950 transition-colors">
-                  Architectural Hardscaping
-                </h4>
-                <p className="text-xs text-brand-muted leading-relaxed font-normal">
-                  Natural stone walkways, pergolas, retaining masonry, and illuminated garden paths engineered against subsoil settling and erosion.
-                </p>
+                <div className="w-8 group-hover:w-full h-0.5 bg-gradient-to-r from-bronze to-burgundy transition-all duration-500 rounded-full mt-6" />
               </div>
-              <div className="w-8 group-hover:w-full h-0.5 bg-gradient-to-r from-bronze to-burgundy transition-all duration-500 rounded-full mt-6" />
-            </div>
+            </ScrollReveal>
 
           </div>
         </div>
@@ -338,7 +348,7 @@ export const Gallery = () => {
         <div className="absolute top-0 right-1/4 w-96 h-96 bg-bronze/15 rounded-full blur-3xl pointer-events-none" />
         <div className="absolute bottom-0 left-10 w-80 h-80 bg-burgundy/30 rounded-full blur-3xl pointer-events-none" />
 
-        <div className="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10 text-center space-y-6">
+        <ScrollReveal animation="fade-up" delay={150} className="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10 text-center space-y-6">
           <div className="inline-flex items-center gap-2 text-xs font-bold uppercase tracking-widest text-bronze px-4 py-1.5 rounded-full bg-white/5 border border-white/10 backdrop-blur-xs">
             <Sparkles className="w-3.5 h-3.5 text-bronze" />
             <span>Signature Bespoke Designs</span>
@@ -369,7 +379,7 @@ export const Gallery = () => {
               <ArrowRight className="w-4 h-4 text-bronze-light shrink-0" />
             </Link>
           </div>
-        </div>
+        </ScrollReveal>
       </section>
 
       {/* 5. ENHANCED LIGHTBOX MODAL WITH NEXT / PREVIOUS NAVIGATION */}
