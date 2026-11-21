@@ -5,7 +5,6 @@ import {
   Search,
   SlidersHorizontal,
   ArrowRight,
-  Sparkles,
   ShieldCheck,
   CheckCircle2,
   Droplets,
@@ -137,7 +136,6 @@ export const Services = () => {
             <div className="flex items-center gap-3 animate-fade-in-up">
               <span className="h-px w-8 sm:w-14 bg-gradient-to-r from-transparent via-bronze/80 to-bronze transition-all duration-700" />
               <span className="inline-flex items-center gap-2 text-[11px] sm:text-xs font-semibold tracking-[0.22em] sm:tracking-[0.26em] text-burgundy uppercase px-3.5 py-1 rounded-full bg-burgundy/5 border border-burgundy/15 backdrop-blur-xs shadow-xs hover:border-bronze transition-all duration-300">
-                <Sparkles className="w-3.5 h-3.5 text-bronze animate-pulse" />
                 <span>Our Core Divisions</span>
               </span>
               <span className="h-px w-8 sm:w-14 bg-gradient-to-l from-transparent via-bronze/80 to-bronze transition-all duration-700" />
@@ -215,21 +213,7 @@ export const Services = () => {
               })}
             </div>
 
-            {/* Highlights Trust Indicators */}
-            <div className="pt-2 flex flex-wrap items-center gap-3 sm:gap-4 text-xs sm:text-xs text-brand-dark/80 font-medium">
-              <span className="inline-flex items-center gap-1.5">
-                <CheckCircle2 className="w-3.5 h-3.5 text-bronze" />
-                <span>100% Turnkey Execution</span>
-              </span>
-              <span className="inline-flex items-center gap-1.5">
-                <CheckCircle2 className="w-3.5 h-3.5 text-bronze" />
-                <span>In-House Agronomists</span>
-              </span>
-              <span className="inline-flex items-center gap-1.5">
-                <CheckCircle2 className="w-3.5 h-3.5 text-bronze" />
-                <span>Climate-Calibrated Systems</span>
-              </span>
-            </div>
+            
 
           </div>
         </div>
@@ -396,7 +380,6 @@ export const Services = () => {
 
         <ScrollReveal animation="fade-up" delay={150} className="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10 text-center space-y-6">
           <div className="inline-flex items-center gap-2 text-xs font-bold uppercase tracking-widest text-bronze px-4 py-1.5 rounded-full bg-white/5 border border-white/10 backdrop-blur-xs">
-            <Sparkles className="w-3.5 h-3.5 text-bronze" />
             <span>Project Estimation &amp; Site Surveys</span>
           </div>
 

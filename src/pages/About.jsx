@@ -4,7 +4,6 @@ import { Helmet } from 'react-helmet-async';
 import {
   Compass,
   Target,
-  Sparkles,
   ShieldCheck,
   Award,
   Trees,
@@ -76,7 +75,6 @@ export const About = () => {
             <div className="flex items-center justify-center gap-3 sm:gap-4 lg:gap-5 mb-5 sm:mb-7 lg:mb-8 animate-fade-in-up">
               <span className="h-px w-8 sm:w-16 lg:w-20 bg-gradient-to-r from-transparent via-bronze/80 to-bronze transition-all duration-700" />
               <span className="inline-flex items-center gap-2 text-xs sm:text-[13px] lg:text-sm font-semibold tracking-[0.22em] sm:tracking-[0.28em] text-burgundy uppercase px-3.5 py-1.5 rounded-full bg-burgundy/5 border border-burgundy/15 backdrop-blur-xs shadow-xs hover:border-bronze hover:bg-white/80 transition-all duration-300">
-                <Sparkles className="w-3.5 h-3.5 text-bronze animate-pulse" />
                 <span>About Our Organization</span>
               </span>
               <span className="h-px w-8 sm:w-16 lg:w-20 bg-gradient-to-l from-transparent via-bronze/80 to-bronze transition-all duration-700" />
@@ -97,21 +95,7 @@ export const About = () => {
               For over a decade and a half, {companyName} has redefined outdoor architecture across residential, agricultural, and commercial sectors.
             </p>
 
-            {/* Interactive Feature Pills */}
-            <div className="mt-8 flex flex-wrap items-center justify-center gap-2.5 sm:gap-3.5 animate-fade-in-up [animation-delay:450ms]">
-              <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-white/85 backdrop-blur-md border border-sand shadow-xs text-xs sm:text-sm font-medium text-brand-dark hover:border-bronze hover:bg-white hover:scale-105 hover:shadow-md transition-all duration-300 cursor-default">
-                <ShieldCheck className="w-4 h-4 text-bronze shrink-0" />
-                <span>Certified Agronomists</span>
-              </div>
-              <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-white/85 backdrop-blur-md border border-sand shadow-xs text-xs sm:text-sm font-medium text-brand-dark hover:border-bronze hover:bg-white hover:scale-105 hover:shadow-md transition-all duration-300 cursor-default">
-                <Droplets className="w-4 h-4 text-bronze shrink-0" />
-                <span>Water-Conservation Engineering</span>
-              </div>
-              <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-white/85 backdrop-blur-md border border-sand shadow-xs text-xs sm:text-sm font-medium text-brand-dark hover:border-bronze hover:scale-105 hover:shadow-md transition-all duration-300 cursor-default">
-                <Trees className="w-4 h-4 text-bronze shrink-0" />
-                <span>Living Ecosystems</span>
-              </div>
-            </div>
+            
           </div>
         </div>
       </section>

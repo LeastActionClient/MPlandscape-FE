@@ -13,7 +13,6 @@ import {
   Compass,
   MessageSquare,
   ClipboardCheck,
-  Sparkles,
 } from 'lucide-react';
 import SectionHeading from '../components/common/SectionHeading';
 import ServiceCard from '../components/common/ServiceCard';
@@ -477,7 +476,6 @@ export const Home = () => {
               {/* Floating Badge with Gentle Float Animation */}
               <div className="absolute -bottom-6 -right-6 hidden sm:block bg-burgundy/95 backdrop-blur-md text-white p-6 rounded-2xl shadow-2xl max-w-xs border border-bronze/50 animate-float hover:scale-103 transition-transform duration-300 z-20 group/badge">
                 <div className="flex items-center gap-1.5">
-                  <Sparkles className="w-3.5 h-3.5 text-bronze animate-pulse" />
                   <p className="text-xs uppercase tracking-wider text-bronze font-bold">Integrity & Quality</p>
                 </div>
                 <p className="text-sm font-light mt-1.5 leading-relaxed text-cream/90">

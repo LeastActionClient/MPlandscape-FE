@@ -7,7 +7,6 @@ import {
   Mail,
   Clock,
   MessageCircle,
-  Sparkles,
   ShieldCheck,
   Calendar,
   CheckCircle2,
@@ -101,7 +100,6 @@ export const Contact = () => {
               <div className="flex items-center gap-3 sm:gap-4 mb-2 animate-fade-in-up">
                 <span className="h-px w-8 sm:w-14 bg-gradient-to-r from-transparent via-bronze/80 to-bronze transition-all duration-700" />
                 <span className="inline-flex items-center gap-2 text-xs sm:text-[13px] font-semibold tracking-[0.22em] text-sand-200 uppercase px-3.5 py-1.5 rounded-full bg-white/10 border border-white/20 backdrop-blur-md shadow-xs hover:border-bronze transition-all duration-300">
-                  <Sparkles className="w-3.5 h-3.5 text-bronze-light animate-pulse" />
                   <span>Connect With Specialists</span>
                 </span>
                 <span className="h-px w-8 sm:w-14 bg-gradient-to-l from-transparent via-bronze/80 to-bronze transition-all duration-700" />

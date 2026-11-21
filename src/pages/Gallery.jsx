@@ -3,7 +3,6 @@ import { Helmet } from 'react-helmet-async';
 import { Link } from 'react-router-dom';
 import {
   ArrowRight,
-  Sparkles,
   Camera,
   Trees,
   Droplets,
@@ -119,7 +118,6 @@ export const Gallery = () => {
             <div className="flex items-center justify-center gap-3 sm:gap-4 mb-2 animate-fade-in-up">
               <span className="h-px w-8 sm:w-16 bg-gradient-to-r from-transparent via-bronze/80 to-bronze transition-all duration-700" />
               <span className="inline-flex items-center gap-2 text-xs sm:text-[13px] font-semibold tracking-[0.22em] sm:tracking-[0.26em] text-sand-200 uppercase px-3.5 py-1.5 rounded-full bg-white/10 border border-white/20 backdrop-blur-md shadow-xs">
-                <Sparkles className="w-3.5 h-3.5 text-bronze-light animate-pulse" />
                 <span>Visual Portfolio</span>
               </span>
               <span className="h-px w-8 sm:w-16 bg-gradient-to-l from-transparent via-bronze/80 to-bronze transition-all duration-700" />
@@ -350,7 +348,6 @@ export const Gallery = () => {
 
         <ScrollReveal animation="fade-up" delay={150} className="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10 text-center space-y-6">
           <div className="inline-flex items-center gap-2 text-xs font-bold uppercase tracking-widest text-bronze px-4 py-1.5 rounded-full bg-white/5 border border-white/10 backdrop-blur-xs">
-            <Sparkles className="w-3.5 h-3.5 text-bronze" />
             <span>Signature Bespoke Designs</span>
           </div>
 

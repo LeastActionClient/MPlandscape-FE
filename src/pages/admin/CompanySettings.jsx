@@ -2,7 +2,6 @@ import React, { useState, useEffect } from 'react';
 import { Helmet } from 'react-helmet-async';
 import {
   Building2,
-  Sparkles,
   Target,
   Compass,
   Save,
