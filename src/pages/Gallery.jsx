@@ -104,12 +104,12 @@ export const Gallery = () => {
         }}
         aria-label="Projects Gallery Header"
       >
-        {/* Soft dark gradient wash ensuring pristine typography readability */}
-        <div className="absolute inset-0 bg-gradient-to-b from-black/80 via-burgundy-950/70 to-black/85 pointer-events-none" />
+        {/* Light transparent scrim to keep the nursery background bright and visible while ensuring text readability */}
+        <div className="absolute inset-0 bg-gradient-to-b from-black/45 via-black/28 to-black/50 pointer-events-none" />
 
-        {/* Ambient floating glow lights */}
-        <div className="absolute top-1/4 left-10 w-72 h-72 bg-bronze/20 rounded-full blur-3xl pointer-events-none animate-pulse-glow" />
-        <div className="absolute bottom-10 right-14 w-80 h-80 bg-burgundy/25 rounded-full blur-3xl pointer-events-none animate-float-slow" />
+        {/* Subtle warm ambient glow lights */}
+        <div className="absolute top-1/4 left-10 w-72 h-72 bg-bronze/10 rounded-full blur-3xl pointer-events-none animate-pulse-glow" />
+        <div className="absolute bottom-10 right-14 w-80 h-80 bg-burgundy/10 rounded-full blur-3xl pointer-events-none animate-float-slow" />
 
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10 w-full">
           <div className="max-w-2xl sm:max-w-3xl mx-auto text-center space-y-3 sm:space-y-4">
@@ -125,17 +125,17 @@ export const Gallery = () => {
             </div>
 
             {/* Main Headline with Staggered Word Motion */}
-            <h1 className="text-2xl sm:text-3xl md:text-4xl lg:text-[2.65rem] font-bold text-white font-sans tracking-tight break-words leading-tight drop-shadow-[0_2px_8px_rgba(0,0,0,0.85)] animate-fade-in-up [animation-delay:150ms]">
+            <h1 className="text-2xl sm:text-3xl md:text-4xl lg:text-[2.65rem] font-bold text-white font-sans tracking-tight break-words leading-tight drop-shadow-[0_2px_12px_rgba(0,0,0,0.95)] animate-fade-in-up [animation-delay:150ms]">
               <span className="inline-block transition-transform duration-300 hover:scale-[1.01]">
                 Curated Portfolio
               </span>{' '}
-              <span className="inline-block font-serif italic text-bronze-light font-semibold bg-gradient-to-r from-bronze-light via-sand-200 to-bronze-light bg-clip-text text-transparent">
+              <span className="inline-block font-serif italic text-bronze-light font-semibold bg-gradient-to-r from-bronze-light via-sand-100 to-bronze-light bg-clip-text text-transparent drop-shadow-[0_2px_8px_rgba(0,0,0,0.9)]">
                 of Completed Works
               </span>
             </h1>
 
             {/* Subtitle Description */}
-            <p className="text-xs sm:text-sm md:text-base text-sand-100 leading-relaxed max-w-xl mx-auto font-normal drop-shadow-[0_2px_6px_rgba(0,0,0,0.85)] animate-fade-in-up [animation-delay:300ms]">
+            <p className="text-xs sm:text-sm md:text-base text-cream leading-relaxed max-w-xl mx-auto font-normal drop-shadow-[0_2px_8px_rgba(0,0,0,0.95)] animate-fade-in-up [animation-delay:300ms]">
               Browse our dynamic visual archive showcasing bespoke residential estates, agro-forestry plantations, commercial courtyards, and smart irrigation networks.
             </p>
 
