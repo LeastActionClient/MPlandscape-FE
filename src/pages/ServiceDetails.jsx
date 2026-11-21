@@ -96,8 +96,11 @@ export const ServiceDetails = () => {
       </Helmet>
 
       {/* Banner & Breadcrumb */}
-      <section className="bg-gradient-to-b from-cream via-cream to-sand/20 border-b border-sand py-10 lg:py-14">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <section className="bg-gradient-to-b from-cream via-cream to-sand/20 border-b border-sand py-10 lg:py-14 relative overflow-hidden">
+        {/* Ambient subtle glow */}
+        <div className="absolute top-0 right-1/4 w-80 h-80 bg-bronze/10 rounded-full blur-3xl pointer-events-none" />
+
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
           <Breadcrumb
             items={[
               { label: 'Services', to: '/services' },
@@ -105,8 +108,8 @@ export const ServiceDetails = () => {
             ]}
           />
 
-          <div className="max-w-4xl mt-4 space-y-3">
-            <span className="badge-burgundy">Specialized Division</span>
+          <div className="max-w-4xl mt-4 space-y-3 animate-fade-in-up">
+            <span className="badge-burgundy shadow-2xs">Specialized Division</span>
             <h1 className="text-2xl xs:text-3xl sm:text-4xl lg:text-5xl font-extrabold text-burgundy font-sans tracking-tight leading-tight break-words">
               {service.title}
             </h1>
@@ -120,18 +123,21 @@ export const ServiceDetails = () => {
       </section>
 
       {/* Main Details & Enquiry Grid */}
-      <section className="py-16 sm:py-20 bg-cream">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <section className="py-16 sm:py-20 bg-cream relative overflow-hidden">
+        {/* Ambient background glow */}
+        <div className="absolute top-1/2 left-0 w-72 h-72 bg-sand/30 rounded-full blur-3xl pointer-events-none -translate-y-1/2" />
+
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
           <div className="grid lg:grid-cols-12 gap-12 items-start">
             {/* Left Content Column */}
-            <div className="lg:col-span-7 space-y-8">
+            <div className="lg:col-span-7 space-y-8 animate-fade-in-up">
               {/* Feature Hero Image */}
-              <div className="rounded-2xl overflow-hidden shadow-xl border border-sand bg-sand/20 aspect-16/9 flex items-center justify-center">
+              <div className="rounded-2xl overflow-hidden shadow-xl border border-sand bg-sand/20 aspect-16/9 flex items-center justify-center group/img relative">
                 {service.imageUrl ? (
                   <img
                     src={service.imageUrl}
                     alt={service.title}
-                    className="w-full h-full object-cover"
+                    className="w-full h-full object-cover transition-transform duration-700 ease-out group-hover/img:scale-105"
                     onError={(e) => {
                       e.currentTarget.onerror = null;
                       e.currentTarget.src = '/mp-logo.png';
@@ -161,15 +167,18 @@ export const ServiceDetails = () => {
 
               {/* Key Features & Deliverables */}
               {service.features && service.features.length > 0 && (
-                <div className="p-6 sm:p-8 rounded-2xl bg-cream-light border border-sand space-y-4">
-                  <div className="flex items-center gap-2 text-burgundy font-bold text-lg">
-                    <Award className="w-5 h-5 text-bronze" />
+                <div className="relative overflow-hidden p-6 sm:p-8 rounded-2xl bg-cream-light border border-sand hover:border-bronze hover:shadow-xl hover:shadow-burgundy/8 transition-all duration-300 group">
+                  {/* Sliding Top Accent Line */}
+                  <div className="absolute top-0 left-0 right-0 h-1 bg-gradient-to-r from-burgundy via-bronze to-burgundy scale-x-0 group-hover:scale-x-100 transition-transform duration-500 origin-left" />
+
+                  <div className="flex items-center gap-2 text-burgundy font-bold text-lg mb-4">
+                    <Award className="w-5 h-5 text-bronze group-hover:rotate-12 transition-transform duration-300" />
                     <span>Key Features & Specifications</span>
                   </div>
                   <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 pt-2">
                     {service.features.map((feature, idx) => (
-                      <div key={idx} className="flex items-start gap-2.5">
-                        <CheckCircle2 className="w-4 h-4 text-bronze flex-shrink-0 mt-0.5" />
+                      <div key={idx} className="flex items-start gap-2.5 p-1 rounded-lg hover:bg-sand/30 transition-colors duration-200">
+                        <CheckCircle2 className="w-4 h-4 text-bronze shrink-0 mt-0.5 group-hover:scale-110 transition-transform duration-200" />
                         <span className="text-sm text-brand-dark font-medium leading-snug">
                           {feature}
                         </span>
@@ -180,7 +189,7 @@ export const ServiceDetails = () => {
               )}
 
               {/* Quality Guarantee Box */}
-              <div className="p-6 rounded-2xl bg-burgundy text-white space-y-2 border border-bronze/30">
+              <div className="p-6 rounded-2xl bg-burgundy text-white space-y-2 border border-bronze/30 shadow-lg hover:shadow-2xl hover:border-bronze hover:-translate-y-1 transition-all duration-300">
                 <div className="flex items-center gap-2 text-bronze text-sm sm:text-xs font-bold uppercase tracking-wider">
                   <ShieldCheck className="w-4 h-4 text-bronze" />
                   <span>The MP Landscape Guarantee</span>
@@ -195,7 +204,7 @@ export const ServiceDetails = () => {
             </div>
 
             {/* Right Sticky Enquiry Form */}
-            <div className="lg:col-span-5 sticky top-28">
+            <div className="lg:col-span-5 sticky top-28 animate-fade-in-up">
               <EnquiryForm
                 preselectedServiceId={service._id}
                 title={`Request Quote for ${service.title}`}

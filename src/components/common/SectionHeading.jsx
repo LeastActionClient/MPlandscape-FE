@@ -15,10 +15,10 @@ export const SectionHeading = ({
   }[align];
 
   return (
-    <div className={`flex flex-col max-w-3xl ${alignment} ${className}`}>
+    <div className={`flex flex-col max-w-3xl animate-fade-in-up ${alignment} ${className}`}>
       {badge && (
         <span
-          className={`inline-flex items-center gap-1.5 px-3.5 py-1 rounded-full text-xs sm:text-xs font-semibold tracking-wider uppercase mb-3 border transition-all duration-300 shadow-2xs hover:scale-102 ${
+          className={`inline-flex items-center gap-1.5 px-3.5 py-1 rounded-full text-xs sm:text-xs font-semibold tracking-wider uppercase mb-3 border transition-all duration-300 shadow-2xs hover:scale-105 hover:shadow-xs ${
             light
               ? 'bg-cream/10 text-cream border-cream/20 hover:border-bronze/40'
               : 'bg-burgundy/10 text-burgundy border-burgundy/20 hover:border-bronze/50'
