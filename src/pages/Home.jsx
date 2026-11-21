@@ -238,20 +238,20 @@ export const Home = () => {
 
               {/* Action Buttons: Cleanly Spaced Below Headline */}
               <div
-                className={`pt-2 sm:pt-3 md:pt-4 flex flex-row flex-wrap sm:flex-nowrap items-center gap-3 sm:gap-4 transition-all duration-700 delay-300 transform ${
+                className={`pt-2 sm:pt-3 md:pt-4 flex flex-col min-[420px]:flex-row flex-wrap sm:flex-nowrap items-stretch min-[420px]:items-center gap-2.5 sm:gap-4 transition-all duration-700 delay-300 transform ${
                   currentSlide === 0 ? 'translate-y-0 opacity-100' : 'translate-y-6 opacity-0'
                 }`}
               >
                 <Link
                   to="/services"
-                  className="inline-flex items-center justify-center gap-2 px-5 py-2.5 sm:px-6 sm:py-3 rounded-full bg-burgundy hover:bg-burgundy-900 text-white border border-burgundy hover:border-bronze text-sm sm:text-sm md:text-base font-semibold tracking-wide transition-all duration-300 shadow-md hover:shadow-xl hover:shadow-burgundy/40 hover:-translate-y-0.5 active:translate-y-0 group/btn whitespace-nowrap"
+                  className="inline-flex items-center justify-center gap-2 px-5 py-2.5 sm:px-6 sm:py-3 rounded-full bg-burgundy hover:bg-burgundy-900 text-white border border-burgundy hover:border-bronze text-sm sm:text-sm md:text-base font-semibold tracking-wide transition-all duration-300 shadow-md hover:shadow-xl hover:shadow-burgundy/40 hover:-translate-y-0.5 active:translate-y-0 group/btn whitespace-nowrap text-center"
                 >
                   <span>Explore Our Services</span>
                   <ArrowRight className="w-4 h-4 text-bronze-light shrink-0 transition-transform duration-300 group-hover/btn:translate-x-1" />
                 </Link>
                 <Link
                   to="/contact"
-                  className="inline-flex items-center justify-center gap-2 px-5 py-2.5 sm:px-6 sm:py-3 rounded-full bg-white/15 hover:bg-white/25 text-white border border-white/60 hover:border-white text-sm sm:text-sm md:text-base font-semibold tracking-wide transition-all duration-300 backdrop-blur-md shadow-md hover:shadow-xl hover:-translate-y-0.5 active:translate-y-0 group/btn whitespace-nowrap"
+                  className="inline-flex items-center justify-center gap-2 px-5 py-2.5 sm:px-6 sm:py-3 rounded-full bg-white/15 hover:bg-white/25 text-white border border-white/60 hover:border-white text-sm sm:text-sm md:text-base font-semibold tracking-wide transition-all duration-300 backdrop-blur-md shadow-md hover:shadow-xl hover:-translate-y-0.5 active:translate-y-0 group/btn whitespace-nowrap text-center"
                 >
                   <span className="text-white drop-shadow-xs">Send an Enquiry</span>
                   <ArrowRight className="w-4 h-4 text-bronze-light group-hover:text-white shrink-0 transition-transform duration-300 group-hover/btn:translate-x-1" />
@@ -298,20 +298,20 @@ export const Home = () => {
 
               {/* Action Buttons: Cleanly Spaced Below Headline */}
               <div
-                className={`pt-2 sm:pt-3 md:pt-4 flex flex-row flex-wrap sm:flex-nowrap items-center gap-3 sm:gap-4 transition-all duration-700 delay-300 transform ${
+                className={`pt-2 sm:pt-3 md:pt-4 flex flex-col min-[420px]:flex-row flex-wrap sm:flex-nowrap items-stretch min-[420px]:items-center gap-2.5 sm:gap-4 transition-all duration-700 delay-300 transform ${
                   currentSlide === 1 ? 'translate-y-0 opacity-100' : 'translate-y-6 opacity-0'
                 }`}
               >
                 <Link
                   to="/services"
-                  className="inline-flex items-center justify-center gap-2 px-5 py-2.5 sm:px-6 sm:py-3 rounded-full bg-burgundy hover:bg-burgundy-900 text-white border border-burgundy hover:border-bronze text-sm sm:text-sm md:text-base font-semibold tracking-wide transition-all duration-300 shadow-md hover:shadow-xl hover:shadow-burgundy/40 hover:-translate-y-0.5 active:translate-y-0 group/btn whitespace-nowrap"
+                  className="inline-flex items-center justify-center gap-2 px-5 py-2.5 sm:px-6 sm:py-3 rounded-full bg-burgundy hover:bg-burgundy-900 text-white border border-burgundy hover:border-bronze text-sm sm:text-sm md:text-base font-semibold tracking-wide transition-all duration-300 shadow-md hover:shadow-xl hover:shadow-burgundy/40 hover:-translate-y-0.5 active:translate-y-0 group/btn whitespace-nowrap text-center"
                 >
                   <span>Explore Our Services</span>
                   <ArrowRight className="w-4 h-4 text-bronze-light shrink-0 transition-transform duration-300 group-hover/btn:translate-x-1" />
                 </Link>
                 <Link
                   to="/contact"
-                  className="inline-flex items-center justify-center gap-2 px-5 py-2.5 sm:px-6 sm:py-3 rounded-full bg-white/15 hover:bg-white/25 text-white border border-white/60 hover:border-white text-sm sm:text-sm md:text-base font-semibold tracking-wide transition-all duration-300 backdrop-blur-md shadow-md hover:shadow-xl hover:-translate-y-0.5 active:translate-y-0 group/btn whitespace-nowrap"
+                  className="inline-flex items-center justify-center gap-2 px-5 py-2.5 sm:px-6 sm:py-3 rounded-full bg-white/15 hover:bg-white/25 text-white border border-white/60 hover:border-white text-sm sm:text-sm md:text-base font-semibold tracking-wide transition-all duration-300 backdrop-blur-md shadow-md hover:shadow-xl hover:-translate-y-0.5 active:translate-y-0 group/btn whitespace-nowrap text-center"
                 >
                   <span className="text-white drop-shadow-xs">Send an Enquiry</span>
                   <ArrowRight className="w-4 h-4 text-bronze-light group-hover:text-white shrink-0 transition-transform duration-300 group-hover/btn:translate-x-1" />

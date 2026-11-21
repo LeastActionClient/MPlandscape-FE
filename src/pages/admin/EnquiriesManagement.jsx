@@ -428,8 +428,8 @@ const EnquiriesManagement = () => {
           />
         ) : (
           <div className="bg-white rounded-2xl border border-sand-300 shadow-xs overflow-hidden">
-            <div className="overflow-x-auto w-full">
-              <table className="min-w-full text-left text-sm text-charcoal">
+            <div className="overflow-x-auto w-full min-w-0">
+              <table className="w-full min-w-[640px] text-left text-sm text-charcoal">
                 <thead className="bg-sand-50/70 text-xs font-semibold text-charcoal/70 uppercase tracking-wider border-b border-sand-200">
                   <tr>
                     <th scope="col" className="px-3 sm:px-5 py-3.5">Customer</th>

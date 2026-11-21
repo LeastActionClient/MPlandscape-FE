@@ -413,8 +413,8 @@ const Dashboard = () => {
               />
             </div>
           ) : (
-            <div className="overflow-x-auto w-full">
-              <table className="min-w-full text-left text-sm text-charcoal">
+            <div className="overflow-x-auto w-full min-w-0">
+              <table className="w-full min-w-[620px] text-left text-sm text-charcoal">
                 <thead className="bg-sand-50/70 text-xs font-semibold text-charcoal/70 uppercase tracking-wider border-b border-sand-200">
                   <tr>
                     <th scope="col" className="px-6 py-3.5">Customer</th>
