@@ -456,7 +456,7 @@ const ContactManagement = () => {
                 {mapUrl && (
                   <div className="mt-3 rounded-xl overflow-hidden border border-sand-300 h-44 bg-sand-50 relative">
                     <iframe
-                      src={formatGoogleMapsEmbedUrl(mapUrl, physicalOfficeAddress)}
+                      src={formatGoogleMapsEmbedUrl(mapUrl, address)}
                       width="100%"
                       height="100%"
                       style={{ border: 0 }}
