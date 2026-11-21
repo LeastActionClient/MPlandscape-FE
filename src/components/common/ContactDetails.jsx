@@ -37,9 +37,9 @@ export const ContactDetails = ({ settings, className = '' }) => {
   return (
     <div className={`space-y-6 ${className}`}>
       {/* Phone Numbers */}
-      <div className="flex items-start gap-4">
-        <div className="w-10 h-10 rounded-xl bg-burgundy/10 text-burgundy flex items-center justify-center flex-shrink-0">
-          <Phone className="w-5 h-5 text-burgundy" />
+      <div className="group/item flex items-start gap-4 transition-transform duration-300 hover:translate-x-1">
+        <div className="w-10 h-10 rounded-xl bg-burgundy/10 text-burgundy flex items-center justify-center flex-shrink-0 group-hover/item:bg-burgundy group-hover/item:text-white group-hover/item:scale-110 transition-all duration-300 shadow-2xs">
+          <Phone className="w-5 h-5" />
         </div>
         <div>
           <h4 className="text-sm sm:text-xs font-bold uppercase tracking-wider text-bronze">Telephone / Enquiries</h4>
@@ -59,9 +59,9 @@ export const ContactDetails = ({ settings, className = '' }) => {
 
       {/* WhatsApp Quick Chat */}
       {whatsapp && (
-        <div className="flex items-start gap-4">
-          <div className="w-10 h-10 rounded-xl bg-bronze/15 text-bronze-dark flex items-center justify-center flex-shrink-0">
-            <MessageCircle className="w-5 h-5 text-bronze-dark" />
+        <div className="group/item flex items-start gap-4 transition-transform duration-300 hover:translate-x-1">
+          <div className="w-10 h-10 rounded-xl bg-bronze/15 text-bronze-dark flex items-center justify-center flex-shrink-0 group-hover/item:bg-bronze group-hover/item:text-white group-hover/item:scale-110 transition-all duration-300 shadow-2xs">
+            <MessageCircle className="w-5 h-5" />
           </div>
           <div>
             <h4 className="text-sm sm:text-xs font-bold uppercase tracking-wider text-bronze">WhatsApp Direct</h4>
@@ -72,16 +72,16 @@ export const ContactDetails = ({ settings, className = '' }) => {
               className="mt-1 inline-flex flex-wrap items-center gap-1.5 text-base sm:text-sm font-semibold text-brand-dark hover:text-burgundy transition-colors"
             >
               <span className="break-all">{whatsapp}</span>
-              <span className="text-xs sm:text-[10px] bg-sand/60 px-2 py-0.5 rounded-full font-medium text-brand-dark shrink-0">Chat Now</span>
+              <span className="text-xs sm:text-[10px] bg-sand/60 px-2 py-0.5 rounded-full font-medium text-brand-dark shrink-0 hover:bg-bronze hover:text-white transition-colors">Chat Now</span>
             </a>
           </div>
         </div>
       )}
 
       {/* Email Addresses */}
-      <div className="flex items-start gap-4">
-        <div className="w-10 h-10 rounded-xl bg-burgundy/10 text-burgundy flex items-center justify-center flex-shrink-0">
-          <Mail className="w-5 h-5 text-burgundy" />
+      <div className="group/item flex items-start gap-4 transition-transform duration-300 hover:translate-x-1">
+        <div className="w-10 h-10 rounded-xl bg-burgundy/10 text-burgundy flex items-center justify-center flex-shrink-0 group-hover/item:bg-burgundy group-hover/item:text-white group-hover/item:scale-110 transition-all duration-300 shadow-2xs">
+          <Mail className="w-5 h-5" />
         </div>
         <div>
           <h4 className="text-sm sm:text-xs font-bold uppercase tracking-wider text-bronze">Email Correspondence</h4>
@@ -101,9 +101,9 @@ export const ContactDetails = ({ settings, className = '' }) => {
 
       {/* Physical Address */}
       {settings.address && (
-        <div className="flex items-start gap-4">
-          <div className="w-10 h-10 rounded-xl bg-burgundy/10 text-burgundy flex items-center justify-center flex-shrink-0">
-            <MapPin className="w-5 h-5 text-burgundy" />
+        <div className="group/item flex items-start gap-4 transition-transform duration-300 hover:translate-x-1">
+          <div className="w-10 h-10 rounded-xl bg-burgundy/10 text-burgundy flex items-center justify-center flex-shrink-0 group-hover/item:bg-burgundy group-hover/item:text-white group-hover/item:scale-110 transition-all duration-300 shadow-2xs">
+            <MapPin className="w-5 h-5" />
           </div>
           <div>
             <h4 className="text-sm sm:text-xs font-bold uppercase tracking-wider text-bronze">Headquarters & Nursery</h4>
@@ -116,9 +116,9 @@ export const ContactDetails = ({ settings, className = '' }) => {
 
       {/* Working Hours */}
       {settings.workingHours && (
-        <div className="flex items-start gap-4">
-          <div className="w-10 h-10 rounded-xl bg-burgundy/10 text-burgundy flex items-center justify-center flex-shrink-0">
-            <Clock className="w-5 h-5 text-burgundy" />
+        <div className="group/item flex items-start gap-4 transition-transform duration-300 hover:translate-x-1">
+          <div className="w-10 h-10 rounded-xl bg-burgundy/10 text-burgundy flex items-center justify-center flex-shrink-0 group-hover/item:bg-burgundy group-hover/item:text-white group-hover/item:scale-110 transition-all duration-300 shadow-2xs">
+            <Clock className="w-5 h-5" />
           </div>
           <div>
             <h4 className="text-sm sm:text-xs font-bold uppercase tracking-wider text-bronze">Operational Hours</h4>
