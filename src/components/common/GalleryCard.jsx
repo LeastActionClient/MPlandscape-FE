@@ -34,14 +34,20 @@ export const GalleryCard = ({ item, onSelect, className = '' }) => {
   return (
     <div
       onClick={() => onSelect && onSelect(item)}
-      className={`group relative overflow-hidden rounded-2xl border border-sand/60 bg-brand-charcoal cursor-pointer shadow-md hover:shadow-xl transition-all duration-300 transform hover:-translate-y-1 aspect-4/3 w-full select-none ${className}`}
+      className={`group relative overflow-hidden rounded-2xl border border-sand/70 bg-brand-charcoal cursor-pointer shadow-md hover:shadow-2xl hover:shadow-burgundy/25 transition-all duration-500 transform hover:-translate-y-2 aspect-4/3 w-full select-none ${className}`}
     >
-      {/* Background Image */}
+      {/* Sliding Top Accent Highlight on Hover */}
+      <div className="absolute top-0 left-0 right-0 h-1 bg-gradient-to-r from-burgundy via-bronze to-burgundy scale-x-0 group-hover:scale-x-100 transition-transform duration-500 origin-left z-20 pointer-events-none" />
+
+      {/* Subtle Ambient Corner Glow on Hover */}
+      <div className="absolute -top-12 -right-12 w-28 h-28 bg-bronze/20 rounded-full blur-xl opacity-0 group-hover:opacity-100 transition-opacity duration-500 pointer-events-none z-10" />
+
+      {/* Background Image with Smooth Organic Zoom */}
       {!imageError && item.imageUrl ? (
         <img
           src={item.imageUrl}
           alt={item.title}
-          className="w-full h-full object-cover transition-transform duration-500 ease-out group-hover:scale-105"
+          className="w-full h-full object-cover transition-transform duration-700 ease-out group-hover:scale-110"
           loading="lazy"
           onError={() => setImageError(true)}
         />
@@ -53,21 +59,24 @@ export const GalleryCard = ({ item, onSelect, className = '' }) => {
       )}
 
       {/* Permanent Dark Gradient Overlay for Maximum Title Legibility */}
-      <div className="absolute inset-0 bg-gradient-to-t from-black/85 via-black/25 to-transparent pointer-events-none transition-opacity duration-300 group-hover:from-black/90 group-hover:via-black/35" />
+      <div className="absolute inset-0 bg-gradient-to-t from-black/90 via-black/35 to-black/10 pointer-events-none transition-opacity duration-500 group-hover:from-black/95 group-hover:via-black/45" />
 
-      {/* Subtle Zoom Indicator on Hover */}
-      <div className="absolute top-2.5 right-2.5 w-7 h-7 sm:w-8 sm:h-8 rounded-full bg-black/45 backdrop-blur-md text-white flex items-center justify-center opacity-0 group-hover:opacity-100 transition-all duration-300 shadow-md border border-white/20">
-        <ZoomIn className="w-3.5 h-3.5 sm:w-4 sm:h-4 text-white" />
+      {/* Modern Zoom / Expand Indicator Pill */}
+      <div className="absolute top-3 right-3 px-2.5 py-1 rounded-full bg-black/50 backdrop-blur-md text-white flex items-center gap-1.5 opacity-0 group-hover:opacity-100 transform translate-y-1 group-hover:translate-y-0 transition-all duration-300 shadow-lg border border-white/20 group-hover:border-bronze/60">
+        <ZoomIn className="w-3.5 h-3.5 text-bronze-light" />
+        <span className="text-[11px] font-semibold text-white tracking-wide hidden sm:inline">View</span>
       </div>
 
-      {/* Bottom Title Overlay with Small Elegant Icon */}
-      <div className="absolute bottom-0 inset-x-0 p-3 sm:p-3.5 z-10 flex items-center gap-2 sm:gap-2.5 min-w-0">
-        <div className="w-5 h-5 sm:w-6 sm:h-6 rounded-full bg-black/40 border border-white/20 flex items-center justify-center shrink-0">
-          <IconComponent className="w-3.5 h-3.5 text-bronze-light" />
+      {/* Bottom Title Overlay with Animated Icon and Arrow */}
+      <div className="absolute bottom-0 inset-x-0 p-3 sm:p-4 z-10 flex items-center justify-between gap-2.5 min-w-0">
+        <div className="flex items-center gap-2 sm:gap-2.5 min-w-0 flex-1">
+          <div className="w-6 h-6 sm:w-7 sm:h-7 rounded-full bg-black/55 border border-white/20 group-hover:border-bronze/60 flex items-center justify-center shrink-0 group-hover:scale-110 group-hover:rotate-6 transition-all duration-300 shadow-sm">
+            <IconComponent className="w-3.5 h-3.5 sm:w-4 sm:h-4 text-bronze-light" />
+          </div>
+          <h4 className="text-xs sm:text-sm font-semibold text-white tracking-wide truncate drop-shadow-sm font-sans flex-1 group-hover:text-sand-100 transition-colors duration-300">
+            {item.title}
+          </h4>
         </div>
-        <h4 className="text-sm sm:text-sm font-semibold text-white tracking-wide truncate drop-shadow-sm font-sans flex-1">
-          {item.title}
-        </h4>
       </div>
     </div>
   );
