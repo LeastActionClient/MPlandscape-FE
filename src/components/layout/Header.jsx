@@ -21,7 +21,7 @@ export const Header = ({ settings }) => {
               aria-label="MP Landscape Services Home"
             >
               <MPLogo
-                imgClassName="h-8.5 sm:h-11 md:h-[48px] w-auto object-contain"
+                imgClassName="h-8 sm:h-11 md:h-[48px] w-auto object-contain"
                 showText={true}
               />
             </Link>
@@ -33,15 +33,16 @@ export const Header = ({ settings }) => {
           </div>
 
           {/* Right: Action CTA & Mobile Trigger */}
-          <div className="flex items-center justify-end gap-2 sm:gap-3 shrink-0">
+          <div className="flex items-center justify-end gap-1.5 sm:gap-3 shrink-0">
             {/* Consultation CTA Button - Fully Responsive on Mobile, Tablet & Desktop */}
             <Link
               to="/contact"
-              className="inline-flex items-center gap-1.5 btn-primary text-xs sm:text-xs lg:text-sm px-3 py-1.5 sm:px-3.5 sm:py-2 lg:px-4.5 lg:py-2 shadow-xs whitespace-nowrap"
+              className="inline-flex items-center gap-1 sm:gap-1.5 btn-primary text-xs lg:text-sm px-2 py-1.5 sm:px-3.5 sm:py-2 lg:px-4.5 lg:py-2 shadow-xs whitespace-nowrap"
             >
-              <span className="sm:hidden font-medium">Consultation</span>
+              <span className="inline min-[360px]:hidden font-medium">Consult</span>
+              <span className="hidden min-[360px]:inline sm:hidden font-medium">Consultation</span>
               <span className="hidden sm:inline">Request Consultation</span>
-              <ArrowRight className="w-3.5 h-3.5 sm:w-3.5 sm:h-3.5 lg:w-4 lg:h-4 text-bronze-light shrink-0" />
+              <ArrowRight className="w-3.5 h-3.5 lg:w-4 lg:h-4 text-bronze-light shrink-0" />
             </Link>
 
             {/* Mobile Hamburger Button */}

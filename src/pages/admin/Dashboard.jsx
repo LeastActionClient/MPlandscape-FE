@@ -236,8 +236,11 @@ const Dashboard = () => {
               <div
                 key={kpi.title}
                 onClick={() => navigate(kpi.path)}
-                className="bg-white rounded-2xl border border-sand-300 p-5 shadow-xs hover:shadow-md hover:border-sand-400 transition-all duration-200 cursor-pointer group flex flex-col justify-between"
+                className="bg-white rounded-2xl border border-sand-300 p-5 shadow-xs hover:shadow-xl hover:shadow-burgundy/5 hover:border-sand-400 hover:-translate-y-1 transition-all duration-300 cursor-pointer group flex flex-col justify-between relative overflow-hidden"
               >
+                {/* Sliding Top Accent Line */}
+                <div className="absolute top-0 left-0 right-0 h-1 bg-gradient-to-r from-burgundy via-bronze to-burgundy scale-x-0 group-hover:scale-x-100 transition-transform duration-500 origin-left" />
+
                 <div className="flex items-start justify-between">
                   <div>
                     <p className="text-xs font-semibold uppercase tracking-wider text-charcoal/60">
@@ -247,13 +250,13 @@ const Dashboard = () => {
                       {kpi.value}
                     </p>
                   </div>
-                  <div className={`w-11 h-11 rounded-xl ${kpi.bg} flex items-center justify-center shadow-xs group-hover:scale-105 transition-transform`}>
+                  <div className={`w-11 h-11 rounded-xl ${kpi.bg} flex items-center justify-center shadow-xs group-hover:scale-110 group-hover:rotate-6 transition-all duration-300`}>
                     <Icon className={`w-6 h-6 ${kpi.iconColor}`} />
                   </div>
                 </div>
                 <div className="mt-4 pt-3 border-t border-sand-100 flex items-center justify-between text-xs">
                   <span className="text-charcoal/70">{kpi.subtext}</span>
-                  <span className="text-burgundy-800 font-semibold group-hover:translate-x-0.5 transition-transform flex items-center gap-0.5">
+                  <span className="text-burgundy-800 font-semibold group-hover:translate-x-1 transition-transform flex items-center gap-0.5">
                     View
                     <ChevronRight className="w-3.5 h-3.5" />
                   </span>
@@ -413,8 +416,8 @@ const Dashboard = () => {
               />
             </div>
           ) : (
-            <div className="overflow-x-auto w-full">
-              <table className="min-w-full text-left text-sm text-charcoal">
+            <div className="overflow-x-auto w-full min-w-0">
+              <table className="w-full min-w-[620px] text-left text-sm text-charcoal">
                 <thead className="bg-sand-50/70 text-xs font-semibold text-charcoal/70 uppercase tracking-wider border-b border-sand-200">
                   <tr>
                     <th scope="col" className="px-6 py-3.5">Customer</th>

@@ -366,13 +366,16 @@ const GalleryManagement = () => {
               {paginatedItems.map((item) => (
                 <div
                   key={item._id}
-                  className="bg-white rounded-2xl border border-sand-300 shadow-xs overflow-hidden flex flex-col group hover:shadow-md transition-all duration-200"
+                  className="bg-white rounded-2xl border border-sand-300 shadow-xs overflow-hidden flex flex-col group hover:shadow-xl hover:shadow-burgundy/5 hover:border-sand-400 hover:-translate-y-1 transition-all duration-300 relative"
                 >
+                  {/* Sliding Top Accent Line */}
+                  <div className="absolute top-0 left-0 right-0 h-1 bg-gradient-to-r from-burgundy via-bronze to-burgundy scale-x-0 group-hover:scale-x-100 transition-transform duration-500 origin-left z-10" />
+
                   <div className="relative aspect-4/3 bg-sand-100 overflow-hidden">
                     <img
                       src={item.imageUrl}
                       alt={item.title}
-                      className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300"
+                      className="w-full h-full object-cover group-hover:scale-108 transition-transform duration-500 ease-out"
                       onError={(e) => {
                         e.target.src = '/mp-logo.png';
                       }}

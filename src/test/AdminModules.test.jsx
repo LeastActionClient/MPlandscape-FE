@@ -116,6 +116,7 @@ vi.mock('../services/settingsService', () => ({
         emailAddresses: ['info@mplandscape.com'],
         whatsappNumber: '+91 8838548402',
         address: 'Coimbatore, Tamil Nadu, India',
+        mapUrl: 'https://maps.google.com/maps?q=13.04601,80.1309814',
         workingHours: 'Mon - Sat: 8:00 AM - 6:30 PM',
         vision: 'Excellence in horticultural solutions',
         mission: 'Sustainable landscape development',

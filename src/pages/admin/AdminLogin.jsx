@@ -96,8 +96,10 @@ const AdminLogin = () => {
           </div>
         </div>
 
-        <div className="mt-8 sm:mx-auto sm:w-full sm:max-w-md px-4 relative z-10">
-          <div className="bg-white py-8 px-6 shadow-xl rounded-2xl sm:px-10 border border-sand-300">
+        <div className="mt-8 sm:mx-auto sm:w-full sm:max-w-md px-4 relative z-10 animate-fade-in-up">
+          <div className="bg-white py-8 px-6 shadow-xl hover:shadow-2xl rounded-2xl sm:px-10 border border-sand-300 relative overflow-hidden transition-all duration-300">
+            {/* Top Accent Gradient Bar */}
+            <div className="absolute top-0 left-0 right-0 h-1 bg-gradient-to-r from-burgundy-900 via-bronze to-burgundy-900" />
             {authError && (
               <div
                 role="alert"

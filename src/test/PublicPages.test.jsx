@@ -192,4 +192,14 @@ describe('Public Website Pages & Forms (Task 8.2)', () => {
       expect(screen.getByText(/Thank You!/i)).toBeInTheDocument();
     });
   });
+
+  it('converts user Google Maps place links to embeddable map URLs', () => {
+    const rawPlaceUrl =
+      "https://www.google.com/maps/place/13%C2%B002'45.6%22N+80%C2%B007'51.5%22E/@13.04601,80.1284065,680m/data=!3m2!1e3!4b1!4m4!3m3!8m2!3d13.04601!4d80.1309814?hl=en&entry=ttu";
+    const { formatGoogleMapsEmbedUrl } = require('../utils/mapHelper');
+    const embedUrl = formatGoogleMapsEmbedUrl(rawPlaceUrl);
+
+    expect(embedUrl).toContain('maps.google.com/maps?q=13.04601,80.1309814');
+    expect(embedUrl).toContain('output=embed');
+  });
 });
