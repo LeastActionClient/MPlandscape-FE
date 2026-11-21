@@ -40,12 +40,21 @@ export const SectionHeading = ({
         </h2>
       )}
 
-      {/* Decorative Bronze Divider Accent with gradient and sliding shimmer */}
-      <div
-        className={`h-1 w-16 bg-gradient-to-r from-bronze-dark via-bronze to-bronze-light rounded-full my-3.5 shadow-xs transition-all duration-500 hover:w-24 ${
-          align === 'center' ? 'mx-auto' : ''
-        }`}
-      />
+      {/* Refined Bronze Decorative Accents around Section Headings */}
+      {align === 'center' ? (
+        <div className="flex items-center justify-center gap-2.5 my-3.5 select-none" aria-hidden="true">
+          <span className="w-8 sm:w-12 h-px bg-gradient-to-r from-transparent to-bronze/60" />
+          <span className="w-1.5 h-1.5 rotate-45 border border-bronze bg-bronze/30 shadow-2xs" />
+          <div className="h-0.5 w-14 sm:w-18 bg-gradient-to-r from-bronze-dark via-bronze to-bronze-light rounded-full shadow-xs transition-all duration-500 hover:w-24" />
+          <span className="w-1.5 h-1.5 rotate-45 border border-bronze bg-bronze/30 shadow-2xs" />
+          <span className="w-8 sm:w-12 h-px bg-gradient-to-l from-transparent to-bronze/60" />
+        </div>
+      ) : (
+        <div className="flex items-center gap-2.5 my-3.5 select-none" aria-hidden="true">
+          <span className="w-1.5 h-1.5 rotate-45 border border-bronze bg-bronze/30 shadow-2xs" />
+          <div className="h-0.5 w-16 sm:w-20 bg-gradient-to-r from-bronze to-transparent rounded-full shadow-xs" />
+        </div>
+      )}
 
       {subtitle && (
         <p

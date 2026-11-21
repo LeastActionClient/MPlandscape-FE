@@ -15,6 +15,11 @@ import LoadingSpinner from '../components/common/LoadingSpinner';
 import ErrorMessage from '../components/common/ErrorMessage';
 import ServiceCard from '../components/common/ServiceCard';
 import ScrollReveal from '../components/common/ScrollReveal';
+import SectionDivider from '../components/common/SectionDivider';
+import {
+  BotanicalBranchLeft,
+  BotanicalBranchRight,
+} from '../components/common/DecorativeSideDecor';
 import serviceService from '../services/serviceService';
 
 export const ServiceDetails = () => {
@@ -125,7 +130,8 @@ export const ServiceDetails = () => {
 
       {/* Main Details & Enquiry Grid */}
       <section className="py-16 sm:py-20 bg-cream relative overflow-hidden">
-        {/* Ambient background glow */}
+        {/* Ambient background glow & subtle botanical side decoration */}
+        <BotanicalBranchLeft />
         <div className="absolute top-1/2 left-0 w-72 h-72 bg-sand/30 rounded-full blur-3xl pointer-events-none -translate-y-1/2" />
 
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
@@ -222,8 +228,12 @@ export const ServiceDetails = () => {
 
       {/* Related Services Section */}
       {relatedServices.length > 0 && (
-        <section className="py-16 bg-cream-light border-t border-sand">
-          <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <>
+          <SectionDivider variant="bronze-accent" />
+          <section className="py-16 bg-sand-50/70 border-t border-sand-200/60 relative overflow-hidden">
+            {/* Subtle botanical line art */}
+            <BotanicalBranchRight />
+            <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
             <div className="flex items-center justify-between mb-8">
               <div>
                 <span className="badge-burgundy">Complementary Solutions</span>
@@ -246,6 +256,7 @@ export const ServiceDetails = () => {
             </div>
           </div>
         </section>
+        </>
       )}
     </>
   );

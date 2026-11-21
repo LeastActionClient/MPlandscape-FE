@@ -20,6 +20,12 @@ import SectionHeading from '../components/common/SectionHeading';
 import EnquiryForm from '../components/common/EnquiryForm';
 import ContactDetails from '../components/common/ContactDetails';
 import ScrollReveal from '../components/common/ScrollReveal';
+import SectionDivider from '../components/common/SectionDivider';
+import {
+  BotanicalBranchLeft,
+  BotanicalBranchRight,
+  TopographicalContour,
+} from '../components/common/DecorativeSideDecor';
 import contactHeroBg from '../assets/contact-hero-bg.jpg';
 import { formatGoogleMapsEmbedUrl, getDirectGoogleMapsUrl } from '../utils/mapHelper';
 
@@ -137,8 +143,10 @@ export const Contact = () => {
       </section>
 
       {/* 2. QUICK DIRECT COMMUNICATION CHANNELS: Modern Interactive Cards */}
-      <section className="py-12 sm:py-14 bg-cream-light border-b border-sand/60">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <section className="py-12 sm:py-14 bg-cream border-b border-sand/60 relative overflow-hidden">
+        {/* Subtle botanical line art in margin */}
+        <BotanicalBranchLeft />
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 sm:gap-5">
             
             {/* Direct Call */}
@@ -239,9 +247,13 @@ export const Contact = () => {
         </div>
       </section>
 
+      <SectionDivider variant="bronze-accent" />
+
       {/* 3. MAIN SECTION: CONTACT CHANNELS & INTERACTIVE ENQUIRY FORM */}
-      <section className="py-16 sm:py-20 bg-cream relative">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <section className="py-16 sm:py-20 bg-sand-50/70 border-y border-sand-200/60 relative overflow-hidden">
+        {/* Subtle topographical contours in empty margin */}
+        <TopographicalContour position="right" />
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
           <div className="grid lg:grid-cols-12 gap-10 lg:gap-12 items-start">
             
             {/* Left Column: Direct Info Luxury Card */}
@@ -286,8 +298,12 @@ export const Contact = () => {
         </div>
       </section>
 
+      <SectionDivider variant="bronze-accent" />
+
       {/* 4. CONSULTATION TIMELINE: 3-Stage Response Process */}
-      <section className="py-16 sm:py-20 bg-cream-light border-y border-sand/60 relative overflow-hidden">
+      <section className="py-16 sm:py-20 bg-cream relative overflow-hidden">
+        {/* Subtle botanical line art */}
+        <BotanicalBranchRight />
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
           <SectionHeading
             badge="Consultation Process"
@@ -370,8 +386,10 @@ export const Contact = () => {
         </div>
       </section>
 
+      <SectionDivider variant="bronze-accent" />
+
       {/* 5. INTERACTIVE GOOGLE MAP SHOWCASE */}
-      <section id="location-map" className="bg-cream border-t border-sand pb-16 sm:pb-20">
+      <section id="location-map" className="bg-sand-50/70 border-t border-sand-200/60 pb-16 sm:pb-20 relative overflow-hidden">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pt-12 sm:pt-16">
           <SectionHeading
             badge="Location"

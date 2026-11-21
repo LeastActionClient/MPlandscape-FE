@@ -19,6 +19,11 @@ import {
 import SectionHeading from '../components/common/SectionHeading';
 import GalleryCard from '../components/common/GalleryCard';
 import ScrollReveal from '../components/common/ScrollReveal';
+import SectionDivider from '../components/common/SectionDivider';
+import {
+  BotanicalBranchRight,
+  ArchitecturalGridMarks,
+} from '../components/common/DecorativeSideDecor';
 import LoadingSpinner from '../components/common/LoadingSpinner';
 import ErrorMessage from '../components/common/ErrorMessage';
 import EmptyState from '../components/common/EmptyState';
@@ -159,8 +164,10 @@ export const Gallery = () => {
       </section>
 
       {/* 2. GALLERY SHOWCASE SECTION: Category Filters & Staggered Motion Grid */}
-      <section className="pt-8 sm:pt-10 md:pt-12 pb-16 sm:pb-20 bg-cream">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <section className="pt-8 sm:pt-10 md:pt-12 pb-16 sm:pb-20 bg-cream relative overflow-hidden">
+        {/* Subtle decorative botanical line art */}
+        <BotanicalBranchRight />
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
           
           {/* Controls Bar: Categories & Project Count */}
           <div className="flex flex-col sm:flex-row sm:items-center justify-between pb-6 sm:pb-8 border-b border-sand/60 gap-4">
@@ -253,8 +260,12 @@ export const Gallery = () => {
         </div>
       </section>
 
+      <SectionDivider variant="bronze-accent" />
+
       {/* 3. EXECUTION HIGHLIGHTS: Pillars of Landscape Photography */}
-      <section className="py-20 bg-cream-light border-y border-sand/60 relative overflow-hidden">
+      <section className="py-20 bg-sand-50/70 border-y border-sand-200/60 relative overflow-hidden">
+        {/* Architectural layout marks */}
+        <ArchitecturalGridMarks position="left" />
         {/* Soft background glow */}
         <div className="absolute top-1/2 right-0 w-80 h-80 bg-bronze/10 rounded-full blur-3xl pointer-events-none -translate-y-1/2" />
         <div className="absolute bottom-0 left-0 w-96 h-96 bg-sand/25 rounded-full blur-3xl pointer-events-none" />

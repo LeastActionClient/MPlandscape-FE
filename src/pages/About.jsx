@@ -21,6 +21,13 @@ import {
 } from 'lucide-react';
 import SectionHeading from '../components/common/SectionHeading';
 import ScrollReveal from '../components/common/ScrollReveal';
+import SectionDivider from '../components/common/SectionDivider';
+import {
+  BotanicalBranchLeft,
+  BotanicalBranchRight,
+  TopographicalContour,
+  ArchitecturalGridMarks,
+} from '../components/common/DecorativeSideDecor';
 import aboutHeroBg from '../assets/about-hero-bg.jpg';
 import aboutLegacyImg from '../assets/about-legacy.jpg';
 
@@ -102,7 +109,8 @@ export const About = () => {
 
       {/* 2. COMPANY INTRODUCTION & INTERACTIVE STATS */}
       <section className="py-20 sm:py-24 bg-cream relative overflow-hidden">
-        {/* Subtle decorative background watermarks */}
+        {/* Subtle decorative background watermarks & side botanical art */}
+        <BotanicalBranchLeft />
         <div className="absolute top-1/2 right-0 w-96 h-96 bg-sand/20 rounded-full blur-3xl pointer-events-none -translate-y-1/2" />
         
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
@@ -204,9 +212,12 @@ export const About = () => {
         </div>
       </section>
 
+      <SectionDivider variant="bronze-accent" />
+
       {/* 3. STRATEGIC DIRECTION: VISION & MISSION LUXURY CARDS */}
-      <section className="py-20 sm:py-24 bg-cream-light border-y border-sand relative overflow-hidden">
-        {/* Soft background glow */}
+      <section className="py-20 sm:py-24 bg-sand-50/70 border-y border-sand-200/60 relative overflow-hidden">
+        {/* Soft background glow & topographical contours */}
+        <TopographicalContour position="right" />
         <div className="absolute -top-24 left-1/2 -translate-x-1/2 w-[600px] h-64 bg-bronze/10 rounded-full blur-3xl pointer-events-none" />
 
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
@@ -274,8 +285,12 @@ export const About = () => {
         </div>
       </section>
 
+      <SectionDivider variant="bronze-accent" />
+
       {/* 4. METHODOLOGY: 4-STAGE ARCHITECTURAL PROCESS CARDS */}
       <section className="py-20 sm:py-24 bg-cream relative overflow-hidden">
+        {/* Decorative botanical side line art */}
+        <BotanicalBranchRight />
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
           <SectionHeading
             badge="Methodology"
@@ -389,8 +404,12 @@ export const About = () => {
         </div>
       </section>
 
+      <SectionDivider variant="bronze-accent" />
+
       {/* 5. CORE HORTICULTURAL PILLARS: Modern Technical Rigor Grid */}
-      <section className="py-20 bg-cream-light border-t border-sand/60 relative overflow-hidden">
+      <section className="py-20 bg-sand-50/70 border-t border-sand-200/60 relative overflow-hidden">
+        {/* Architectural layout marks */}
+        <ArchitecturalGridMarks position="left" />
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
           <SectionHeading
             badge="Engineering Rigor"
@@ -460,7 +479,8 @@ export const About = () => {
 
       {/* 6. WHY CHOOSE US: LUXURY DARK BURGUNDY EXPERIENCE */}
       <section className="py-20 sm:py-24 bg-burgundy-dark text-cream border-t border-burgundy/40 relative overflow-hidden">
-        {/* Soft Ambient Radiance in Background */}
+        {/* Soft Ambient Radiance in Background and delicate side motif */}
+        <BotanicalBranchRight className="opacity-10 text-sand-300" />
         <div className="absolute top-0 right-1/4 w-96 h-96 bg-bronze/15 rounded-full blur-3xl pointer-events-none" />
         <div className="absolute bottom-0 left-10 w-80 h-80 bg-burgundy/30 rounded-full blur-3xl pointer-events-none" />
 

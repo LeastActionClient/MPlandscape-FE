@@ -23,6 +23,13 @@ import ErrorMessage from '../components/common/ErrorMessage';
 import EmptyState from '../components/common/EmptyState';
 import Modal from '../components/common/Modal';
 import ScrollReveal from '../components/common/ScrollReveal';
+import SectionDivider from '../components/common/SectionDivider';
+import {
+  BotanicalBranchLeft,
+  BotanicalBranchRight,
+  TopographicalContour,
+  ArchitecturalGridMarks,
+} from '../components/common/DecorativeSideDecor';
 import serviceService from '../services/serviceService';
 import galleryService from '../services/galleryService';
 import heroLandscape from '../assets/hero-landscape.jpg';
@@ -324,7 +331,8 @@ export const Home = () => {
 
       {/* 2. CRAFTSMANSHIP & CORE HORTICULTURAL EXECUTION */}
       <section className="py-16 sm:py-20 bg-cream border-b border-sand/50 relative overflow-hidden">
-        {/* Subtle decorative background glow */}
+        {/* Subtle decorative background glow and side line-art */}
+        <BotanicalBranchLeft />
         <div className="absolute top-1/2 left-0 w-72 h-72 bg-sand/30 rounded-full blur-3xl pointer-events-none -translate-y-1/2" />
         <div className="absolute bottom-0 right-0 w-80 h-80 bg-bronze/10 rounded-full blur-3xl pointer-events-none" />
 
@@ -451,9 +459,12 @@ export const Home = () => {
         </div>
       </section>
 
+      <SectionDivider variant="bronze-accent" />
+
       {/* 3. COMPANY INTRODUCTION / ABOUT SECTION */}
-      <section className="py-20 bg-cream border-t border-sand/40 relative overflow-hidden">
-        {/* Ambient background glows */}
+      <section className="py-20 bg-sand-50/70 border-t border-sand-200/60 relative overflow-hidden">
+        {/* Ambient background glows and side botanical decoration */}
+        <BotanicalBranchRight />
         <div className="absolute top-1/4 right-0 w-80 h-80 bg-sand/30 rounded-full blur-3xl pointer-events-none" />
         <div className="absolute bottom-1/4 left-0 w-80 h-80 bg-bronze/10 rounded-full blur-3xl pointer-events-none" />
 
@@ -538,9 +549,13 @@ export const Home = () => {
         </div>
       </section>
 
+      <SectionDivider variant="bronze-accent" />
+
       {/* 4. DYNAMIC SERVICES SECTION (First 3 Active Services) */}
-      <section className="py-20 lg:py-24 bg-cream-light border-t border-sand relative overflow-hidden">
-        {/* Subtle decorative background glow */}
+      <section className="py-20 lg:py-24 bg-cream border-t border-sand/60 relative overflow-hidden">
+        {/* Subtle decorative background glow, topographical lines and architectural marks */}
+        <TopographicalContour position="left" />
+        <ArchitecturalGridMarks position="right" />
         <div className="absolute top-0 left-1/3 w-96 h-96 bg-sand/30 rounded-full blur-3xl pointer-events-none" />
 
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
@@ -594,9 +609,12 @@ export const Home = () => {
         </div>
       </section>
 
+      <SectionDivider variant="bronze-accent" />
+
       {/* 5. "HOW WE WORK" SECTION ("From Planning to Completion") */}
-      <section className="py-20 bg-cream border-t border-sand relative overflow-hidden">
-        {/* Subtle decorative background glow */}
+      <section className="py-20 bg-sand-50/70 border-t border-sand-200/60 relative overflow-hidden">
+        {/* Subtle decorative background glow and side line-art */}
+        <BotanicalBranchLeft />
         <div className="absolute top-1/2 right-0 w-80 h-80 bg-sand/35 rounded-full blur-3xl pointer-events-none -translate-y-1/2" />
 
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
@@ -729,7 +747,8 @@ export const Home = () => {
 
       {/* 6. WHY CHOOSE US SECTION */}
       <section className="py-24 bg-burgundy-dark text-cream border-t border-burgundy/30 relative overflow-hidden">
-        {/* Ambient background radial gradient glows */}
+        {/* Ambient background radial gradient glows and side motif */}
+        <BotanicalBranchRight className="opacity-10 text-sand-300" />
         <div className="absolute -top-24 right-1/4 w-[500px] h-[500px] bg-bronze/10 rounded-full blur-3xl pointer-events-none" />
         <div className="absolute -bottom-24 left-1/4 w-[500px] h-[500px] bg-burgundy/30 rounded-full blur-3xl pointer-events-none" />
 
@@ -830,8 +849,10 @@ export const Home = () => {
       </section>
 
       {/* 7. DYNAMIC PROJECT GALLERY SECTION (First 6 Active Images, 3x2 Grid) */}
-      <section className="py-20 bg-cream border-t border-sand relative overflow-hidden">
-        {/* Subtle decorative background glow */}
+      <section className="py-20 bg-sand-50/70 border-t border-sand-200/60 relative overflow-hidden">
+        {/* Subtle decorative background glow, topographical contours & botanical branch */}
+        <TopographicalContour position="left" />
+        <BotanicalBranchRight />
         <div className="absolute top-0 left-1/4 w-80 h-80 bg-sand/30 rounded-full blur-3xl pointer-events-none" />
 
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">

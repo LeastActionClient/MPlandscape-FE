@@ -19,6 +19,11 @@ import {
 import SectionHeading from '../components/common/SectionHeading';
 import ServiceCard from '../components/common/ServiceCard';
 import ScrollReveal from '../components/common/ScrollReveal';
+import SectionDivider from '../components/common/SectionDivider';
+import {
+  BotanicalBranchLeft,
+  TopographicalContour,
+} from '../components/common/DecorativeSideDecor';
 import LoadingSpinner from '../components/common/LoadingSpinner';
 import ErrorMessage from '../components/common/ErrorMessage';
 import EmptyState from '../components/common/EmptyState';
@@ -220,8 +225,10 @@ export const Services = () => {
       </section>
 
       {/* 2. SERVICES GRID: Staggered Slide Motion & Elevated Cards */}
-      <section id="services-list" className="py-16 sm:py-20 bg-cream relative">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <section id="services-list" className="py-16 sm:py-20 bg-cream relative overflow-hidden">
+        {/* Subtle decorative botanical side art */}
+        <BotanicalBranchLeft />
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
           
           {/* Section Sub-Header / Count Indicator */}
           <div className="flex flex-col sm:flex-row sm:items-center justify-between pb-8 sm:pb-10 border-b border-sand/60 gap-3">
@@ -277,9 +284,12 @@ export const Services = () => {
         </div>
       </section>
 
+      <SectionDivider variant="bronze-accent" />
+
       {/* 3. EXECUTION STANDARDS: Modern Engineering Methodology Grid */}
-      <section className="py-20 bg-cream-light border-y border-sand/60 relative overflow-hidden">
-        {/* Soft background glow */}
+      <section className="py-20 bg-sand-50/70 border-y border-sand-200/60 relative overflow-hidden">
+        {/* Soft background glow & topographical contour */}
+        <TopographicalContour position="right" />
         <div className="absolute top-1/2 left-0 w-80 h-80 bg-bronze/10 rounded-full blur-3xl pointer-events-none -translate-y-1/2" />
         <div className="absolute bottom-0 right-0 w-96 h-96 bg-sand/30 rounded-full blur-3xl pointer-events-none" />
 
