@@ -7,24 +7,24 @@ export const ServiceCard = ({ service, onEnquire, className = '' }) => {
 
   return (
     <article
-      className={`card-luxury flex flex-col h-full overflow-hidden group relative rounded-2xl border border-sand/80 bg-cream-light shadow-sm hover:shadow-2xl hover:shadow-burgundy/10 hover:-translate-y-2 hover:border-bronze transition-all duration-500 ${className}`}
+      className={`card-luxury flex flex-col h-full overflow-hidden group relative rounded-2xl border border-sand/80 bg-cream-light shadow-xs hover:shadow-xl hover:shadow-burgundy/10 hover:-translate-y-1.5 hover:border-bronze transition-all duration-300 ${className}`}
     >
       {/* Sliding Top Accent Highlight on Hover */}
-      <div className="absolute top-0 left-0 right-0 h-1 bg-gradient-to-r from-burgundy via-bronze to-burgundy scale-x-0 group-hover:scale-x-100 transition-transform duration-500 origin-left z-20" />
+      <div className="absolute top-0 left-0 right-0 h-1 bg-gradient-to-r from-burgundy via-bronze to-burgundy scale-x-0 group-hover:scale-x-100 transition-transform duration-300 origin-left z-20" />
 
-      {/* Compact Image Thumbnail (Proportional Aspect Ratio) */}
+      {/* Unobstructed Clean Image Thumbnail (Proportional Aspect Ratio) */}
       <div className="relative aspect-16/9 w-full overflow-hidden bg-sand/20 flex items-center justify-center">
         {service.imageUrl ? (
           <img
             src={service.imageUrl}
             alt={service.title}
-            className="w-full h-full object-cover transition-transform duration-700 ease-out group-hover:scale-110"
+            className="w-full h-full object-cover transition-transform duration-500 ease-out group-hover:scale-105"
             loading="lazy"
             onError={(e) => {
               e.currentTarget.onerror = null;
               e.currentTarget.src = '/mp-logo.png';
               e.currentTarget.className =
-                'w-auto h-20 object-contain p-3 transition-transform duration-700 ease-out group-hover:scale-105';
+                'w-auto h-16 object-contain p-3 transition-transform duration-500 ease-out group-hover:scale-105';
             }}
           />
         ) : (
@@ -32,33 +32,28 @@ export const ServiceCard = ({ service, onEnquire, className = '' }) => {
             <img
               src="/mp-logo.png"
               alt="MP Landscape Services"
-              className="w-auto h-20 object-contain opacity-90 transition-transform duration-700 ease-out group-hover:scale-105 drop-shadow-xs"
+              className="w-auto h-16 object-contain opacity-90 transition-transform duration-500 ease-out group-hover:scale-105 drop-shadow-xs"
             />
           </div>
         )}
-
-        <div className="absolute inset-0 bg-gradient-to-t from-brand-charcoal/80 via-transparent to-transparent opacity-70 group-hover:opacity-50 transition-opacity duration-300 pointer-events-none" />
-
-        {service.subtitle && (
-          <span className="absolute bottom-2.5 left-2.5 right-2.5 text-xs sm:text-xs font-semibold text-white tracking-wide truncate bg-burgundy/90 backdrop-blur-md px-3 py-1 rounded-md border border-white/15 shadow-md">
-            {service.subtitle}
-          </span>
-        )}
       </div>
 
-      {/* Compact Card Content: Title & Horizontal Action Buttons */}
-      <div className="p-4 sm:p-5 flex-1 flex flex-col justify-between gap-4">
-        <div>
-          <h3 className="text-lg sm:text-xl font-bold font-sans text-brand-dark group-hover:text-burgundy transition-colors duration-300 leading-snug break-words">
-            <Link to={`/services/${service.slug}`} className="hover:underline flex items-start justify-between gap-2">
+      {/* Compact Card Content: Balanced Title & Horizontal Action Buttons */}
+      <div className="p-3.5 sm:p-4 flex-1 flex flex-col justify-between gap-2.5 sm:gap-3">
+        <div className="min-h-[2.5rem] flex items-center">
+          <h3 className="text-[15px] sm:text-base font-bold font-sans text-brand-dark group-hover:text-burgundy transition-colors duration-300 leading-snug break-words w-full">
+            <Link
+              to={`/services/${service.slug}`}
+              className="hover:underline flex items-start justify-between gap-2"
+            >
               <span>{service.title}</span>
-              <ArrowRight className="w-4 h-4 opacity-0 -translate-x-2 group-hover:opacity-100 group-hover:translate-x-0 transition-all duration-300 text-bronze shrink-0 mt-1" />
+              <ArrowRight className="w-4 h-4 opacity-0 -translate-x-1.5 group-hover:opacity-100 group-hover:translate-x-0 transition-all duration-300 text-bronze shrink-0 mt-0.5" />
             </Link>
           </h3>
         </div>
 
         {/* Action Buttons: Horizontally Aligned in the Same Row */}
-        <div className="grid grid-cols-2 gap-2 sm:gap-2.5 pt-3 border-t border-sand/40">
+        <div className="grid grid-cols-2 gap-2 sm:gap-2.5 pt-2.5 border-t border-sand/40 mt-auto">
           <Link
             to={`/services/${service.slug}`}
             className="inline-flex items-center justify-center gap-1 text-xs sm:text-[13px] font-semibold py-2 px-2 sm:px-2.5 rounded-lg border border-burgundy/35 text-burgundy bg-transparent hover:bg-burgundy hover:text-white hover:border-burgundy shadow-2xs hover:shadow-xs transition-all duration-300 text-center whitespace-nowrap group/btn"

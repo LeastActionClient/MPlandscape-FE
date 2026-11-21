@@ -20,6 +20,7 @@ import LoadingSpinner from '../../components/common/LoadingSpinner';
 import ErrorMessage from '../../components/common/ErrorMessage';
 import ConfirmationDialog from '../../components/common/ConfirmationDialog';
 import Button from '../../components/common/Button';
+import { formatGoogleMapsEmbedUrl } from '../../utils/mapHelper';
 
 const ContactManagement = () => {
   const [settings, setSettings] = useState(null);
@@ -439,15 +440,31 @@ const ContactManagement = () => {
               {/* Google Maps URL */}
               <div className="md:col-span-2">
                 <label className="block text-xs font-semibold text-charcoal mb-2">
-                  Google Maps URL
+                  Google Maps URL / Coordinates / Embed Code
                 </label>
                 <input
-                  type="url"
+                  type="text"
                   value={mapUrl}
                   onChange={(e) => setMapUrl(e.target.value)}
-                  placeholder="https://maps.google.com/?q=..."
+                  placeholder="https://maps.google.com/maps/place/... or coordinates or iframe embed code"
                   className="w-full px-3 py-2 border border-sand-300 rounded-lg text-sm focus:ring-2 focus:ring-burgundy-600 focus:outline-none"
                 />
+                <p className="text-[11px] text-charcoal/60 mt-1">
+                  Accepts Google Maps place links, share URLs, coordinates, or iframe embed codes. Automatically converted for embedding.
+                </p>
+
+                {mapUrl && (
+                  <div className="mt-3 rounded-xl overflow-hidden border border-sand-300 h-44 bg-sand-50 relative">
+                    <iframe
+                      src={formatGoogleMapsEmbedUrl(mapUrl, physicalOfficeAddress)}
+                      width="100%"
+                      height="100%"
+                      style={{ border: 0 }}
+                      loading="lazy"
+                      title="Google Maps Location Preview"
+                    />
+                  </div>
+                )}
               </div>
             </div>
           </div>

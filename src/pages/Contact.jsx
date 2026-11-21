@@ -6,12 +6,17 @@ import SectionHeading from '../components/common/SectionHeading';
 import EnquiryForm from '../components/common/EnquiryForm';
 import ContactDetails from '../components/common/ContactDetails';
 import contactHeroBg from '../assets/contact-hero-bg.jpg';
+import { formatGoogleMapsEmbedUrl, getDirectGoogleMapsUrl } from '../utils/mapHelper';
 
 export const Contact = () => {
   const { settings } = useOutletContext() || {};
 
   const companyName = settings?.companyName || 'MP Landscape Services';
-  const mapUrl = settings?.mapUrl || 'https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d125322.43770335894!2d76.88483284061807!3d11.01429995166291!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3ba859af2f971cb5%3A0x2fc1c81e183ed282!2sCoimbatore%2C%20Tamil%20Nadu!5e0!3m2!1sen!2sin!4v1700000000000!5m2!1sen!2sin';
+  const physicalAddress =
+    settings?.address ||
+    'No.94, Sri Krishna Nagar, Mosque Street, Noombal, Thiruverkadu, Chennai, Tamil Nadu, 600077';
+  const embedMapUrl = formatGoogleMapsEmbedUrl(settings?.mapUrl, physicalAddress);
+  const directMapUrl = getDirectGoogleMapsUrl(settings?.mapUrl, physicalAddress);
 
   return (
     <>
@@ -117,9 +122,9 @@ export const Contact = () => {
             subtitle="Explore our living specimen trees, palms, and design consultation studio in person."
           />
 
-          <div className="mt-8 rounded-2xl overflow-hidden shadow-lg border border-sand h-[350px] sm:h-[420px] bg-sand/20">
+          <div className="mt-8 rounded-2xl overflow-hidden shadow-lg border border-sand h-[350px] sm:h-[420px] bg-sand/20 relative group">
             <iframe
-              src={mapUrl}
+              src={embedMapUrl}
               width="100%"
               height="100%"
               style={{ border: 0 }}
@@ -128,6 +133,18 @@ export const Contact = () => {
               referrerPolicy="no-referrer-when-downgrade"
               title="MP Landscape Services Location Map"
             />
+            {/* Direct Google Maps Navigation Button */}
+            <div className="absolute bottom-3 right-3 z-10">
+              <a
+                href={directMapUrl}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-lg bg-burgundy/90 hover:bg-burgundy text-white text-xs font-semibold shadow-md backdrop-blur-xs transition-all duration-300 hover:scale-105"
+              >
+                <MapPin className="w-3.5 h-3.5 text-bronze" />
+                <span>Open in Google Maps</span>
+              </a>
+            </div>
           </div>
         </div>
       </section>
