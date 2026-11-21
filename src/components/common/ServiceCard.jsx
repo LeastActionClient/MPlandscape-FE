@@ -7,10 +7,13 @@ export const ServiceCard = ({ service, onEnquire, className = '' }) => {
 
   return (
     <article
-      className={`card-luxury flex flex-col h-full overflow-hidden group relative rounded-2xl border border-sand/80 bg-cream-light shadow-xs hover:shadow-xl hover:shadow-burgundy/10 hover:-translate-y-1.5 hover:border-bronze transition-all duration-300 ${className}`}
+      className={`card-luxury flex flex-col h-full overflow-hidden group relative rounded-2xl border border-sand/80 bg-cream-light shadow-xs hover:shadow-2xl hover:shadow-burgundy/15 hover:-translate-y-2 hover:border-bronze transition-all duration-500 ${className}`}
     >
       {/* Sliding Top Accent Highlight on Hover */}
-      <div className="absolute top-0 left-0 right-0 h-1 bg-gradient-to-r from-burgundy via-bronze to-burgundy scale-x-0 group-hover:scale-x-100 transition-transform duration-300 origin-left z-20" />
+      <div className="absolute top-0 left-0 right-0 h-1 bg-gradient-to-r from-burgundy via-bronze to-burgundy scale-x-0 group-hover:scale-x-100 transition-transform duration-500 origin-left z-20" />
+
+      {/* Subtle Ambient Corner Glow on Hover */}
+      <div className="absolute -top-12 -right-12 w-28 h-28 bg-bronze/15 rounded-full blur-xl opacity-0 group-hover:opacity-100 transition-opacity duration-500 pointer-events-none z-10" />
 
       {/* Unobstructed Clean Image Thumbnail (Proportional Aspect Ratio) */}
       <div className="relative aspect-16/9 w-full overflow-hidden bg-sand/20 flex items-center justify-center">
@@ -18,13 +21,13 @@ export const ServiceCard = ({ service, onEnquire, className = '' }) => {
           <img
             src={service.imageUrl}
             alt={service.title}
-            className="w-full h-full object-cover transition-transform duration-500 ease-out group-hover:scale-105"
+            className="w-full h-full object-cover transition-transform duration-700 ease-out group-hover:scale-108"
             loading="lazy"
             onError={(e) => {
               e.currentTarget.onerror = null;
               e.currentTarget.src = '/mp-logo.png';
               e.currentTarget.className =
-                'w-auto h-16 object-contain p-3 transition-transform duration-500 ease-out group-hover:scale-105';
+                'w-auto h-16 object-contain p-3 transition-transform duration-700 ease-out group-hover:scale-108';
             }}
           />
         ) : (
@@ -32,10 +35,11 @@ export const ServiceCard = ({ service, onEnquire, className = '' }) => {
             <img
               src="/mp-logo.png"
               alt="MP Landscape Services"
-              className="w-auto h-16 object-contain opacity-90 transition-transform duration-500 ease-out group-hover:scale-105 drop-shadow-xs"
+              className="w-auto h-16 object-contain opacity-90 transition-transform duration-700 ease-out group-hover:scale-108 drop-shadow-xs"
             />
           </div>
         )}
+        <div className="absolute inset-0 bg-gradient-to-t from-black/25 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500 pointer-events-none" />
       </div>
 
       {/* Compact Card Content: Balanced Title & Horizontal Action Buttons */}
