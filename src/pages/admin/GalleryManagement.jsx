@@ -14,6 +14,9 @@ import {
   Layers,
   Check,
   CheckCircle,
+  Video,
+  Play,
+  Film,
 } from 'lucide-react';
 import galleryService from '../../services/galleryService';
 import LoadingSpinner from '../../components/common/LoadingSpinner';
@@ -95,22 +98,90 @@ const GalleryManagement = () => {
     }
   };
 
-  const processFiles = async (fileList) => {
-    const validImageFiles = fileList.filter((f) => f && f.type && f.type.startsWith('image/'));
-    if (validImageFiles.length === 0) return;
+  const formatFileSize = (bytes) => {
+    if (!bytes || bytes === 0) return '0 B';
+    const k = 1024;
+    const sizes = ['B', 'KB', 'MB', 'GB'];
+    const i = Math.floor(Math.log(bytes) / Math.log(k));
+    return `${parseFloat((bytes / Math.pow(k, i)).toFixed(1))} ${sizes[i]}`;
+  };
 
-    // Automatically compress images client-side to guarantee < 800 KB per image
-    const optimizedFiles = await Promise.all(
-      validImageFiles.map(async (file) => {
+  const isVideoFile = (file) => {
+    if (!file) return false;
+    if (file.type && file.type.startsWith('video/')) return true;
+    return /\.(mp4|webm|mov|m4v)$/i.test(file.name || '');
+  };
+
+  const isImageFile = (file) => {
+    if (!file) return false;
+    if (file.type && file.type.startsWith('image/')) return true;
+    return /\.(jpg|jpeg|png|webp|gif|avif)$/i.test(file.name || '');
+  };
+
+  const processFiles = async (fileList) => {
+    setUploadError('');
+    const newFiles = [];
+    const newPreviews = [];
+
+    for (const file of fileList) {
+      if (!file) continue;
+
+      const isVideo = isVideoFile(file);
+      const isImage = isImageFile(file);
+
+      if (!isVideo && !isImage) {
+        setUploadError(
+          `File "${file.name}" has an unsupported format. Supported formats: JPG, PNG, WEBP, GIF, AVIF for images; MP4, WEBM, MOV, M4V for videos.`
+        );
+        return;
+      }
+
+      if (isVideo && file.size > 100 * 1024 * 1024) {
+        setUploadError(
+          `Video "${file.name}" exceeds the 100 MB limit (${formatFileSize(file.size)}).`
+        );
+        return;
+      }
+
+      if (isImage && file.size > 15 * 1024 * 1024) {
+        setUploadError(
+          `Image "${file.name}" exceeds the 15 MB limit (${formatFileSize(file.size)}).`
+        );
+        return;
+      }
+
+      if (isImage) {
         try {
-          return await compressImageFile(file);
+          const optimized = await compressImageFile(file);
+          newFiles.push(optimized);
+          newPreviews.push({
+            url: URL.createObjectURL(optimized),
+            isVideo: false,
+            name: file.name,
+            size: optimized.size || file.size,
+          });
         } catch {
-          return file;
+          newFiles.push(file);
+          newPreviews.push({
+            url: URL.createObjectURL(file),
+            isVideo: false,
+            name: file.name,
+            size: file.size,
+          });
         }
-      })
-    );
-    setUploadFiles((prev) => [...prev, ...optimizedFiles]);
-    const newPreviews = optimizedFiles.map((f) => URL.createObjectURL(f));
+      } else {
+        // Videos are kept without image compression
+        newFiles.push(file);
+        newPreviews.push({
+          url: URL.createObjectURL(file),
+          isVideo: true,
+          name: file.name,
+          size: file.size,
+        });
+      }
+    }
+
+    setUploadFiles((prev) => [...prev, ...newFiles]);
     setPreviewUrls((prev) => [...prev, ...newPreviews]);
   };
 
@@ -123,7 +194,13 @@ const GalleryManagement = () => {
 
   const removeSelectedFile = (index) => {
     setUploadFiles((prev) => prev.filter((_, i) => i !== index));
-    setPreviewUrls((prev) => prev.filter((_, i) => i !== index));
+    setPreviewUrls((prev) => {
+      const removed = prev[index];
+      if (removed?.url) {
+        URL.revokeObjectURL(removed.url);
+      }
+      return prev.filter((_, i) => i !== index);
+    });
   };
 
   const openUploadModal = () => {
@@ -151,7 +228,12 @@ const GalleryManagement = () => {
     }
 
     if (uploadFiles.length === 0 && !uploadUrl.trim()) {
-      setUploadError('Please select at least one image file or provide an image URL');
+      setUploadError('Please select at least one image or video file, or provide an image URL');
+      return;
+    }
+
+    if (uploadUrl.trim() && /\.(mp4|webm|mov|m4v)(\?.*)?$/i.test(uploadUrl.trim())) {
+      setUploadError('The URL option is strictly for images. Please upload videos via the file selector.');
       return;
     }
 
@@ -159,13 +241,15 @@ const GalleryManagement = () => {
       setIsUploading(true);
 
       if (uploadFiles.length > 0) {
-        // Upload images one-by-one to guarantee each payload is under 600KB and never triggers Vercel's 4.5MB limit
+        // Upload media one-by-one to support multiple uploads and progress tracking
         for (let i = 0; i < uploadFiles.length; i++) {
           const file = uploadFiles[i];
+          const isVideo = isVideoFile(file);
+          const mediaLabel = isVideo ? 'video' : 'image';
           setUploadProgress(
             uploadFiles.length > 1
-              ? `Uploading image ${i + 1} of ${uploadFiles.length}...`
-              : 'Uploading image...'
+              ? `Uploading ${mediaLabel} ${i + 1} of ${uploadFiles.length}: ${file.name || ''}...`
+              : `Uploading ${mediaLabel}: ${file.name || ''}...`
           );
 
           const payload = new FormData();
@@ -177,7 +261,8 @@ const GalleryManagement = () => {
           payload.append('description', uploadDescription.trim());
           payload.append('displayOrder', String(Number(uploadOrder) + i));
           payload.append('isActive', String(uploadActive));
-          payload.append('images', file);
+          payload.append('mediaType', isVideo ? 'VIDEO' : 'IMAGE');
+          payload.append('media', file);
 
           await galleryService.createGallery(payload);
         }
@@ -188,6 +273,7 @@ const GalleryManagement = () => {
         payload.append('description', uploadDescription.trim());
         payload.append('displayOrder', String(uploadOrder));
         payload.append('isActive', String(uploadActive));
+        payload.append('mediaType', 'IMAGE');
         payload.append('imageUrl', uploadUrl.trim());
 
         await galleryService.createGallery(payload);
@@ -198,7 +284,7 @@ const GalleryManagement = () => {
     } catch (err) {
       setUploadError(
         err.response?.data?.message ||
-          'Failed to upload gallery images. Please verify your connection or try uploading fewer photos at a time.'
+          'Failed to upload gallery media. Please verify your connection or try uploading fewer items at a time.'
       );
     } finally {
       setIsUploading(false);
@@ -233,7 +319,19 @@ const GalleryManagement = () => {
       payload.append('isActive', String(editingItem.isActive));
 
       if (editFile) {
-        payload.append('image', editFile);
+        const isVideo = isVideoFile(editFile);
+        if (isVideo && editFile.size > 100 * 1024 * 1024) {
+          setEditError(`Video exceeds the 100 MB limit (${formatFileSize(editFile.size)}).`);
+          setIsEditing(false);
+          return;
+        }
+        if (!isVideo && editFile.size > 15 * 1024 * 1024) {
+          setEditError(`Image exceeds the 15 MB limit (${formatFileSize(editFile.size)}).`);
+          setIsEditing(false);
+          return;
+        }
+        payload.append('mediaType', isVideo ? 'VIDEO' : 'IMAGE');
+        payload.append('media', editFile);
       } else if (editingItem.imageUrl) {
         payload.append('imageUrl', editingItem.imageUrl);
       }
@@ -316,9 +414,10 @@ const GalleryManagement = () => {
               size="sm"
               onClick={openUploadModal}
               className="gap-2 shadow-xs shrink-0"
+              aria-label="Upload Images & Media"
             >
               <Plus className="w-4 h-4 shrink-0" />
-              <span>Upload Images</span>
+              <span>Upload Media</span>
             </Button>
           </div>
         </div>
@@ -357,80 +456,114 @@ const GalleryManagement = () => {
           <EmptyState
             title="No gallery items found"
             message="There are no items currently in the gallery."
-            actionText="Upload Images"
+            actionText="Upload Media"
             onAction={openUploadModal}
           />
         ) : (
           <div className="space-y-6">
             <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-5">
-              {paginatedItems.map((item) => (
-                <div
-                  key={item._id}
-                  className="bg-white rounded-2xl border border-sand-300 shadow-xs overflow-hidden flex flex-col group hover:shadow-xl hover:shadow-burgundy/5 hover:border-sand-400 hover:-translate-y-1 transition-all duration-300 relative"
-                >
-                  {/* Sliding Top Accent Line */}
-                  <div className="absolute top-0 left-0 right-0 h-1 bg-gradient-to-r from-burgundy via-bronze to-burgundy scale-x-0 group-hover:scale-x-100 transition-transform duration-500 origin-left z-10" />
+              {paginatedItems.map((item) => {
+                const isVideo =
+                  item.mediaType === 'VIDEO' ||
+                  item.resourceType === 'video' ||
+                  /\.(mp4|webm|mov|m4v)(\?.*)?$/i.test(item.imageUrl || '');
 
-                  <div className="relative aspect-4/3 bg-sand-100 overflow-hidden">
-                    <img
-                      src={item.imageUrl}
-                      alt={item.title}
-                      className="w-full h-full object-cover group-hover:scale-108 transition-transform duration-500 ease-out"
-                      onError={(e) => {
-                        e.target.src = '/mp-logo.png';
-                      }}
-                    />
-                    <div className="absolute top-2 right-2">
-                      <button
-                        type="button"
-                        onClick={() => handleToggleActive(item)}
-                        className={`px-2 py-0.5 rounded-md text-[10px] font-bold shadow-xs transition-colors ${
-                          item.isActive
-                            ? 'bg-bronze text-white'
-                            : 'bg-gray-700/80 text-gray-200'
-                        }`}
-                      >
-                        {item.isActive ? 'Active' : 'Hidden'}
-                      </button>
-                    </div>
-                  </div>
+                return (
+                  <div
+                    key={item._id}
+                    className="bg-white rounded-2xl border border-sand-300 shadow-xs overflow-hidden flex flex-col group hover:shadow-xl hover:shadow-burgundy/5 hover:border-sand-400 hover:-translate-y-1 transition-all duration-300 relative"
+                  >
+                    {/* Sliding Top Accent Line */}
+                    <div className="absolute top-0 left-0 right-0 h-1 bg-gradient-to-r from-burgundy via-bronze to-burgundy scale-x-0 group-hover:scale-x-100 transition-transform duration-500 origin-left z-10" />
 
-                  <div className="p-4 flex-1 flex flex-col justify-between">
-                    <div>
-                      <h3 className="font-semibold text-sm text-burgundy-950 truncate">
-                        {item.title}
-                      </h3>
-                      {item.description && (
-                        <p className="text-xs text-charcoal/60 mt-1 line-clamp-2">
-                          {item.description}
-                        </p>
+                    <div className="relative aspect-4/3 bg-sand-100 overflow-hidden">
+                      {isVideo ? (
+                        <div className="relative w-full h-full bg-brand-charcoal flex items-center justify-center">
+                          {item.videoThumbnail ? (
+                            <img
+                              src={item.videoThumbnail}
+                              alt={item.title}
+                              className="w-full h-full object-cover group-hover:scale-108 transition-transform duration-500 ease-out"
+                            />
+                          ) : (
+                            <video
+                              src={item.imageUrl}
+                              preload="metadata"
+                              className="w-full h-full object-cover group-hover:scale-108 transition-transform duration-500 ease-out pointer-events-none"
+                            />
+                          )}
+                          <div className="absolute inset-0 bg-black/35 flex items-center justify-center group-hover:bg-black/20 transition-colors pointer-events-none">
+                            <div className="w-10 h-10 rounded-full bg-black/60 border border-bronze/60 text-white flex items-center justify-center shadow-lg group-hover:scale-110 group-hover:bg-burgundy transition-all">
+                              <Play className="w-4 h-4 fill-white ml-0.5" />
+                            </div>
+                          </div>
+                          <div className="absolute top-2 left-2 px-2 py-0.5 rounded-md bg-black/80 backdrop-blur-xs text-[10px] font-bold text-sand-100 border border-white/20 flex items-center gap-1 shadow-xs">
+                            <Film className="w-3 h-3 text-bronze" />
+                            <span>VIDEO</span>
+                          </div>
+                        </div>
+                      ) : (
+                        <img
+                          src={item.imageUrl}
+                          alt={item.title}
+                          className="w-full h-full object-cover group-hover:scale-108 transition-transform duration-500 ease-out"
+                          onError={(e) => {
+                            e.target.src = '/mp-logo.png';
+                          }}
+                        />
                       )}
-                    </div>
-
-                    <div className="mt-4 pt-3 border-t border-sand-100 flex items-center justify-between text-xs text-charcoal/60">
-                      <span>Order: #{item.displayOrder ?? 0}</span>
-                      <div className="flex items-center gap-1.5">
+                      <div className="absolute top-2 right-2">
                         <button
                           type="button"
-                          onClick={() => openEditModal(item)}
-                          className="p-1 rounded-md text-burgundy-700 hover:text-burgundy-950 hover:bg-sand-100 transition-colors"
-                          title="Edit metadata"
+                          onClick={() => handleToggleActive(item)}
+                          className={`px-2 py-0.5 rounded-md text-[10px] font-bold shadow-xs transition-colors ${
+                            item.isActive
+                              ? 'bg-bronze text-white'
+                              : 'bg-gray-700/80 text-gray-200'
+                          }`}
                         >
-                          <Edit className="w-3.5 h-3.5" />
-                        </button>
-                        <button
-                          type="button"
-                          onClick={() => setDeleteTarget(item)}
-                          className="p-1 rounded-md text-red-600 hover:text-red-800 hover:bg-red-50 transition-colors"
-                          title="Delete image"
-                        >
-                          <Trash2 className="w-3.5 h-3.5" />
+                          {item.isActive ? 'Active' : 'Hidden'}
                         </button>
                       </div>
                     </div>
+
+                    <div className="p-4 flex-1 flex flex-col justify-between">
+                      <div>
+                        <h3 className="font-semibold text-sm text-burgundy-950 truncate">
+                          {item.title}
+                        </h3>
+                        {item.description && (
+                          <p className="text-xs text-charcoal/60 mt-1 line-clamp-2">
+                            {item.description}
+                          </p>
+                        )}
+                      </div>
+
+                      <div className="mt-4 pt-3 border-t border-sand-100 flex items-center justify-between text-xs text-charcoal/60">
+                        <span>Order: #{item.displayOrder ?? 0}</span>
+                        <div className="flex items-center gap-1.5">
+                          <button
+                            type="button"
+                            onClick={() => openEditModal(item)}
+                            className="p-1 rounded-md text-burgundy-700 hover:text-burgundy-950 hover:bg-sand-100 transition-colors"
+                            title="Edit metadata"
+                          >
+                            <Edit className="w-3.5 h-3.5" />
+                          </button>
+                          <button
+                            type="button"
+                            onClick={() => setDeleteTarget(item)}
+                            className="p-1 rounded-md text-red-600 hover:text-red-800 hover:bg-red-50 transition-colors"
+                            title="Delete media"
+                          >
+                            <Trash2 className="w-3.5 h-3.5" />
+                          </button>
+                        </div>
+                      </div>
+                    </div>
                   </div>
-                </div>
-              ))}
+                );
+              })}
             </div>
 
             {/* Pagination Controls */}
@@ -455,7 +588,7 @@ const GalleryManagement = () => {
         <Modal
           isOpen={isUploadModalOpen}
           onClose={() => setIsUploadModalOpen(false)}
-          title="Upload Gallery Images"
+          title="Upload Gallery Media"
           size="lg"
         >
           <form onSubmit={handleUploadSubmit} className="space-y-5 text-sm">
@@ -468,7 +601,7 @@ const GalleryManagement = () => {
 
             <div>
               <label className="block text-xs font-semibold text-charcoal mb-1">
-                Project Title / Image Caption *
+                Project Title / Caption *
               </label>
               <input
                 type="text"
@@ -507,10 +640,10 @@ const GalleryManagement = () => {
               />
             </div>
 
-            {/* Drag & Drop File Picker with Multiple Previews */}
+            {/* Drag & Drop Media Picker with Separate Image & Video Previews */}
             <div>
               <label className="block text-xs font-semibold text-charcoal mb-1">
-                Select Photo(s) (Single or Multi-select)
+                Select Media File(s) (Images & Videos Supported)
               </label>
               <div
                 onDragOver={(e) => {
@@ -540,52 +673,90 @@ const GalleryManagement = () => {
                 <label className="flex flex-col items-center justify-center w-full h-full cursor-pointer">
                   <Upload className="w-8 h-8 text-burgundy-700 mb-1" />
                   <span className="text-xs font-semibold text-charcoal">
-                    Click to select images or drag and drop
+                    Click to select images or videos, or drag &amp; drop
                   </span>
-                  <span className="text-[10px] text-charcoal/50 mt-0.5">
-                    Supports JPG, PNG, WEBP files (Auto-compressed)
+                  <span className="text-[10px] text-charcoal/60 mt-0.5 text-center">
+                    Images: JPG, PNG, WEBP, GIF, AVIF (max 15MB) &bull; Videos: MP4, WEBM, MOV, M4V (max 100MB)
                   </span>
                   <input
                     type="file"
                     multiple
-                    accept="image/*"
+                    accept="image/jpeg,image/png,image/webp,image/gif,image/avif,video/mp4,video/webm,video/quicktime,video/x-m4v"
                     onChange={handleFilesSelect}
                     className="hidden"
                   />
                 </label>
               </div>
 
-              {/* Previews */}
+              {/* Previews with Distinct Image & Video Indicators and Playback Controls */}
               {previewUrls.length > 0 && (
                 <div className="mt-3">
                   <p className="text-xs font-semibold text-charcoal mb-2">
-                    Selected Images ({previewUrls.length}):
+                    Selected Media ({previewUrls.length}):
                   </p>
-                  <div className="grid grid-cols-3 sm:grid-cols-4 gap-2.5 max-h-48 overflow-y-auto p-2 bg-sand-50 rounded-xl border border-sand-200">
-                    {previewUrls.map((url, idx) => (
-                      <div key={idx} className="relative aspect-square rounded-lg overflow-hidden group border border-sand-300">
-                        <img src={url} alt="Preview" className="w-full h-full object-cover" />
-                        <button
-                          type="button"
-                          onClick={() => removeSelectedFile(idx)}
-                          className="absolute top-1 right-1 p-1 bg-black/60 text-white rounded-full hover:bg-red-600 transition-colors"
-                        >
-                          <X className="w-3 h-3" />
-                        </button>
+                  <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-3 max-h-64 overflow-y-auto p-2.5 bg-sand-50 rounded-xl border border-sand-200">
+                    {previewUrls.map((preview, idx) => (
+                      <div
+                        key={idx}
+                        className="relative rounded-xl overflow-hidden group border border-sand-300 bg-white flex flex-col shadow-2xs"
+                      >
+                        {preview.isVideo ? (
+                          <div className="relative aspect-video bg-black flex items-center justify-center">
+                            <video
+                              src={preview.url}
+                              controls
+                              className="w-full h-full object-contain"
+                            />
+                            <div className="absolute top-1.5 left-1.5 px-2 py-0.5 rounded bg-black/80 backdrop-blur-xs text-[9px] font-bold text-sand-200 border border-white/20 flex items-center gap-1 shadow-xs pointer-events-none">
+                              <Film className="w-2.5 h-2.5 text-bronze" />
+                              <span>VIDEO</span>
+                            </div>
+                          </div>
+                        ) : (
+                          <div className="relative aspect-video bg-sand-100 overflow-hidden flex items-center justify-center">
+                            <img
+                              src={preview.url}
+                              alt="Preview"
+                              className="w-full h-full object-cover"
+                            />
+                            <div className="absolute top-1.5 left-1.5 px-2 py-0.5 rounded bg-black/80 backdrop-blur-xs text-[9px] font-bold text-sand-200 border border-white/20 flex items-center gap-1 shadow-xs pointer-events-none">
+                              <ImageIcon className="w-2.5 h-2.5 text-bronze" />
+                              <span>IMAGE</span>
+                            </div>
+                          </div>
+                        )}
+                        <div className="p-2 bg-white flex items-center justify-between gap-1.5 text-[11px] text-charcoal border-t border-sand-200">
+                          <div className="min-w-0 flex-1">
+                            <p className="truncate font-medium text-burgundy-950" title={preview.name}>
+                              {preview.name}
+                            </p>
+                            <p className="text-[10px] text-charcoal/60">
+                              {formatFileSize(preview.size)}
+                            </p>
+                          </div>
+                          <button
+                            type="button"
+                            onClick={() => removeSelectedFile(idx)}
+                            className="p-1 rounded-md text-red-600 hover:text-red-800 hover:bg-red-50 transition-colors shrink-0"
+                            title="Remove file"
+                          >
+                            <X className="w-3.5 h-3.5" />
+                          </button>
+                        </div>
                       </div>
                     ))}
                   </div>
                 </div>
               )}
 
-              {/* Alternative Image URL */}
+              {/* Alternative Image URL (For images only) */}
               <div className="mt-3">
-                <span className="text-[11px] text-charcoal/60">Or provide image URL:</span>
+                <span className="text-[11px] text-charcoal/60">Or provide image URL (images only):</span>
                 <input
                   type="url"
                   value={uploadUrl}
                   onChange={(e) => setUploadUrl(e.target.value)}
-                  placeholder="https://..."
+                  placeholder="https://example.com/photo.jpg"
                   className="w-full px-2.5 py-1.5 mt-0.5 border border-sand-300 rounded-lg text-xs focus:ring-2 focus:ring-burgundy-600 focus:outline-none"
                 />
               </div>
@@ -622,7 +793,15 @@ const GalleryManagement = () => {
                 disabled={isUploading}
                 className="w-full xs:w-auto justify-center"
               >
-                {isUploading ? (uploadProgress || 'Uploading...') : `Upload ${uploadFiles.length > 1 ? `${uploadFiles.length} Photos` : 'Image'}`}
+                {isUploading
+                  ? uploadProgress || 'Uploading...'
+                  : `Upload ${
+                      uploadFiles.length > 1
+                        ? `${uploadFiles.length} Media Files`
+                        : uploadFiles.length === 1 && isVideoFile(uploadFiles[0])
+                        ? 'Video'
+                        : 'Media'
+                    }`}
               </Button>
             </div>
           </form>
@@ -632,7 +811,7 @@ const GalleryManagement = () => {
         <Modal
           isOpen={isEditModalOpen}
           onClose={() => setIsEditModalOpen(false)}
-          title="Edit Gallery Item"
+          title="Edit Gallery Media"
           size="md"
         >
           {editingItem && (
@@ -682,30 +861,61 @@ const GalleryManagement = () => {
               </div>
 
               <div>
-                <label className="block text-xs font-semibold text-charcoal mb-1">Image</label>
+                <label className="block text-xs font-semibold text-charcoal mb-1">
+                  Media File (Image or Video)
+                </label>
                 <div className="flex gap-3 items-center">
-                  <div className="w-16 h-16 rounded-lg overflow-hidden border border-sand-300 flex-shrink-0 bg-sand-100">
-                    <img src={editPreview} alt="Preview" className="w-full h-full object-cover" />
+                  <div className="w-20 h-16 rounded-lg overflow-hidden border border-sand-300 flex-shrink-0 bg-sand-100 flex items-center justify-center">
+                    {editFile ? (
+                      isVideoFile(editFile) ? (
+                        <video src={editPreview} className="w-full h-full object-cover" controls />
+                      ) : (
+                        <img src={editPreview} alt="Preview" className="w-full h-full object-cover" />
+                      )
+                    ) : editingItem.mediaType === 'VIDEO' ||
+                      editingItem.resourceType === 'video' ||
+                      /\.(mp4|webm|mov|m4v)(\?.*)?$/i.test(editingItem.imageUrl || '') ? (
+                      <video src={editingItem.imageUrl} className="w-full h-full object-cover" controls />
+                    ) : (
+                      <img src={editPreview} alt="Preview" className="w-full h-full object-cover" />
+                    )}
                   </div>
                   <div className="flex-1">
                     <input
                       type="file"
-                      accept="image/*"
+                      accept="image/jpeg,image/png,image/webp,image/gif,image/avif,video/mp4,video/webm,video/quicktime,video/x-m4v"
                       onChange={async (e) => {
                         const file = e.target.files?.[0];
                         if (file) {
-                          try {
-                            const optimized = await compressImageFile(file);
-                            setEditFile(optimized);
-                            setEditPreview(URL.createObjectURL(optimized));
-                          } catch {
+                          const isVideo = isVideoFile(file);
+                          if (isVideo) {
+                            if (file.size > 100 * 1024 * 1024) {
+                              setEditError(`Video exceeds the 100 MB limit (${formatFileSize(file.size)}).`);
+                              return;
+                            }
                             setEditFile(file);
                             setEditPreview(URL.createObjectURL(file));
+                          } else {
+                            if (file.size > 15 * 1024 * 1024) {
+                              setEditError(`Image exceeds the 15 MB limit (${formatFileSize(file.size)}).`);
+                              return;
+                            }
+                            try {
+                              const optimized = await compressImageFile(file);
+                              setEditFile(optimized);
+                              setEditPreview(URL.createObjectURL(optimized));
+                            } catch {
+                              setEditFile(file);
+                              setEditPreview(URL.createObjectURL(file));
+                            }
                           }
                         }
                       }}
                       className="text-xs text-charcoal"
                     />
+                    <p className="text-[10px] text-charcoal/50 mt-1">
+                      Choose an image (max 15MB) or video (max 100MB) to replace current media.
+                    </p>
                   </div>
                 </div>
               </div>
@@ -753,9 +963,9 @@ const GalleryManagement = () => {
           isOpen={Boolean(deleteTarget)}
           onClose={() => setDeleteTarget(null)}
           onConfirm={handleDelete}
-          title="Delete Gallery Photo"
+          title="Delete Gallery Media"
           message={`Are you sure you want to delete "${deleteTarget?.title}"? This action cannot be undone.`}
-          confirmText={isDeleting ? 'Deleting...' : 'Delete Photo'}
+          confirmText={isDeleting ? 'Deleting...' : 'Delete Media'}
           confirmVariant="danger"
         />
       </div>

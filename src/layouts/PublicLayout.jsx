@@ -3,6 +3,7 @@ import { Outlet, useLocation } from 'react-router-dom';
 import { Toaster } from 'react-hot-toast';
 import Header from '../components/layout/Header';
 import Footer from '../components/layout/Footer';
+import FloatingSocialButtons from '../components/common/FloatingSocialButtons';
 import settingsService from '../services/settingsService';
 import serviceService from '../services/serviceService';
 
@@ -82,6 +83,9 @@ export const PublicLayout = () => {
       </main>
 
       <Footer settings={settings} services={services} />
+
+      {/* Floating Instagram & WhatsApp Quick Action Buttons */}
+      <FloatingSocialButtons settings={settings} />
     </div>
   );
 };
