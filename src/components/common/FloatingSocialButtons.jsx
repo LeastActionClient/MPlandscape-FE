@@ -33,7 +33,7 @@ export const FloatingSocialButtons = ({ settings }) => {
   return (
     <aside
       aria-label="Quick Social and Messaging Channels"
-      className="fixed right-3.5 sm:right-6 bottom-5 sm:bottom-7 z-40 flex flex-col items-center gap-3 select-none pointer-events-auto"
+      className="fixed right-3.5 sm:right-6 bottom-20 sm:bottom-24 lg:bottom-28 z-40 flex flex-col items-center gap-3 select-none pointer-events-auto"
     >
       {/* 1. Instagram Floating Button (Positioned Above WhatsApp) */}
       <div className="relative flex items-center group">

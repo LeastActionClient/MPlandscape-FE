@@ -10,6 +10,8 @@ import {
   Trees,
   RefreshCw,
   Building2,
+  Play,
+  Film,
 } from 'lucide-react';
 
 const getCardIcon = (title = '', category = '') => {
@@ -25,11 +27,15 @@ const getCardIcon = (title = '', category = '') => {
 };
 
 export const GalleryCard = ({ item, onSelect, className = '' }) => {
-  const [imageError, setImageError] = useState(!item?.imageUrl);
+  const [mediaError, setMediaError] = useState(!item?.imageUrl);
 
   if (!item) return null;
 
   const IconComponent = getCardIcon(item.title, item.category);
+  const isVideo =
+    item.mediaType === 'VIDEO' ||
+    item.resourceType === 'video' ||
+    /\.(mp4|webm|mov|m4v)(\?.*)?$/i.test(item.imageUrl || '');
 
   return (
     <div
@@ -42,15 +48,50 @@ export const GalleryCard = ({ item, onSelect, className = '' }) => {
       {/* Subtle Ambient Corner Glow on Hover */}
       <div className="absolute -top-12 -right-12 w-28 h-28 bg-bronze/20 rounded-full blur-xl opacity-0 group-hover:opacity-100 transition-opacity duration-500 pointer-events-none z-10" />
 
-      {/* Background Image with Smooth Organic Zoom */}
-      {!imageError && item.imageUrl ? (
-        <img
-          src={item.imageUrl}
-          alt={item.title}
-          className="w-full h-full object-cover transition-transform duration-700 ease-out group-hover:scale-110"
-          loading="lazy"
-          onError={() => setImageError(true)}
-        />
+      {/* Media: Image or Video Thumbnail / Frame with Smooth Organic Zoom */}
+      {!mediaError && item.imageUrl ? (
+        isVideo ? (
+          <div className="w-full h-full relative overflow-hidden bg-black flex items-center justify-center">
+            {item.videoThumbnail ? (
+              <img
+                src={item.videoThumbnail}
+                alt={item.title}
+                className="w-full h-full object-cover transition-transform duration-700 ease-out group-hover:scale-110"
+                onError={() => setMediaError(true)}
+              />
+            ) : (
+              <video
+                src={item.imageUrl}
+                preload="metadata"
+                muted
+                playsInline
+                className="w-full h-full object-cover transition-transform duration-700 ease-out group-hover:scale-110 pointer-events-none"
+                onError={() => setMediaError(true)}
+              />
+            )}
+
+            {/* Prominent Play Button Badge */}
+            <div className="absolute inset-0 flex items-center justify-center pointer-events-none z-10">
+              <div className="w-12 h-12 rounded-full bg-black/60 backdrop-blur-md border border-bronze/60 text-white flex items-center justify-center shadow-xl group-hover:scale-115 group-hover:bg-burgundy group-hover:border-sand transition-all duration-300">
+                <Play className="w-5 h-5 fill-white ml-0.5" />
+              </div>
+            </div>
+
+            {/* Top-Left Video Indicator Pill */}
+            <div className="absolute top-3 left-3 px-2.5 py-1 rounded-full bg-black/65 backdrop-blur-md text-sand-200 border border-white/20 flex items-center gap-1.5 shadow-md z-10">
+              <Film className="w-3 h-3 text-bronze" />
+              <span className="text-[10px] font-bold uppercase tracking-wider">Video</span>
+            </div>
+          </div>
+        ) : (
+          <img
+            src={item.imageUrl}
+            alt={item.title}
+            className="w-full h-full object-cover transition-transform duration-700 ease-out group-hover:scale-110"
+            loading="lazy"
+            onError={() => setMediaError(true)}
+          />
+        )
       ) : (
         <div className="w-full h-full flex flex-col items-center justify-center bg-sand/20 text-cream p-4 text-center">
           <ImageIcon className="w-8 h-8 text-bronze/70 mb-1" />
@@ -61,13 +102,22 @@ export const GalleryCard = ({ item, onSelect, className = '' }) => {
       {/* Permanent Dark Gradient Overlay for Maximum Title Legibility */}
       <div className="absolute inset-0 bg-gradient-to-t from-black/90 via-black/35 to-black/10 pointer-events-none transition-opacity duration-500 group-hover:from-black/95 group-hover:via-black/45" />
 
-      {/* Modern Zoom / Expand Indicator Pill */}
-      <div className="absolute top-3 right-3 px-2.5 py-1 rounded-full bg-black/50 backdrop-blur-md text-white flex items-center gap-1.5 opacity-0 group-hover:opacity-100 transform translate-y-1 group-hover:translate-y-0 transition-all duration-300 shadow-lg border border-white/20 group-hover:border-bronze/60">
-        <ZoomIn className="w-3.5 h-3.5 text-bronze-light" />
-        <span className="text-[11px] font-semibold text-white tracking-wide hidden sm:inline">View</span>
+      {/* Modern Zoom / Play Indicator Pill */}
+      <div className="absolute top-3 right-3 px-2.5 py-1 rounded-full bg-black/50 backdrop-blur-md text-white flex items-center gap-1.5 opacity-0 group-hover:opacity-100 transform translate-y-1 group-hover:translate-y-0 transition-all duration-300 shadow-lg border border-white/20 group-hover:border-bronze/60 z-10">
+        {isVideo ? (
+          <>
+            <Play className="w-3.5 h-3.5 text-bronze-light fill-bronze-light" />
+            <span className="text-[11px] font-semibold text-white tracking-wide hidden sm:inline">Play</span>
+          </>
+        ) : (
+          <>
+            <ZoomIn className="w-3.5 h-3.5 text-bronze-light" />
+            <span className="text-[11px] font-semibold text-white tracking-wide hidden sm:inline">View</span>
+          </>
+        )}
       </div>
 
-      {/* Bottom Title Overlay with Animated Icon and Arrow */}
+      {/* Bottom Title Overlay with Animated Icon */}
       <div className="absolute bottom-0 inset-x-0 p-3 sm:p-4 z-10 flex items-center justify-between gap-2.5 min-w-0">
         <div className="flex items-center gap-2 sm:gap-2.5 min-w-0 flex-1">
           <div className="w-6 h-6 sm:w-7 sm:h-7 rounded-full bg-black/55 border border-white/20 group-hover:border-bronze/60 flex items-center justify-center shrink-0 group-hover:scale-110 group-hover:rotate-6 transition-all duration-300 shadow-sm">

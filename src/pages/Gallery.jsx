@@ -399,13 +399,38 @@ export const Gallery = () => {
       >
         {selectedImage && (
           <div className="space-y-4">
-            {/* Image Canvas with Navigation Arrows */}
+            {/* Media Canvas with Navigation Arrows */}
             <div className="relative rounded-2xl overflow-hidden bg-brand-charcoal max-h-[70vh] flex items-center justify-center group/preview border border-sand/40">
-              <img
-                src={selectedImage.imageUrl}
-                alt={selectedImage.title}
-                className="max-h-[70vh] w-auto object-contain mx-auto transition-transform duration-300 select-none"
-              />
+              {(() => {
+                const isVideo =
+                  selectedImage.mediaType === 'VIDEO' ||
+                  selectedImage.resourceType === 'video' ||
+                  /\.(mp4|webm|mov|m4v)(\?.*)?$/i.test(selectedImage.imageUrl || '');
+
+                if (isVideo) {
+                  return (
+                    <video
+                      key={selectedImage._id}
+                      src={selectedImage.imageUrl}
+                      controls
+                      autoPlay={false}
+                      controlsList="nodownload"
+                      playsInline
+                      className="max-h-[70vh] w-full max-w-full rounded-xl object-contain mx-auto shadow-2xl bg-black"
+                    >
+                      Your browser does not support the video tag.
+                    </video>
+                  );
+                }
+
+                return (
+                  <img
+                    src={selectedImage.imageUrl}
+                    alt={selectedImage.title}
+                    className="max-h-[70vh] w-auto object-contain mx-auto transition-transform duration-300 select-none"
+                  />
+                );
+              })()}
 
               {/* Prev Button */}
               {items.length > 1 && (
@@ -415,8 +440,8 @@ export const Gallery = () => {
                     e.stopPropagation();
                     handlePrevImage();
                   }}
-                  className="absolute left-3 top-1/2 -translate-y-1/2 w-10 h-10 rounded-full bg-black/60 hover:bg-black/85 text-white flex items-center justify-center backdrop-blur-md border border-white/20 hover:border-bronze transition-all shadow-lg cursor-pointer"
-                  aria-label="Previous photograph"
+                  className="absolute left-3 top-1/2 -translate-y-1/2 w-10 h-10 rounded-full bg-black/60 hover:bg-black/85 text-white flex items-center justify-center backdrop-blur-md border border-white/20 hover:border-bronze transition-all shadow-lg cursor-pointer z-20"
+                  aria-label="Previous photograph or video"
                 >
                   <ChevronLeft className="w-5 h-5 text-white" />
                 </button>
@@ -430,8 +455,8 @@ export const Gallery = () => {
                     e.stopPropagation();
                     handleNextImage();
                   }}
-                  className="absolute right-3 top-1/2 -translate-y-1/2 w-10 h-10 rounded-full bg-black/60 hover:bg-black/85 text-white flex items-center justify-center backdrop-blur-md border border-white/20 hover:border-bronze transition-all shadow-lg cursor-pointer"
-                  aria-label="Next photograph"
+                  className="absolute right-3 top-1/2 -translate-y-1/2 w-10 h-10 rounded-full bg-black/60 hover:bg-black/85 text-white flex items-center justify-center backdrop-blur-md border border-white/20 hover:border-bronze transition-all shadow-lg cursor-pointer z-20"
+                  aria-label="Next photograph or video"
                 >
                   <ChevronRight className="w-5 h-5 text-white" />
                 </button>
