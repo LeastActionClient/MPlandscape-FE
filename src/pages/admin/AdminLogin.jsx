@@ -74,69 +74,69 @@ const AdminLogin = () => {
         <meta name="robots" content="noindex, nofollow" />
       </Helmet>
 
-      <div className="min-h-screen bg-sand-100 flex flex-col justify-center py-12 sm:px-6 lg:px-8 relative overflow-hidden">
+      <div className="h-screen min-h-screen bg-sand-100 flex flex-col justify-center py-4 sm:py-6 sm:px-6 lg:px-8 relative overflow-y-auto sm:overflow-hidden">
         {/* Subtle decorative background circles */}
         <div className="absolute top-0 right-0 -mr-20 -mt-20 w-80 h-80 rounded-full bg-burgundy-900/5 blur-3xl pointer-events-none" />
         <div className="absolute bottom-0 left-0 -ml-20 -mb-20 w-80 h-80 rounded-full bg-sand-400/20 blur-3xl pointer-events-none" />
 
         <div className="sm:mx-auto sm:w-full sm:max-w-md relative z-10 px-4">
-          <div className="flex justify-center mb-6">
+          <div className="flex justify-center mb-3 sm:mb-4">
             <Link to="/" className="inline-block focus:outline-none focus:ring-2 focus:ring-burgundy-600 rounded-lg p-1">
-              <MPLogo imgClassName="h-16 w-auto object-contain" showText={true} />
+              <MPLogo imgClassName="h-12 sm:h-14 w-auto object-contain" showText={true} />
             </Link>
           </div>
 
           <div className="text-center">
-            <h1 className="text-2xl sm:text-3xl font-serif font-bold text-burgundy-900">
+            <h1 className="text-xl sm:text-2xl font-serif font-bold text-burgundy-900">
               Admin Portal
             </h1>
-            <p className="mt-2 text-sm text-charcoal/70">
+            <p className="mt-1 text-xs sm:text-sm text-charcoal/70">
               Secure authentication for MP Landscape Services administrators
             </p>
           </div>
         </div>
 
-        <div className="mt-8 sm:mx-auto sm:w-full sm:max-w-md px-4 relative z-10 animate-fade-in-up">
-          <div className="bg-white py-8 px-6 shadow-xl hover:shadow-2xl rounded-2xl sm:px-10 border border-sand-300 relative overflow-hidden transition-all duration-300">
+        <div className="mt-4 sm:mt-6 sm:mx-auto sm:w-full sm:max-w-md px-4 relative z-10 animate-fade-in-up">
+          <div className="bg-white py-6 sm:py-7 px-6 sm:px-8 shadow-xl hover:shadow-2xl rounded-2xl border border-sand-300 relative overflow-hidden transition-all duration-300">
             {/* Top Accent Gradient Bar */}
             <div className="absolute top-0 left-0 right-0 h-1 bg-gradient-to-r from-burgundy-900 via-bronze to-burgundy-900" />
             {authError && (
               <div
                 role="alert"
-                className="mb-6 p-4 rounded-xl bg-red-50 border border-red-200 flex items-start gap-3 text-red-700 text-sm animate-fade-in"
+                className="mb-4 p-3.5 rounded-xl bg-red-50 border border-red-200 flex items-start gap-3 text-red-700 text-xs sm:text-sm animate-fade-in"
               >
-                <AlertCircle className="w-5 h-5 flex-shrink-0 text-red-500 mt-0.5" />
+                <AlertCircle className="w-4 h-4 flex-shrink-0 text-red-500 mt-0.5" />
                 <span className="font-medium">{authError}</span>
               </div>
             )}
 
-            <form onSubmit={handleSubmit(onSubmit)} className="space-y-6">
+            <form onSubmit={handleSubmit(onSubmit)} className="space-y-4 sm:space-y-5">
               <div>
                 <label
                   htmlFor="email"
-                  className="block text-sm font-semibold text-charcoal mb-1"
+                  className="block text-xs sm:text-sm font-semibold text-charcoal mb-1"
                 >
                   Admin Email
                 </label>
                 <div className="relative rounded-lg shadow-sm">
                   <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none text-charcoal/40">
-                    <Mail className="h-5 w-5" />
+                    <Mail className="h-4 w-4 sm:h-5 sm:w-5" />
                   </div>
                   <input
                     id="email"
                     type="email"
                     autoComplete="email"
                     {...register('email')}
-                    className={`block w-full pl-10 pr-3 py-2.5 sm:text-sm rounded-lg border transition-colors bg-sand-50/40 text-charcoal placeholder-charcoal/40 focus:outline-none focus:ring-2 focus:ring-burgundy-600 focus:bg-white ${
+                    className={`block w-full pl-9 sm:pl-10 pr-3 py-2 sm:py-2.5 text-xs sm:text-sm rounded-lg border transition-colors bg-sand-50/40 text-charcoal placeholder-charcoal/40 focus:outline-none focus:ring-2 focus:ring-burgundy-600 focus:bg-white ${
                       errors.email
                         ? 'border-red-500 focus:border-red-500'
                         : 'border-sand-300 focus:border-burgundy-600'
                     }`}
-                    placeholder="admin@mplandscape.com"
+                    placeholder="example@gmail.com"
                   />
                 </div>
                 {errors.email && (
-                  <p className="mt-1.5 text-xs text-red-600 font-medium">
+                  <p className="mt-1 text-xs text-red-600 font-medium">
                     {errors.email.message}
                   </p>
                 )}
@@ -145,20 +145,20 @@ const AdminLogin = () => {
               <div>
                 <label
                   htmlFor="password"
-                  className="block text-sm font-semibold text-charcoal mb-1"
+                  className="block text-xs sm:text-sm font-semibold text-charcoal mb-1"
                 >
                   Password
                 </label>
                 <div className="relative rounded-lg shadow-sm">
                   <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none text-charcoal/40">
-                    <Lock className="h-5 w-5" />
+                    <Lock className="h-4 w-4 sm:h-5 sm:w-5" />
                   </div>
                   <input
                     id="password"
                     type={showPassword ? 'text' : 'password'}
                     autoComplete="current-password"
                     {...register('password')}
-                    className={`block w-full pl-10 pr-10 py-2.5 sm:text-sm rounded-lg border transition-colors bg-sand-50/40 text-charcoal placeholder-charcoal/40 focus:outline-none focus:ring-2 focus:ring-burgundy-600 focus:bg-white ${
+                    className={`block w-full pl-9 sm:pl-10 pr-10 py-2 sm:py-2.5 text-xs sm:text-sm rounded-lg border transition-colors bg-sand-50/40 text-charcoal placeholder-charcoal/40 focus:outline-none focus:ring-2 focus:ring-burgundy-600 focus:bg-white ${
                       errors.password
                         ? 'border-red-500 focus:border-red-500'
                         : 'border-sand-300 focus:border-burgundy-600'
@@ -172,25 +172,25 @@ const AdminLogin = () => {
                     aria-label={showPassword ? 'Hide password' : 'Show password'}
                   >
                     {showPassword ? (
-                      <EyeOff className="h-5 w-5" />
+                      <EyeOff className="h-4 w-4 sm:h-5 sm:w-5" />
                     ) : (
-                      <Eye className="h-5 w-5" />
+                      <Eye className="h-4 w-4 sm:h-5 sm:w-5" />
                     )}
                   </button>
                 </div>
                 {errors.password && (
-                  <p className="mt-1.5 text-xs text-red-600 font-medium">
+                  <p className="mt-1 text-xs text-red-600 font-medium">
                     {errors.password.message}
                   </p>
                 )}
               </div>
 
-              <div>
+              <div className="pt-1">
                 <Button
                   type="submit"
                   variant="primary"
-                  size="lg"
-                  className="w-full flex justify-center shadow-md shadow-burgundy-900/10"
+                  size="md"
+                  className="w-full flex justify-center shadow-md shadow-burgundy-900/10 py-2.5"
                   disabled={isSubmitting}
                 >
                   {isSubmitting ? (
@@ -205,18 +205,18 @@ const AdminLogin = () => {
               </div>
             </form>
 
-            <div className="mt-8 pt-6 border-t border-sand-200 text-center">
+            <div className="mt-5 pt-4 sm:mt-6 sm:pt-4 border-t border-sand-200 text-center">
               <Link
                 to="/"
-                className="inline-flex items-center gap-2 text-sm text-burgundy-800 hover:text-burgundy-950 font-medium transition-colors"
+                className="inline-flex items-center gap-2 text-xs sm:text-sm text-burgundy-800 hover:text-burgundy-950 font-medium transition-colors"
               >
-                <ArrowLeft className="w-4 h-4" />
+                <ArrowLeft className="w-3.5 h-3.5 sm:w-4 sm:h-4" />
                 Return to public website
               </Link>
             </div>
           </div>
 
-          <p className="mt-6 text-center text-xs text-charcoal/50">
+          <p className="mt-3 sm:mt-4 text-center text-[11px] sm:text-xs text-charcoal/50">
             &copy; {new Date().getFullYear()} MP Landscape Services. Unauthorized access is strictly prohibited.
           </p>
         </div>
