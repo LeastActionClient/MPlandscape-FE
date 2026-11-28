@@ -164,15 +164,19 @@ export const EnquiryForm = ({
   }
 
   return (
-    <div className={`card-luxury p-6 sm:p-8 border border-sand bg-cream-light ${className}`}>
+    <div className={`card-luxury p-4 min-[360px]:p-5 sm:p-8 border border-sand bg-cream-light ${className}`}>
       {title && (
-        <div className="mb-6">
-          <h3 className="text-xl sm:text-2xl font-bold font-sans text-burgundy">{title}</h3>
-          {subtitle && <p className="text-xs sm:text-sm text-brand-muted mt-1">{subtitle}</p>}
+        <div className="mb-3 min-[360px]:mb-4 sm:mb-6">
+          <h3 className="text-[17px] min-[360px]:text-[18px] sm:text-2xl font-semibold sm:font-bold font-sans text-burgundy">{title}</h3>
+          {subtitle && (
+            <p className="text-[13px] min-[360px]:text-[13.5px] sm:text-sm text-brand-muted mt-1 leading-relaxed">
+              {subtitle}
+            </p>
+          )}
         </div>
       )}
 
-      <form onSubmit={handleSubmit(onSubmit)} className="space-y-4" noValidate>
+      <form onSubmit={handleSubmit(onSubmit)} className="space-y-3 min-[360px]:space-y-3.5 sm:space-y-4" noValidate>
         {/* Hidden Honeypot Field */}
         <div className="hidden" aria-hidden="true">
           <input
@@ -184,9 +188,9 @@ export const EnquiryForm = ({
         </div>
 
         {/* Full Name & Phone */}
-        <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+        <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 sm:gap-4">
           <div>
-            <label className="block text-sm sm:text-xs font-semibold text-brand-dark uppercase tracking-wider mb-1.5">
+            <label className="block text-[13px] min-[360px]:text-[13.5px] sm:text-xs font-medium text-brand-dark uppercase tracking-wider mb-1">
               Full Name <span className="text-burgundy">*</span>
             </label>
             <input
@@ -199,19 +203,19 @@ export const EnquiryForm = ({
                 onChange: handleNameChange,
               })}
               onKeyDown={handleNameKeyDown}
-              className={`w-full px-3.5 py-2.5 rounded-lg border text-base sm:text-sm text-brand-dark bg-white focus:outline-hidden transition-all disabled:opacity-60 disabled:cursor-not-allowed ${
+              className={`w-full px-3 py-2 min-[360px]:px-3.5 min-[360px]:py-2.5 rounded-lg border text-[14px] min-[360px]:text-[14.5px] sm:text-sm placeholder:text-[13px] min-[360px]:placeholder:text-[13.5px] sm:placeholder:text-sm placeholder:text-brand-muted/65 text-brand-dark bg-white focus:outline-hidden transition-all disabled:opacity-60 disabled:cursor-not-allowed ${
                 errors.customerName
                   ? 'border-burgundy focus:ring-1 focus:ring-burgundy'
                   : 'border-sand focus:border-bronze focus:ring-1 focus:ring-bronze'
               }`}
             />
             {errors.customerName && (
-              <p className="text-sm sm:text-xs text-burgundy mt-1 font-medium">{errors.customerName.message}</p>
+              <p className="text-xs text-burgundy mt-1 font-medium">{errors.customerName.message}</p>
             )}
           </div>
 
           <div>
-            <label className="block text-sm sm:text-xs font-semibold text-brand-dark uppercase tracking-wider mb-1.5">
+            <label className="block text-[13px] min-[360px]:text-[13.5px] sm:text-xs font-medium text-brand-dark uppercase tracking-wider mb-1">
               Phone Number <span className="text-burgundy">*</span>
             </label>
             <input
@@ -226,22 +230,22 @@ export const EnquiryForm = ({
                 onChange: handlePhoneChange,
               })}
               onKeyDown={handlePhoneKeyDown}
-              className={`w-full px-3.5 py-2.5 rounded-lg border text-base sm:text-sm text-brand-dark bg-white focus:outline-hidden transition-all disabled:opacity-60 disabled:cursor-not-allowed ${
+              className={`w-full px-3 py-2 min-[360px]:px-3.5 min-[360px]:py-2.5 rounded-lg border text-[14px] min-[360px]:text-[14.5px] sm:text-sm placeholder:text-[13px] min-[360px]:placeholder:text-[13.5px] sm:placeholder:text-sm placeholder:text-brand-muted/65 text-brand-dark bg-white focus:outline-hidden transition-all disabled:opacity-60 disabled:cursor-not-allowed ${
                 errors.phone
                   ? 'border-burgundy focus:ring-1 focus:ring-burgundy'
                   : 'border-sand focus:border-bronze focus:ring-1 focus:ring-bronze'
               }`}
             />
             {errors.phone && (
-              <p className="text-sm sm:text-xs text-burgundy mt-1 font-medium">{errors.phone.message}</p>
+              <p className="text-xs text-burgundy mt-1 font-medium">{errors.phone.message}</p>
             )}
           </div>
         </div>
 
         {/* Email & Location */}
-        <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+        <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 sm:gap-4">
           <div>
-            <label className="block text-sm sm:text-xs font-semibold text-brand-dark uppercase tracking-wider mb-1.5">
+            <label className="block text-[13px] min-[360px]:text-[13.5px] sm:text-xs font-medium text-brand-dark uppercase tracking-wider mb-1">
               Email Address <span className="text-burgundy">*</span>
             </label>
             <input
@@ -249,19 +253,19 @@ export const EnquiryForm = ({
               placeholder="e.g. ramesh@example.com"
               disabled={submitting}
               {...register('email')}
-              className={`w-full px-3.5 py-2.5 rounded-lg border text-base sm:text-sm text-brand-dark bg-white focus:outline-hidden transition-all disabled:opacity-60 disabled:cursor-not-allowed ${
+              className={`w-full px-3 py-2 min-[360px]:px-3.5 min-[360px]:py-2.5 rounded-lg border text-[14px] min-[360px]:text-[14.5px] sm:text-sm placeholder:text-[13px] min-[360px]:placeholder:text-[13.5px] sm:placeholder:text-sm placeholder:text-brand-muted/65 text-brand-dark bg-white focus:outline-hidden transition-all disabled:opacity-60 disabled:cursor-not-allowed ${
                 errors.email
                   ? 'border-burgundy focus:ring-1 focus:ring-burgundy'
                   : 'border-sand focus:border-bronze focus:ring-1 focus:ring-bronze'
               }`}
             />
             {errors.email && (
-              <p className="text-sm sm:text-xs text-burgundy mt-1 font-medium">{errors.email.message}</p>
+              <p className="text-xs text-burgundy mt-1 font-medium">{errors.email.message}</p>
             )}
           </div>
 
           <div>
-            <label className="block text-sm sm:text-xs font-semibold text-brand-dark uppercase tracking-wider mb-1.5">
+            <label className="block text-[13px] min-[360px]:text-[13.5px] sm:text-xs font-medium text-brand-dark uppercase tracking-wider mb-1">
               Project Location
             </label>
             <input
@@ -269,27 +273,27 @@ export const EnquiryForm = ({
               placeholder="e.g. Coimbatore, Tamil Nadu"
               disabled={submitting}
               {...register('location')}
-              className={`w-full px-3.5 py-2.5 rounded-lg border text-base sm:text-sm text-brand-dark bg-white focus:outline-hidden transition-all disabled:opacity-60 disabled:cursor-not-allowed ${
+              className={`w-full px-3 py-2 min-[360px]:px-3.5 min-[360px]:py-2.5 rounded-lg border text-[14px] min-[360px]:text-[14.5px] sm:text-sm placeholder:text-[13px] min-[360px]:placeholder:text-[13.5px] sm:placeholder:text-sm placeholder:text-brand-muted/65 text-brand-dark bg-white focus:outline-hidden transition-all disabled:opacity-60 disabled:cursor-not-allowed ${
                 errors.location
                   ? 'border-burgundy focus:ring-1 focus:ring-burgundy'
                   : 'border-sand focus:border-bronze focus:ring-1 focus:ring-bronze'
               }`}
             />
             {errors.location && (
-              <p className="text-sm sm:text-xs text-burgundy mt-1 font-medium">{errors.location.message}</p>
+              <p className="text-xs text-burgundy mt-1 font-medium">{errors.location.message}</p>
             )}
           </div>
         </div>
 
         {/* Service Selector Dropdown */}
         <div>
-          <label className="block text-sm sm:text-xs font-semibold text-brand-dark uppercase tracking-wider mb-1.5">
+          <label className="block text-[13px] min-[360px]:text-[13.5px] sm:text-xs font-medium text-brand-dark uppercase tracking-wider mb-1">
             Interested Service <span className="text-burgundy">*</span>
           </label>
           <select
             disabled={submitting}
             {...register('serviceId')}
-            className={`w-full px-3.5 py-2.5 rounded-lg border text-base sm:text-sm text-brand-dark bg-white focus:outline-hidden transition-all cursor-pointer disabled:opacity-60 disabled:cursor-not-allowed ${
+            className={`w-full px-3 py-2 min-[360px]:px-3.5 min-[360px]:py-2.5 rounded-lg border text-[14px] min-[360px]:text-[14.5px] sm:text-sm text-brand-dark bg-white focus:outline-hidden transition-all cursor-pointer disabled:opacity-60 disabled:cursor-not-allowed ${
               errors.serviceId
                 ? 'border-burgundy focus:ring-1 focus:ring-burgundy'
                 : 'border-sand focus:border-bronze focus:ring-1 focus:ring-bronze'
@@ -303,21 +307,21 @@ export const EnquiryForm = ({
             ))}
           </select>
           {errors.serviceId && (
-            <p className="text-sm sm:text-xs text-burgundy mt-1 font-medium">{errors.serviceId.message}</p>
+            <p className="text-xs text-burgundy mt-1 font-medium">{errors.serviceId.message}</p>
           )}
         </div>
 
         {/* Message Field */}
         <div>
-          <label className="block text-sm sm:text-xs font-semibold text-brand-dark uppercase tracking-wider mb-1.5">
+          <label className="block text-[13px] min-[360px]:text-[13.5px] sm:text-xs font-medium text-brand-dark uppercase tracking-wider mb-1">
             Project Details & Requirements <span className="text-burgundy">*</span>
           </label>
           <textarea
-            rows="4"
+            rows="3"
             placeholder="Describe your site dimensions, property type, intended landscape features, or farming goals (min 10 characters)..."
             disabled={submitting}
             {...register('message')}
-            className={`w-full px-3.5 py-2.5 rounded-lg border text-base sm:text-sm text-brand-dark bg-white focus:outline-hidden transition-all disabled:opacity-60 disabled:cursor-not-allowed ${
+            className={`w-full px-3 py-2 min-[360px]:px-3.5 min-[360px]:py-2.5 rounded-lg border text-[14px] min-[360px]:text-[14.5px] sm:text-sm placeholder:text-[13px] min-[360px]:placeholder:text-[13.5px] sm:placeholder:text-sm placeholder:text-brand-muted/65 text-brand-dark bg-white focus:outline-hidden transition-all disabled:opacity-60 disabled:cursor-not-allowed ${
               errors.message
                 ? 'border-burgundy focus:ring-1 focus:ring-burgundy'
                 : 'border-sand focus:border-bronze focus:ring-1 focus:ring-bronze'
@@ -325,12 +329,12 @@ export const EnquiryForm = ({
           />
           <div className="flex items-center justify-between mt-1">
             {errors.message ? (
-              <p className="text-sm sm:text-xs text-burgundy font-medium">{errors.message.message}</p>
+              <p className="text-xs text-burgundy font-medium">{errors.message.message}</p>
             ) : (
-              <span className="text-xs sm:text-[11px] text-brand-muted font-medium">Min 10 meaningful characters</span>
+              <span className="text-[11px] text-brand-muted font-medium">Min 10 meaningful characters</span>
             )}
             <span
-              className={`text-xs sm:text-[11px] tabular-nums font-medium ${
+              className={`text-[11px] tabular-nums font-medium ${
                 messageValue.length > 1000 ? 'text-burgundy font-semibold' : 'text-brand-muted'
               }`}
             >
@@ -340,7 +344,7 @@ export const EnquiryForm = ({
         </div>
 
         {/* Submit Button */}
-        <div className="pt-2">
+        <div className="pt-1 sm:pt-2">
           <Button
             type="submit"
             variant="primary"
@@ -348,7 +352,7 @@ export const EnquiryForm = ({
             loading={submitting}
             icon={Send}
             iconPosition="right"
-            className="w-full"
+            className="w-full text-[13.5px] min-[360px]:text-[14px] sm:text-sm font-semibold"
           >
             {submitting ? 'Submitting Enquiry...' : 'Submit Service Enquiry'}
           </Button>

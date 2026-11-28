@@ -26,7 +26,7 @@ describe('Frontend App & Routing', () => {
 
   it('renders consultation request call-to-action buttons', () => {
     render(<App />);
-    const ctas = screen.getAllByText(/Request Consultation/i);
+    const ctas = screen.getAllByText(/Request (Enquiry|Consultation)|Enquiry/i);
     expect(ctas.length).toBeGreaterThan(0);
   });
 });

@@ -127,12 +127,12 @@ const CompanySettings = () => {
 
       <div className="space-y-6 max-w-4xl">
         {/* Header */}
-        <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4 pb-4 border-b border-sand-300">
+        <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-3 sm:gap-4 pb-3 sm:pb-4 border-b border-sand-300">
           <div>
-            <h1 className="text-2xl sm:text-3xl font-serif font-bold text-burgundy-900">
+            <h1 className="text-[23px] min-[360px]:text-[25px] min-[390px]:text-[27px] sm:text-3xl font-serif font-semibold sm:font-bold text-burgundy-900 leading-tight">
               Company Settings
             </h1>
-            <p className="text-sm text-charcoal/70 mt-1">
+            <p className="text-[13px] min-[360px]:text-[13.5px] min-[390px]:text-[14px] sm:text-sm text-charcoal/70 mt-1">
               Configure brand identity, company mission, vision statement, and public about narratives.
             </p>
           </div>
@@ -142,7 +142,7 @@ const CompanySettings = () => {
             size="sm"
             onClick={handleReload}
             disabled={refreshing}
-            className="gap-2 self-start sm:self-auto shrink-0"
+            className="gap-2 self-start sm:self-auto shrink-0 text-xs sm:text-sm"
           >
             <RefreshCw className={`w-3.5 h-3.5 shrink-0 ${refreshing ? 'animate-spin text-burgundy-900' : ''}`} />
             <span>Reload</span>
@@ -190,8 +190,8 @@ const CompanySettings = () => {
 
         <form onSubmit={handleSubmit} className="space-y-6">
           {/* Brand Identity Card */}
-          <div className="bg-white p-6 rounded-2xl border border-sand-300 shadow-xs space-y-5">
-            <h2 className="text-base font-serif font-bold text-burgundy-900 flex items-center gap-2 pb-3 border-b border-sand-200">
+          <div className="bg-white p-4 min-[360px]:p-5 sm:p-6 rounded-2xl border border-sand-300 shadow-xs space-y-4 sm:space-y-5">
+            <h2 className="text-[15px] min-[360px]:text-[16px] sm:text-base font-serif font-semibold sm:font-bold text-burgundy-900 flex items-center gap-2 pb-2.5 sm:pb-3 border-b border-sand-200">
               <Building2 className="w-4 h-4 text-burgundy-700" />
               Brand & Company Identity
             </h2>
@@ -242,8 +242,8 @@ const CompanySettings = () => {
           </div>
 
           {/* Narrative & Philosophy Card */}
-          <div className="bg-white p-6 rounded-2xl border border-sand-300 shadow-xs space-y-5">
-            <h2 className="text-base font-serif font-bold text-burgundy-900 flex items-center gap-2 pb-3 border-b border-sand-200">
+          <div className="bg-white p-4 min-[360px]:p-5 sm:p-6 rounded-2xl border border-sand-300 shadow-xs space-y-4 sm:space-y-5">
+            <h2 className="text-[15px] min-[360px]:text-[16px] sm:text-base font-serif font-semibold sm:font-bold text-burgundy-900 flex items-center gap-2 pb-2.5 sm:pb-3 border-b border-sand-200">
               <FileText className="w-4 h-4 text-burgundy-700" />
               About Story, Vision & Mission
             </h2>

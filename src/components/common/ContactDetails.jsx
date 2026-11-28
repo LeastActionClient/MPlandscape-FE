@@ -19,20 +19,20 @@ export const ContactDetails = ({ settings, className = '' }) => {
   const instagramUrl = getInstagramUrl(settings);
 
   return (
-    <div className={`space-y-6 ${className}`}>
+    <div className={`space-y-4 sm:space-y-6 ${className}`}>
       {/* Phone Numbers */}
-      <div className="group/item flex items-start gap-4 transition-transform duration-300 hover:translate-x-1">
-        <div className="w-10 h-10 rounded-xl bg-burgundy/10 text-burgundy flex items-center justify-center flex-shrink-0 group-hover/item:bg-burgundy group-hover/item:text-white group-hover/item:scale-110 transition-all duration-300 shadow-2xs">
-          <Phone className="w-5 h-5" />
+      <div className="group/item flex items-start gap-3.5 sm:gap-4 transition-transform duration-300 hover:translate-x-1">
+        <div className="w-9 h-9 sm:w-10 sm:h-10 rounded-xl bg-burgundy/10 text-burgundy flex items-center justify-center flex-shrink-0 group-hover/item:bg-burgundy group-hover/item:text-white group-hover/item:scale-110 transition-all duration-300 shadow-2xs">
+          <Phone className="w-4.5 h-4.5 sm:w-5 sm:h-5" />
         </div>
-        <div>
-          <h4 className="text-sm sm:text-xs font-bold uppercase tracking-wider text-bronze">Telephone / Enquiries</h4>
-          <div className="mt-1 space-y-1">
+        <div className="pr-4 sm:pr-0">
+          <h4 className="text-[12.5px] min-[360px]:text-[13px] sm:text-xs font-medium uppercase tracking-wider text-bronze">Telephone / Enquiries</h4>
+          <div className="mt-0.5 sm:mt-1 space-y-0.5 sm:space-y-1">
             {phones.map((phone, idx) => (
               <a
                 key={idx}
                 href={`tel:${phone.replace(/\s+/g, '')}`}
-                className="block text-base sm:text-sm font-semibold text-brand-dark hover:text-burgundy transition-colors"
+                className="block text-[14px] min-[360px]:text-[14.5px] sm:text-sm font-medium text-brand-dark hover:text-burgundy transition-colors"
               >
                 {phone}
               </a>
@@ -43,38 +43,38 @@ export const ContactDetails = ({ settings, className = '' }) => {
 
       {/* WhatsApp Quick Chat */}
       {whatsapp && (
-        <div className="group/item flex items-start gap-4 transition-transform duration-300 hover:translate-x-1">
-          <div className="w-10 h-10 rounded-xl bg-bronze/15 text-bronze-dark flex items-center justify-center flex-shrink-0 group-hover/item:bg-bronze group-hover/item:text-white group-hover/item:scale-110 transition-all duration-300 shadow-2xs">
-            <MessageCircle className="w-5 h-5" />
+        <div className="group/item flex items-start gap-3.5 sm:gap-4 transition-transform duration-300 hover:translate-x-1">
+          <div className="w-9 h-9 sm:w-10 sm:h-10 rounded-xl bg-bronze/15 text-bronze-dark flex items-center justify-center flex-shrink-0 group-hover/item:bg-bronze group-hover/item:text-white group-hover/item:scale-110 transition-all duration-300 shadow-2xs">
+            <MessageCircle className="w-4.5 h-4.5 sm:w-5 sm:h-5" />
           </div>
-          <div>
-            <h4 className="text-sm sm:text-xs font-bold uppercase tracking-wider text-bronze">WhatsApp Direct</h4>
+          <div className="pr-4 sm:pr-0">
+            <h4 className="text-[12.5px] min-[360px]:text-[13px] sm:text-xs font-medium uppercase tracking-wider text-bronze">WhatsApp Direct</h4>
             <a
               href={`https://wa.me/${cleanWhatsapp}?text=Hello%20MP%20Landscape%20Services,%20I%20would%20like%20to%20enquire%20about%20your%20services.`}
               target="_blank"
               rel="noopener noreferrer"
-              className="mt-1 inline-flex flex-wrap items-center gap-1.5 text-base sm:text-sm font-semibold text-brand-dark hover:text-burgundy transition-colors"
+              className="mt-0.5 sm:mt-1 inline-flex flex-wrap items-center gap-1.5 text-[14px] min-[360px]:text-[14.5px] sm:text-sm font-medium text-brand-dark hover:text-burgundy transition-colors"
             >
               <span className="break-all">{whatsapp}</span>
-              <span className="text-xs sm:text-[10px] bg-sand/60 px-2 py-0.5 rounded-full font-medium text-brand-dark shrink-0 hover:bg-bronze hover:text-white transition-colors">Chat Now</span>
+              <span className="text-[11px] sm:text-[10px] bg-sand/60 px-2 py-0.5 rounded-full font-medium text-brand-dark shrink-0 hover:bg-bronze hover:text-white transition-colors">Chat Now</span>
             </a>
           </div>
         </div>
       )}
 
       {/* Email Addresses */}
-      <div className="group/item flex items-start gap-4 transition-transform duration-300 hover:translate-x-1">
-        <div className="w-10 h-10 rounded-xl bg-burgundy/10 text-burgundy flex items-center justify-center flex-shrink-0 group-hover/item:bg-burgundy group-hover/item:text-white group-hover/item:scale-110 transition-all duration-300 shadow-2xs">
-          <Mail className="w-5 h-5" />
+      <div className="group/item flex items-start gap-3.5 sm:gap-4 transition-transform duration-300 hover:translate-x-1">
+        <div className="w-9 h-9 sm:w-10 sm:h-10 rounded-xl bg-burgundy/10 text-burgundy flex items-center justify-center flex-shrink-0 group-hover/item:bg-burgundy group-hover/item:text-white group-hover/item:scale-110 transition-all duration-300 shadow-2xs">
+          <Mail className="w-4.5 h-4.5 sm:w-5 sm:h-5" />
         </div>
-        <div>
-          <h4 className="text-sm sm:text-xs font-bold uppercase tracking-wider text-bronze">Email Correspondence</h4>
-          <div className="mt-1 space-y-1">
+        <div className="pr-4 sm:pr-0">
+          <h4 className="text-[12.5px] min-[360px]:text-[13px] sm:text-xs font-medium uppercase tracking-wider text-bronze">Email Correspondence</h4>
+          <div className="mt-0.5 sm:mt-1 space-y-0.5 sm:space-y-1">
             {emails.map((email, idx) => (
               <a
                 key={idx}
                 href={`mailto:${email}`}
-                className="block text-base sm:text-sm font-semibold text-brand-dark hover:text-burgundy transition-colors break-all"
+                className="block text-[14px] min-[360px]:text-[14.5px] sm:text-sm font-medium text-brand-dark hover:text-burgundy transition-colors break-all"
               >
                 {email}
               </a>
@@ -85,13 +85,13 @@ export const ContactDetails = ({ settings, className = '' }) => {
 
       {/* Physical Address */}
       {settings.address && (
-        <div className="group/item flex items-start gap-4 transition-transform duration-300 hover:translate-x-1">
-          <div className="w-10 h-10 rounded-xl bg-burgundy/10 text-burgundy flex items-center justify-center flex-shrink-0 group-hover/item:bg-burgundy group-hover/item:text-white group-hover/item:scale-110 transition-all duration-300 shadow-2xs">
-            <MapPin className="w-5 h-5" />
+        <div className="group/item flex items-start gap-3.5 sm:gap-4 transition-transform duration-300 hover:translate-x-1">
+          <div className="w-9 h-9 sm:w-10 sm:h-10 rounded-xl bg-burgundy/10 text-burgundy flex items-center justify-center flex-shrink-0 group-hover/item:bg-burgundy group-hover/item:text-white group-hover/item:scale-110 transition-all duration-300 shadow-2xs">
+            <MapPin className="w-4.5 h-4.5 sm:w-5 sm:h-5" />
           </div>
-          <div>
-            <h4 className="text-sm sm:text-xs font-bold uppercase tracking-wider text-bronze">Headquarters & Nursery</h4>
-            <p className="mt-1 text-base sm:text-sm text-brand-dark leading-relaxed font-medium">
+          <div className="pr-4 sm:pr-0">
+            <h4 className="text-[12.5px] min-[360px]:text-[13px] sm:text-xs font-medium uppercase tracking-wider text-bronze">Headquarters & Nursery</h4>
+            <p className="mt-0.5 sm:mt-1 text-[14px] min-[360px]:text-[14.5px] sm:text-sm text-brand-dark leading-relaxed font-normal sm:font-medium">
               {settings.address}
             </p>
           </div>
@@ -100,13 +100,13 @@ export const ContactDetails = ({ settings, className = '' }) => {
 
       {/* Working Hours */}
       {settings.workingHours && (
-        <div className="group/item flex items-start gap-4 transition-transform duration-300 hover:translate-x-1">
-          <div className="w-10 h-10 rounded-xl bg-burgundy/10 text-burgundy flex items-center justify-center flex-shrink-0 group-hover/item:bg-burgundy group-hover/item:text-white group-hover/item:scale-110 transition-all duration-300 shadow-2xs">
-            <Clock className="w-5 h-5" />
+        <div className="group/item flex items-start gap-3.5 sm:gap-4 transition-transform duration-300 hover:translate-x-1">
+          <div className="w-9 h-9 sm:w-10 sm:h-10 rounded-xl bg-burgundy/10 text-burgundy flex items-center justify-center flex-shrink-0 group-hover/item:bg-burgundy group-hover/item:text-white group-hover/item:scale-110 transition-all duration-300 shadow-2xs">
+            <Clock className="w-4.5 h-4.5 sm:w-5 sm:h-5" />
           </div>
-          <div>
-            <h4 className="text-sm sm:text-xs font-bold uppercase tracking-wider text-bronze">Operational Hours</h4>
-            <p className="mt-1 text-base sm:text-sm text-brand-dark font-medium">
+          <div className="pr-4 sm:pr-0">
+            <h4 className="text-[12.5px] min-[360px]:text-[13px] sm:text-xs font-medium uppercase tracking-wider text-bronze">Operational Hours</h4>
+            <p className="mt-0.5 sm:mt-1 text-[14px] min-[360px]:text-[14.5px] sm:text-sm text-brand-dark font-normal sm:font-medium">
               {settings.workingHours}
             </p>
           </div>
@@ -114,18 +114,18 @@ export const ContactDetails = ({ settings, className = '' }) => {
       )}
 
       {/* Social Media Links - Instagram Only */}
-      <div className="pt-4 border-t border-sand">
-        <h4 className="text-sm sm:text-xs font-bold uppercase tracking-wider text-bronze mb-3">Connect With Us</h4>
+      <div className="pt-3.5 sm:pt-4 border-t border-sand">
+        <h4 className="text-[12.5px] min-[360px]:text-[13px] sm:text-xs font-medium uppercase tracking-wider text-bronze mb-2 sm:mb-3">Connect With Us</h4>
         <div className="flex items-center gap-3">
           <a
             href={instagramUrl}
             target="_blank"
             rel="noopener noreferrer"
-            className="w-10 h-10 rounded-xl bg-cream border border-sand flex items-center justify-center text-brand-dark hover:text-white hover:bg-burgundy hover:border-burgundy hover:scale-105 hover:shadow-md transition-all duration-300 group"
+            className="w-9 h-9 sm:w-10 sm:h-10 rounded-xl bg-cream border border-sand flex items-center justify-center text-brand-dark hover:text-white hover:bg-burgundy hover:border-burgundy hover:scale-105 hover:shadow-md transition-all duration-300 group"
             aria-label="Instagram"
             title="Follow MP Landscape Services on Instagram"
           >
-            <InstagramIcon className="w-5 h-5 text-burgundy group-hover:text-white transition-colors" />
+            <InstagramIcon className="w-4.5 h-4.5 sm:w-5 sm:h-5 text-burgundy group-hover:text-white transition-colors" />
           </a>
         </div>
       </div>

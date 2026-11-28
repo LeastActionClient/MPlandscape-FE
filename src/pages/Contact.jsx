@@ -56,7 +56,7 @@ export const Contact = () => {
 
       {/* 1. HERO BANNER: Botanical & Architectural Workspace with Staggered Word Motion */}
       <section
-        className="relative w-full border-b border-sand/60 overflow-hidden select-none min-h-[380px] sm:min-h-[420px] md:min-h-[460px] lg:min-h-[490px] flex items-center"
+        className="relative w-full border-b border-sand/60 overflow-hidden select-none min-h-[170px] min-[360px]:min-h-[190px] sm:min-h-[420px] md:min-h-[460px] lg:min-h-[490px] flex items-center"
         style={{
           backgroundImage: `url(${contactHeroBg})`,
           backgroundSize: 'cover',
@@ -91,8 +91,8 @@ export const Contact = () => {
         <div className="absolute bottom-10 right-10 w-96 h-96 bg-burgundy/20 rounded-full blur-3xl pointer-events-none animate-float-slow" />
 
         {/* Hero Content Container - Two Column Layout */}
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10 w-full py-10 sm:py-12 md:py-14">
-          <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 items-center">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10 w-full py-5 min-[360px]:py-6 sm:py-12 md:py-14">
+          <div className="grid grid-cols-1 lg:grid-cols-12 gap-6 sm:gap-8 items-center">
             
             {/* Left Column: Reserved for the MP Landscape stone sign in the background */}
             <div className="hidden lg:block lg:col-span-6" aria-hidden="true">
@@ -100,29 +100,29 @@ export const Contact = () => {
             </div>
 
             {/* Right Column: Hero Narrative */}
-            <div className="w-full lg:col-span-6 space-y-4 sm:space-y-5">
+            <div className="w-full lg:col-span-6 space-y-2.5 min-[360px]:space-y-3 sm:space-y-5">
               
               {/* Top Eyebrow with Expanding Accent Lines */}
-              <div className="flex items-center gap-3 sm:gap-4 mb-2 animate-fade-in-up">
-                <span className="h-px w-8 sm:w-14 bg-gradient-to-r from-transparent via-bronze/80 to-bronze transition-all duration-700" />
-                <span className="inline-flex items-center gap-2 text-xs sm:text-[13px] font-semibold tracking-[0.22em] text-sand-200 uppercase px-3.5 py-1.5 rounded-full bg-white/10 border border-white/20 backdrop-blur-md shadow-xs hover:border-bronze transition-all duration-300">
+              <div className="flex items-center justify-start gap-1.5 sm:gap-4 mb-1 sm:mb-2 animate-fade-in-up">
+                <span className="hidden sm:inline-block h-px w-10 sm:w-14 bg-gradient-to-r from-transparent via-bronze/80 to-bronze transition-all duration-700" />
+                <span className="inline-flex items-center gap-1 text-[9px] min-[360px]:text-[10px] sm:text-[13px] font-semibold tracking-[0.1em] min-[360px]:tracking-[0.14em] sm:tracking-[0.22em] text-sand-200 uppercase px-2 py-0.5 min-[360px]:px-2.5 min-[360px]:py-1 sm:px-3.5 sm:py-1.5 rounded-full bg-white/10 border border-white/20 backdrop-blur-md shadow-xs hover:border-bronze transition-all duration-300 whitespace-nowrap">
                   <span>Connect With Specialists</span>
                 </span>
-                <span className="h-px w-8 sm:w-14 bg-gradient-to-l from-transparent via-bronze/80 to-bronze transition-all duration-700" />
+                <span className="hidden sm:inline-block h-px w-10 sm:w-14 bg-gradient-to-l from-transparent via-bronze/80 to-bronze transition-all duration-700" />
               </div>
 
               {/* Main Headline */}
-              <h1 className="text-2xl xs:text-3xl sm:text-4xl md:text-[2.75rem] lg:text-[3.15rem] font-bold text-white font-sans tracking-tight leading-[1.18] drop-shadow-[0_2px_12px_rgba(0,0,0,0.85)] animate-fade-in-up [animation-delay:150ms]">
+              <h1 className="text-[23px] min-[360px]:text-[25px] min-[390px]:text-[27px] sm:text-4xl md:text-[2.75rem] lg:text-[3.15rem] font-semibold sm:font-bold text-white font-sans tracking-tight leading-[1.22] sm:leading-[1.18] drop-shadow-[0_2px_12px_rgba(0,0,0,0.85)] animate-fade-in-up [animation-delay:150ms]">
                 Get in Touch with Our Team
               </h1>
 
-              {/* Subtitle Description */}
-              <p className="text-sm sm:text-base md:text-[1.05rem] text-cream/95 leading-relaxed font-normal max-w-xl drop-shadow-[0_2px_8px_rgba(0,0,0,0.7)] animate-fade-in-up [animation-delay:300ms]">
+              {/* Subtitle Description - Hidden on Mobile (<640px) as requested */}
+              <p className="hidden sm:block text-sm sm:text-base md:text-[1.05rem] text-cream/95 leading-relaxed font-normal max-w-xl drop-shadow-[0_2px_8px_rgba(0,0,0,0.7)] animate-fade-in-up [animation-delay:300ms]">
                 Whether you are planning an agricultural orchard, a commercial campus redesign, or a luxury villa garden, our agronomists and landscape architects are ready to assist.
               </p>
 
-              {/* Rapid Response Trust Chips */}
-              <div className="pt-2 flex flex-wrap items-center gap-2.5 sm:gap-3.5 text-xs font-medium text-sand-200/95 animate-fade-in-up [animation-delay:450ms]">
+              {/* Rapid Response Trust Chips - Hidden on Mobile (<640px) as requested */}
+              <div className="hidden sm:flex pt-2 flex-wrap items-center gap-2.5 sm:gap-3.5 text-xs font-medium text-sand-200/95 animate-fade-in-up [animation-delay:450ms]">
                 <span className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-black/40 backdrop-blur-md border border-white/15 shadow-xs">
                   <Clock className="w-3.5 h-3.5 text-bronze-light" />
                   <span>24-Hour Engineer Response</span>
@@ -142,27 +142,27 @@ export const Contact = () => {
         </div>
       </section>
 
-      {/* 2. QUICK DIRECT COMMUNICATION CHANNELS: Modern Interactive Cards */}
-      <section className="py-12 sm:py-14 bg-cream border-b border-sand/60 relative overflow-hidden">
+      {/* 2. QUICK DIRECT COMMUNICATION CHANNELS: Modern Interactive Cards (Hidden on mobile as requested) */}
+      <section className="hidden sm:block py-8 sm:py-14 bg-cream border-b border-sand/60 relative overflow-hidden">
         {/* Subtle botanical line art in margin */}
         <BotanicalBranchLeft />
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 sm:gap-5">
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-3.5 sm:gap-5">
             
             {/* Direct Call */}
             <ScrollReveal animation="fade-up" delay={0}>
               <a
                 href={`tel:${phones[0]?.replace(/\s+/g, '')}`}
-                className="group relative p-5 sm:p-6 rounded-2xl bg-cream border border-sand hover:border-bronze hover:shadow-xl hover:-translate-y-2 transition-all duration-400 flex flex-col justify-between overflow-hidden cursor-pointer h-full"
+                className="group relative p-4.5 sm:p-6 rounded-2xl bg-cream border border-sand hover:border-bronze hover:shadow-xl hover:-translate-y-2 transition-all duration-400 flex flex-col justify-between overflow-hidden cursor-pointer h-full"
               >
                 <div className="absolute top-0 left-0 right-0 h-1 bg-gradient-to-r from-burgundy via-bronze to-burgundy scale-x-0 group-hover:scale-x-100 transition-transform duration-500 origin-left" />
-                <div className="flex items-center justify-between mb-4">
-                  <div className="w-11 h-11 rounded-xl bg-burgundy/10 text-burgundy flex items-center justify-center group-hover:bg-burgundy group-hover:text-white group-hover:scale-110 group-hover:rotate-3 transition-all duration-300 shadow-xs">
-                    <PhoneCall className="w-5 h-5" />
+                <div className="flex items-center justify-between mb-3.5 sm:mb-4">
+                  <div className="w-10 h-10 sm:w-11 sm:h-11 rounded-xl bg-burgundy/10 text-burgundy flex items-center justify-center group-hover:bg-burgundy group-hover:text-white group-hover:scale-110 group-hover:rotate-3 transition-all duration-300 shadow-xs">
+                    <PhoneCall className="w-4.5 h-4.5 sm:w-5 sm:h-5" />
                   </div>
                   <ArrowRight className="w-4 h-4 text-bronze opacity-0 group-hover:opacity-100 group-hover:translate-x-1 transition-all duration-300" />
                 </div>
-                <div>
+                <div className="pr-10 sm:pr-0">
                   <span className="text-[10px] font-bold uppercase tracking-widest text-bronze">Direct Hotline</span>
                   <h4 className="text-base font-bold text-burgundy mt-0.5 group-hover:text-burgundy-950 transition-colors">
                     {phones[0]}
@@ -178,16 +178,16 @@ export const Contact = () => {
                 href={`https://wa.me/${cleanWhatsapp}?text=Hello%20MP%20Landscape%20Services,%20I%20would%20like%20to%20enquire%20about%20your%20services.`}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="group relative p-5 sm:p-6 rounded-2xl bg-cream border border-sand hover:border-bronze hover:shadow-xl hover:-translate-y-2 transition-all duration-400 flex flex-col justify-between overflow-hidden cursor-pointer h-full"
+                className="group relative p-4.5 sm:p-6 rounded-2xl bg-cream border border-sand hover:border-bronze hover:shadow-xl hover:-translate-y-2 transition-all duration-400 flex flex-col justify-between overflow-hidden cursor-pointer h-full"
               >
                 <div className="absolute top-0 left-0 right-0 h-1 bg-gradient-to-r from-burgundy via-bronze to-burgundy scale-x-0 group-hover:scale-x-100 transition-transform duration-500 origin-left" />
-                <div className="flex items-center justify-between mb-4">
-                  <div className="w-11 h-11 rounded-xl bg-bronze/15 text-bronze-dark flex items-center justify-center group-hover:bg-bronze group-hover:text-white group-hover:scale-110 group-hover:-rotate-3 transition-all duration-300 shadow-xs">
-                    <MessageCircle className="w-5 h-5" />
+                <div className="flex items-center justify-between mb-3.5 sm:mb-4">
+                  <div className="w-10 h-10 sm:w-11 sm:h-11 rounded-xl bg-bronze/15 text-bronze-dark flex items-center justify-center group-hover:bg-bronze group-hover:text-white group-hover:scale-110 group-hover:-rotate-3 transition-all duration-300 shadow-xs">
+                    <MessageCircle className="w-4.5 h-4.5 sm:w-5 sm:h-5" />
                   </div>
                   <ArrowRight className="w-4 h-4 text-bronze opacity-0 group-hover:opacity-100 group-hover:translate-x-1 transition-all duration-300" />
                 </div>
-                <div>
+                <div className="pr-10 sm:pr-0">
                   <span className="text-[10px] font-bold uppercase tracking-widest text-bronze">Instant Messaging</span>
                   <h4 className="text-base font-bold text-burgundy mt-0.5 group-hover:text-burgundy-950 transition-colors">
                     WhatsApp Direct
@@ -201,16 +201,16 @@ export const Contact = () => {
             <ScrollReveal animation="fade-up" delay={200}>
               <a
                 href={`mailto:${emails[0]}`}
-                className="group relative p-5 sm:p-6 rounded-2xl bg-cream border border-sand hover:border-bronze hover:shadow-xl hover:-translate-y-2 transition-all duration-400 flex flex-col justify-between overflow-hidden cursor-pointer h-full"
+                className="group relative p-4.5 sm:p-6 rounded-2xl bg-cream border border-sand hover:border-bronze hover:shadow-xl hover:-translate-y-2 transition-all duration-400 flex flex-col justify-between overflow-hidden cursor-pointer h-full"
               >
                 <div className="absolute top-0 left-0 right-0 h-1 bg-gradient-to-r from-burgundy via-bronze to-burgundy scale-x-0 group-hover:scale-x-100 transition-transform duration-500 origin-left" />
-                <div className="flex items-center justify-between mb-4">
-                  <div className="w-11 h-11 rounded-xl bg-burgundy/10 text-burgundy flex items-center justify-center group-hover:bg-burgundy group-hover:text-white group-hover:scale-110 group-hover:rotate-3 transition-all duration-300 shadow-xs">
-                    <Mail className="w-5 h-5" />
+                <div className="flex items-center justify-between mb-3.5 sm:mb-4">
+                  <div className="w-10 h-10 sm:w-11 sm:h-11 rounded-xl bg-burgundy/10 text-burgundy flex items-center justify-center group-hover:bg-burgundy group-hover:text-white group-hover:scale-110 group-hover:rotate-3 transition-all duration-300 shadow-xs">
+                    <Mail className="w-4.5 h-4.5 sm:w-5 sm:h-5" />
                   </div>
                   <ArrowRight className="w-4 h-4 text-bronze opacity-0 group-hover:opacity-100 group-hover:translate-x-1 transition-all duration-300" />
                 </div>
-                <div>
+                <div className="pr-10 sm:pr-0">
                   <span className="text-[10px] font-bold uppercase tracking-widest text-bronze">Formal Correspondence</span>
                   <h4 className="text-base font-bold text-burgundy mt-0.5 group-hover:text-burgundy-950 transition-colors truncate">
                     {emails[0]}
@@ -224,16 +224,16 @@ export const Contact = () => {
             <ScrollReveal animation="fade-up" delay={300}>
               <a
                 href="#location-map"
-                className="group relative p-5 sm:p-6 rounded-2xl bg-cream border border-sand hover:border-bronze hover:shadow-xl hover:-translate-y-2 transition-all duration-400 flex flex-col justify-between overflow-hidden cursor-pointer h-full"
+                className="group relative p-4.5 sm:p-6 rounded-2xl bg-cream border border-sand hover:border-bronze hover:shadow-xl hover:-translate-y-2 transition-all duration-400 flex flex-col justify-between overflow-hidden cursor-pointer h-full"
               >
                 <div className="absolute top-0 left-0 right-0 h-1 bg-gradient-to-r from-burgundy via-bronze to-burgundy scale-x-0 group-hover:scale-x-100 transition-transform duration-500 origin-left" />
-                <div className="flex items-center justify-between mb-4">
-                  <div className="w-11 h-11 rounded-xl bg-bronze/15 text-bronze-dark flex items-center justify-center group-hover:bg-bronze group-hover:text-white group-hover:scale-110 group-hover:-rotate-3 transition-all duration-300 shadow-xs">
-                    <MapPin className="w-5 h-5" />
+                <div className="flex items-center justify-between mb-3.5 sm:mb-4">
+                  <div className="w-10 h-10 sm:w-11 sm:h-11 rounded-xl bg-bronze/15 text-bronze-dark flex items-center justify-center group-hover:bg-bronze group-hover:text-white group-hover:scale-110 group-hover:-rotate-3 transition-all duration-300 shadow-xs">
+                    <MapPin className="w-4.5 h-4.5 sm:w-5 sm:h-5" />
                   </div>
                   <ArrowRight className="w-4 h-4 text-bronze opacity-0 group-hover:opacity-100 group-hover:translate-x-1 transition-all duration-300" />
                 </div>
-                <div>
+                <div className="pr-10 sm:pr-0">
                   <span className="text-[10px] font-bold uppercase tracking-widest text-bronze">Nursery &amp; Studio</span>
                   <h4 className="text-base font-bold text-burgundy mt-0.5 group-hover:text-burgundy-950 transition-colors">
                     Chennai, Tamil Nadu
@@ -247,45 +247,49 @@ export const Contact = () => {
         </div>
       </section>
 
-      <SectionDivider variant="bronze-accent" />
+      <div className="hidden sm:block">
+        <SectionDivider variant="bronze-accent" />
+      </div>
 
       {/* 3. MAIN SECTION: CONTACT CHANNELS & INTERACTIVE ENQUIRY FORM */}
-      <section className="py-16 sm:py-20 bg-sand-50/70 border-y border-sand-200/60 relative overflow-hidden">
+      <section className="py-5 min-[360px]:py-6 pb-14 min-[360px]:pb-16 sm:py-16 lg:py-20 bg-sand-50/70 border-y border-sand-200/60 relative overflow-hidden">
         {/* Subtle topographical contours in empty margin */}
         <TopographicalContour position="right" />
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
-          <div className="grid lg:grid-cols-12 gap-10 lg:gap-12 items-start">
+        <div className="max-w-7xl mx-auto px-3.5 min-[360px]:px-4 sm:px-6 lg:px-8 relative z-10">
+          <div className="grid grid-cols-1 lg:grid-cols-12 gap-5 min-[360px]:gap-6 sm:gap-10 lg:gap-12 items-start">
             
-            {/* Left Column: Direct Info Luxury Card */}
-            <ScrollReveal animation="fade-right" delay={100} className="lg:col-span-5 space-y-6 sm:space-y-8">
-              <div className="group card-luxury p-6 sm:p-8 border border-sand bg-cream-light relative overflow-hidden hover:border-bronze hover:shadow-2xl hover:-translate-y-1.5 transition-all duration-500">
+            {/* Left Column: Direct Info Luxury Card (Contact Details) - On mobile: order-2 (SECOND) */}
+            <ScrollReveal animation="fade-right" delay={100} className="order-2 sm:order-1 lg:order-1 lg:col-span-5 space-y-5 sm:space-y-8">
+              <div className="group card-luxury p-3.5 min-[360px]:p-5 sm:p-8 border border-sand bg-cream-light relative overflow-hidden hover:border-bronze hover:shadow-2xl hover:-translate-y-1.5 transition-all duration-500">
                 {/* Sliding Top Accent Highlight */}
                 <div className="absolute top-0 left-0 right-0 h-1 bg-gradient-to-r from-burgundy via-bronze to-burgundy scale-x-0 group-hover:scale-x-100 transition-transform duration-500 origin-left" />
 
                 <SectionHeading
                   align="left"
                   badge="Corporate Office"
+                  badgeClassName="hidden sm:inline-flex"
                   title="Direct Contact Channels"
                   subtitle="We are available during working hours for technical discussions, site survey scheduling, and general enquiries."
+                  subtitleClassName="hidden sm:block"
                 />
 
-                <div className="mt-8">
+                <div className="mt-4 sm:mt-8">
                   <ContactDetails settings={settings} />
                 </div>
               </div>
 
               {/* Consultation Response Assurance Badge */}
-              <div className="p-5 rounded-2xl bg-cream-light border border-sand/80 shadow-xs flex items-start gap-3.5">
-                <CheckCircle2 className="w-5 h-5 text-bronze shrink-0 mt-0.5" />
-                <div className="text-xs text-brand-muted leading-relaxed">
-                  <span className="font-bold text-burgundy block text-sm mb-0.5">Privacy &amp; Response Guarantee</span>
+              <div className="p-3.5 min-[360px]:p-5 rounded-2xl bg-cream-light border border-sand/80 shadow-xs flex items-start gap-3 sm:gap-3.5">
+                <CheckCircle2 className="w-4.5 h-4.5 sm:w-5 sm:h-5 text-bronze shrink-0 mt-0.5" />
+                <div className="text-[11px] min-[360px]:text-xs text-brand-muted leading-relaxed">
+                  <span className="font-bold text-burgundy block text-xs min-[360px]:text-sm mb-0.5">Privacy &amp; Response Guarantee</span>
                   Your contact information is strictly handled for horticultural consultation. You will receive an engineering callback within one business day.
                 </div>
               </div>
             </ScrollReveal>
 
-            {/* Right Column: Interactive Enquiry Form */}
-            <ScrollReveal animation="fade-left" delay={150} className="lg:col-span-7">
+            {/* Right Column: Interactive Enquiry Form - On mobile: order-1 (FIRST) */}
+            <ScrollReveal animation="fade-left" delay={150} className="order-1 sm:order-2 lg:order-2 lg:col-span-7">
               <div className="group rounded-2xl border border-sand hover:border-bronze/70 transition-colors duration-500 shadow-md hover:shadow-xl bg-white overflow-hidden">
                 <EnquiryForm
                   title="Submit Project Enquiry"
@@ -298,10 +302,10 @@ export const Contact = () => {
         </div>
       </section>
 
-      <SectionDivider variant="bronze-accent" />
+      <SectionDivider variant="bronze-accent" className="hidden sm:flex" />
 
-      {/* 4. CONSULTATION TIMELINE: 3-Stage Response Process */}
-      <section className="py-16 sm:py-20 bg-cream relative overflow-hidden">
+      {/* 4. CONSULTATION TIMELINE: 3-Stage Response Process (Hidden on Mobile <640px) */}
+      <section className="hidden sm:block py-16 sm:py-20 bg-cream relative overflow-hidden">
         {/* Subtle botanical line art */}
         <BotanicalBranchRight />
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">

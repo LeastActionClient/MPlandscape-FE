@@ -33,7 +33,7 @@ export const FloatingSocialButtons = ({ settings }) => {
   return (
     <aside
       aria-label="Quick Social and Messaging Channels"
-      className="fixed right-3.5 sm:right-6 bottom-20 sm:bottom-24 lg:bottom-28 z-40 flex flex-col items-center gap-3 select-none pointer-events-auto"
+      className="fixed right-3.5 sm:right-6 bottom-4 sm:bottom-20 lg:bottom-28 z-40 flex flex-col items-center gap-2.5 sm:gap-3 select-none pointer-events-auto"
     >
       {/* 1. Instagram Floating Button (Positioned Above WhatsApp) */}
       <div className="relative flex items-center group">
@@ -54,9 +54,9 @@ export const FloatingSocialButtons = ({ settings }) => {
           target="_blank"
           rel="noopener noreferrer"
           aria-label="Connect with MP Landscape Services on Instagram (opens in a new tab)"
-          className="w-12 h-12 sm:w-13 sm:h-13 rounded-full flex items-center justify-center text-white bg-gradient-to-tr from-[#f09433] via-[#dc2743] to-[#bc1888] shadow-lg shadow-black/25 hover:shadow-2xl hover:scale-110 active:scale-95 transition-all duration-300 border-2 border-white/30 focus:outline-none focus:ring-2 focus:ring-bronze focus:ring-offset-2 focus:ring-offset-cream"
+          className="w-11 h-11 sm:w-12 sm:h-12 lg:w-13 lg:h-13 rounded-full flex items-center justify-center text-white bg-gradient-to-tr from-[#f09433] via-[#dc2743] to-[#bc1888] shadow-lg shadow-black/25 hover:shadow-2xl hover:scale-110 active:scale-95 transition-all duration-300 border-2 border-white/30 focus:outline-none focus:ring-2 focus:ring-bronze focus:ring-offset-2 focus:ring-offset-cream"
         >
-          <InstagramIcon className="w-6 h-6 sm:w-7 sm:h-7 drop-shadow-xs" />
+          <InstagramIcon className="w-5.5 h-5.5 sm:w-6 sm:h-6 lg:w-7 lg:h-7 drop-shadow-xs" />
         </a>
       </div>
 
@@ -79,9 +79,9 @@ export const FloatingSocialButtons = ({ settings }) => {
           target="_blank"
           rel="noopener noreferrer"
           aria-label="Chat with MP Landscape Services on WhatsApp (opens in a new tab)"
-          className="w-12 h-12 sm:w-13 sm:h-13 rounded-full flex items-center justify-center text-white bg-[#25D366] hover:bg-[#20bd5a] shadow-lg shadow-black/25 hover:shadow-2xl hover:scale-110 active:scale-95 transition-all duration-300 border-2 border-white/30 focus:outline-none focus:ring-2 focus:ring-bronze focus:ring-offset-2 focus:ring-offset-cream"
+          className="w-11 h-11 sm:w-12 sm:h-12 lg:w-13 lg:h-13 rounded-full flex items-center justify-center text-white bg-[#25D366] hover:bg-[#20bd5a] shadow-lg shadow-black/25 hover:shadow-2xl hover:scale-110 active:scale-95 transition-all duration-300 border-2 border-white/30 focus:outline-none focus:ring-2 focus:ring-bronze focus:ring-offset-2 focus:ring-offset-cream"
         >
-          <WhatsAppIcon className="w-6 h-6 sm:w-7 sm:h-7 drop-shadow-xs" />
+          <WhatsAppIcon className="w-5.5 h-5.5 sm:w-6 sm:h-6 lg:w-7 lg:h-7 drop-shadow-xs" />
         </a>
       </div>
     </aside>
