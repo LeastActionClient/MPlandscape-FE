@@ -176,12 +176,12 @@ const Dashboard = () => {
 
       <div className="space-y-8 animate-fade-in">
         {/* Page Header */}
-        <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4 pb-4 border-b border-sand-300">
+        <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-3 sm:gap-4 pb-3 sm:pb-4 border-b border-sand-300">
           <div>
-            <h1 className="text-2xl sm:text-3xl font-serif font-bold text-burgundy-900">
+            <h1 className="text-[23px] min-[360px]:text-[25px] min-[390px]:text-[27px] sm:text-3xl font-serif font-semibold sm:font-bold text-burgundy-900">
               Operational Overview
             </h1>
-            <p className="text-sm text-charcoal/70 mt-1">
+            <p className="text-[13.5px] min-[360px]:text-[14px] text-charcoal/70 mt-0.5 sm:mt-1">
               Live statistics, customer enquiry pipelines, and portfolio activities.
             </p>
           </div>
@@ -190,14 +190,14 @@ const Dashboard = () => {
               type="button"
               onClick={handleRefresh}
               disabled={refreshing}
-              className="inline-flex flex-row items-center justify-center gap-2 px-3 py-1.5 sm:px-3.5 sm:py-2 text-xs font-semibold rounded-lg bg-white border border-sand-300 text-charcoal hover:bg-sand-100 transition-colors shadow-xs whitespace-nowrap shrink-0 disabled:opacity-50 disabled:cursor-not-allowed cursor-pointer"
+              className="inline-flex flex-row items-center justify-center gap-1.5 sm:gap-2 px-2.5 py-1.5 sm:px-3.5 sm:py-2 text-xs font-medium sm:font-semibold rounded-lg bg-white border border-sand-300 text-charcoal hover:bg-sand-100 transition-colors shadow-xs whitespace-nowrap shrink-0 disabled:opacity-50 disabled:cursor-not-allowed cursor-pointer"
             >
               <RefreshCw className={`w-3.5 h-3.5 shrink-0 ${refreshing ? 'animate-spin text-burgundy-900' : ''}`} />
               <span>Refresh</span>
             </button>
             <Link
               to="/admin/enquiries"
-              className="inline-flex flex-row items-center justify-center gap-2 px-3 py-1.5 sm:px-3.5 sm:py-2 text-xs font-semibold rounded-lg bg-burgundy-900 text-white hover:bg-burgundy-800 transition-colors shadow-xs whitespace-nowrap shrink-0"
+              className="inline-flex flex-row items-center justify-center gap-1.5 sm:gap-2 px-2.5 py-1.5 sm:px-3.5 sm:py-2 text-xs font-medium sm:font-semibold rounded-lg bg-burgundy-900 text-white hover:bg-burgundy-800 transition-colors shadow-xs whitespace-nowrap shrink-0"
             >
               <span>Manage Enquiries</span>
               <ArrowRight className="w-3.5 h-3.5 shrink-0" />
@@ -243,18 +243,18 @@ const Dashboard = () => {
 
                 <div className="flex items-start justify-between">
                   <div>
-                    <p className="text-xs font-semibold uppercase tracking-wider text-charcoal/60">
+                    <p className="text-[11px] min-[360px]:text-xs font-semibold uppercase tracking-wider text-charcoal/60">
                       {kpi.title}
                     </p>
-                    <p className="text-3xl font-bold font-serif text-burgundy-950 mt-2">
+                    <p className="text-2xl min-[360px]:text-3xl font-bold font-serif text-burgundy-950 mt-1.5 sm:mt-2">
                       {kpi.value}
                     </p>
                   </div>
-                  <div className={`w-11 h-11 rounded-xl ${kpi.bg} flex items-center justify-center shadow-xs group-hover:scale-110 group-hover:rotate-6 transition-all duration-300`}>
-                    <Icon className={`w-6 h-6 ${kpi.iconColor}`} />
+                  <div className={`w-9 h-9 min-[360px]:w-11 min-[360px]:h-11 rounded-lg sm:rounded-xl ${kpi.bg} flex items-center justify-center shadow-xs group-hover:scale-110 group-hover:rotate-6 transition-all duration-300`}>
+                    <Icon className={`w-5 h-5 sm:w-6 sm:h-6 ${kpi.iconColor}`} />
                   </div>
                 </div>
-                <div className="mt-4 pt-3 border-t border-sand-100 flex items-center justify-between text-xs">
+                <div className="mt-3 sm:mt-4 pt-2.5 sm:pt-3 border-t border-sand-100 flex items-center justify-between text-[11px] min-[360px]:text-xs">
                   <span className="text-charcoal/70">{kpi.subtext}</span>
                   <span className="text-burgundy-800 font-semibold group-hover:translate-x-1 transition-transform flex items-center gap-0.5">
                     View

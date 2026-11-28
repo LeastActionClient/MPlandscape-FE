@@ -387,12 +387,12 @@ const GalleryManagement = () => {
 
       <div className="space-y-6">
         {/* Header & Controls */}
-        <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4 pb-4 border-b border-sand-300">
+        <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-3 sm:gap-4 pb-3 sm:pb-4 border-b border-sand-300">
           <div>
-            <h1 className="text-2xl sm:text-3xl font-serif font-bold text-burgundy-900">
+            <h1 className="text-[23px] min-[360px]:text-[25px] min-[390px]:text-[27px] sm:text-3xl font-serif font-semibold sm:font-bold text-burgundy-900">
               Gallery Management
             </h1>
-            <p className="text-sm text-charcoal/70 mt-1">
+            <p className="text-[13.5px] min-[360px]:text-[14px] text-charcoal/70 mt-0.5 sm:mt-1">
               Upload, organize, preview, and maintain portfolio showcase imagery.
             </p>
           </div>
@@ -403,7 +403,7 @@ const GalleryManagement = () => {
               size="sm"
               onClick={handleRefresh}
               disabled={refreshing}
-              className="gap-2 shrink-0"
+              className="gap-1.5 sm:gap-2 shrink-0 text-xs font-medium sm:font-semibold py-1.5 sm:py-2 px-2.5 sm:px-3"
             >
               <RefreshCw className={`w-3.5 h-3.5 shrink-0 ${refreshing ? 'animate-spin text-burgundy-900' : ''}`} />
               <span>Refresh</span>
@@ -413,7 +413,7 @@ const GalleryManagement = () => {
               variant="primary"
               size="sm"
               onClick={openUploadModal}
-              className="gap-2 shadow-xs shrink-0"
+              className="gap-1.5 sm:gap-2 shadow-xs shrink-0 text-xs font-medium sm:font-semibold py-1.5 sm:py-2 px-2.5 sm:px-3"
               aria-label="Upload Images & Media"
             >
               <Plus className="w-4 h-4 shrink-0" />

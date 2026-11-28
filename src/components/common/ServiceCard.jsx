@@ -43,33 +43,33 @@ export const ServiceCard = ({ service, onEnquire, className = '' }) => {
       </div>
 
       {/* Compact Card Content: Balanced Title & Horizontal Action Buttons */}
-      <div className="p-3.5 sm:p-4 flex-1 flex flex-col justify-between gap-2.5 sm:gap-3">
-        <div className="min-h-[2.5rem] flex items-center">
-          <h3 className="text-[15px] sm:text-base font-bold font-sans text-brand-dark group-hover:text-burgundy transition-colors duration-300 leading-snug break-words w-full">
+      <div className="p-3.5 min-[360px]:p-4 sm:p-5 flex-1 flex flex-col justify-between gap-2.5 sm:gap-3">
+        <div className="min-h-[2.25rem] sm:min-h-[2.5rem] flex items-center">
+          <h3 className="text-[15px] min-[360px]:text-[16px] min-[390px]:text-[17px] sm:text-base font-semibold sm:font-bold font-sans text-brand-dark group-hover:text-burgundy transition-colors duration-300 leading-snug break-words w-full">
             <Link
               to={`/services/${service.slug}`}
-              className="hover:underline flex items-start justify-between gap-2"
+              className="hover:underline flex items-start justify-between gap-1.5 sm:gap-2"
             >
               <span>{service.title}</span>
-              <ArrowRight className="w-4 h-4 opacity-0 -translate-x-1.5 group-hover:opacity-100 group-hover:translate-x-0 transition-all duration-300 text-bronze shrink-0 mt-0.5" />
+              <ArrowRight className="w-3.5 h-3.5 sm:w-4 sm:h-4 opacity-0 -translate-x-1.5 group-hover:opacity-100 group-hover:translate-x-0 transition-all duration-300 text-bronze shrink-0 mt-0.5" />
             </Link>
           </h3>
         </div>
 
         {/* Action Buttons: Horizontally Aligned in the Same Row */}
-        <div className="grid grid-cols-2 gap-2 sm:gap-2.5 pt-2.5 border-t border-sand/40 mt-auto">
+        <div className="grid grid-cols-2 gap-1.5 min-[360px]:gap-2 sm:gap-2.5 pt-2 sm:pt-2.5 border-t border-sand/40 mt-auto">
           <Link
             to={`/services/${service.slug}`}
-            className="inline-flex items-center justify-center gap-1 text-xs sm:text-[13px] font-semibold py-2 px-2 sm:px-2.5 rounded-lg border border-burgundy/35 text-burgundy bg-transparent hover:bg-burgundy hover:text-white hover:border-burgundy shadow-2xs hover:shadow-xs transition-all duration-300 text-center whitespace-nowrap group/btn"
+            className="inline-flex items-center justify-center gap-1 text-[12.5px] min-[360px]:text-[13px] min-[390px]:text-[13.5px] sm:text-sm font-medium sm:font-semibold py-1.5 min-[360px]:py-2 px-1.5 min-[360px]:px-2 sm:px-2.5 rounded-lg border border-burgundy/35 text-burgundy bg-transparent hover:bg-burgundy hover:text-white hover:border-burgundy shadow-2xs hover:shadow-xs transition-all duration-300 text-center whitespace-nowrap group/btn"
           >
             <span>View Details</span>
-            <ArrowRight className="w-3.5 h-3.5 transition-transform duration-300 group-hover/btn:translate-x-0.5 shrink-0" />
+            <ArrowRight className="w-3 h-3 sm:w-3.5 sm:h-3.5 transition-transform duration-300 group-hover/btn:translate-x-0.5 shrink-0" />
           </Link>
 
           <button
             type="button"
             onClick={() => (onEnquire ? onEnquire(service) : null)}
-            className="inline-flex items-center justify-center text-xs sm:text-[13px] font-semibold py-2 px-2 sm:px-2.5 rounded-lg bg-gradient-to-r from-bronze to-bronze-dark text-white hover:from-bronze-light hover:to-bronze transition-all duration-300 text-center shadow-xs hover:shadow-md hover:-translate-y-0.5 active:translate-y-0 cursor-pointer whitespace-nowrap"
+            className="inline-flex items-center justify-center text-[12.5px] min-[360px]:text-[13px] min-[390px]:text-[13.5px] sm:text-sm font-semibold py-1.5 min-[360px]:py-2 px-1.5 min-[360px]:px-2 sm:px-2.5 rounded-lg bg-gradient-to-r from-bronze to-bronze-dark text-white hover:from-bronze-light hover:to-bronze transition-all duration-300 text-center shadow-xs hover:shadow-md hover:-translate-y-0.5 active:translate-y-0 cursor-pointer whitespace-nowrap"
           >
             Enquire Now
           </button>

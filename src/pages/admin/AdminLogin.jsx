@@ -87,17 +87,17 @@ const AdminLogin = () => {
           </div>
 
           <div className="text-center">
-            <h1 className="text-xl sm:text-2xl font-serif font-bold text-burgundy-900">
+            <h1 className="text-[21px] min-[360px]:text-[23px] min-[390px]:text-[25px] sm:text-2xl font-serif font-semibold sm:font-bold text-burgundy-900 leading-tight">
               Admin Portal
             </h1>
-            <p className="mt-1 text-xs sm:text-sm text-charcoal/70">
+            <p className="mt-1 text-[12.5px] min-[360px]:text-[13px] sm:text-sm text-charcoal/70">
               Secure authentication for MP Landscape Services administrators
             </p>
           </div>
         </div>
 
         <div className="mt-4 sm:mt-6 sm:mx-auto sm:w-full sm:max-w-md px-4 relative z-10 animate-fade-in-up">
-          <div className="bg-white py-6 sm:py-7 px-6 sm:px-8 shadow-xl hover:shadow-2xl rounded-2xl border border-sand-300 relative overflow-hidden transition-all duration-300">
+          <div className="bg-white py-5 min-[360px]:py-6 sm:py-7 px-4 min-[360px]:px-6 sm:px-8 shadow-xl hover:shadow-2xl rounded-2xl border border-sand-300 relative overflow-hidden transition-all duration-300">
             {/* Top Accent Gradient Bar */}
             <div className="absolute top-0 left-0 right-0 h-1 bg-gradient-to-r from-burgundy-900 via-bronze to-burgundy-900" />
             {authError && (

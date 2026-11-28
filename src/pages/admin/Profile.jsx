@@ -34,11 +34,11 @@ const Profile = () => {
 
       <div className="space-y-6 max-w-4xl">
         {/* Header */}
-        <div className="pb-4 border-b border-sand-300">
-          <h1 className="text-2xl sm:text-3xl font-serif font-bold text-burgundy-900">
+        <div className="pb-3 sm:pb-4 border-b border-sand-300">
+          <h1 className="text-[23px] min-[360px]:text-[25px] min-[390px]:text-[27px] sm:text-3xl font-serif font-semibold sm:font-bold text-burgundy-900 leading-tight">
             Administrator Profile
           </h1>
-          <p className="text-sm text-charcoal/70 mt-1">
+          <p className="text-[13px] min-[360px]:text-[13.5px] min-[390px]:text-[14px] sm:text-sm text-charcoal/70 mt-1">
             Account identity, authentication role, and security credentials.
           </p>
         </div>
@@ -48,18 +48,18 @@ const Profile = () => {
           {/* Header Banner */}
           <div className="h-28 bg-gradient-to-r from-burgundy-900 via-burgundy-800 to-burgundy-950 p-4 sm:p-6 flex items-end relative">
             <div className="absolute -bottom-10 left-4 sm:left-6">
-              <div className="w-20 h-20 rounded-2xl bg-sand-300 border-4 border-white shadow-md flex items-center justify-center text-burgundy-950 font-bold text-3xl font-serif">
+              <div className="w-16 h-16 sm:w-20 sm:h-20 rounded-xl sm:rounded-2xl bg-sand-300 border-4 border-white shadow-md flex items-center justify-center text-burgundy-950 font-bold text-2xl sm:text-3xl font-serif">
                 {user?.name ? user.name.charAt(0).toUpperCase() : 'A'}
               </div>
             </div>
           </div>
 
           {/* User Details */}
-          <div className="pt-14 p-4 sm:p-8 space-y-6">
-            <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">
+          <div className="pt-12 sm:pt-14 p-4 sm:p-8 space-y-5 sm:space-y-6">
+            <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-3 sm:gap-4">
               <div className="min-w-0">
-                <div className="flex flex-wrap items-center gap-2">
-                  <h2 className="text-xl font-serif font-bold text-burgundy-950 truncate">
+                <div className="flex flex-wrap items-center gap-1.5 sm:gap-2">
+                  <h2 className="text-lg min-[360px]:text-xl font-serif font-bold text-burgundy-950 truncate">
                     {user?.name || 'Administrator'}
                   </h2>
                   <span className="px-2.5 py-0.5 rounded-full text-xs font-semibold bg-sand-200 text-burgundy-950 border border-sand-300 flex items-center gap-1 shrink-0">

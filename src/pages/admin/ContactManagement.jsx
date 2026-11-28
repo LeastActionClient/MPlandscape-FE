@@ -233,12 +233,12 @@ const ContactManagement = () => {
 
       <div className="space-y-6 max-w-5xl">
         {/* Header */}
-        <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4 pb-4 border-b border-sand-300">
+        <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-3 sm:gap-4 pb-3 sm:pb-4 border-b border-sand-300">
           <div>
-            <h1 className="text-2xl sm:text-3xl font-serif font-bold text-burgundy-900">
+            <h1 className="text-[23px] min-[360px]:text-[25px] min-[390px]:text-[27px] sm:text-3xl font-serif font-semibold sm:font-bold text-burgundy-900">
               Contact Information Management
             </h1>
-            <p className="text-sm text-charcoal/70 mt-1">
+            <p className="text-[13.5px] min-[360px]:text-[14px] text-charcoal/70 mt-0.5 sm:mt-1">
               Update company customer service phone numbers, WhatsApp, emails, address, working hours, and social media.
             </p>
           </div>
@@ -248,7 +248,7 @@ const ContactManagement = () => {
             size="sm"
             onClick={handleReloadClick}
             disabled={refreshing}
-            className="gap-2 self-start sm:self-auto shrink-0"
+            className="gap-1.5 sm:gap-2 self-start sm:self-auto shrink-0 text-xs font-medium sm:font-semibold py-1.5 sm:py-2 px-2.5 sm:px-3"
           >
             <RefreshCw className={`w-3.5 h-3.5 shrink-0 ${refreshing ? 'animate-spin text-burgundy-900' : ''}`} />
             <span>Reload</span>

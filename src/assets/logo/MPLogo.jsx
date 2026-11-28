@@ -13,12 +13,13 @@ export const MPLogo = ({
   variant = 'default', // 'default' | 'white-box' | 'dark-bg'
   showText = false,
   textClassName = '',
+  subtitleClassName = '',
 }) => {
   const isDarkBg = variant === 'dark-bg';
   const isWhiteBox = variant === 'white-box' || isDarkBg;
 
   return (
-    <div className={`inline-flex items-center gap-2 sm:gap-2.5 select-none ${className}`}>
+    <div className={`inline-flex items-center gap-1.5 min-[360px]:gap-2 sm:gap-2.5 select-none ${className}`}>
       {/* Official Supplied Logo Badge */}
       <div
         className={`relative flex items-center justify-center shrink-0 transition-transform duration-300 group-hover:scale-105 ${
@@ -37,16 +38,20 @@ export const MPLogo = ({
 
       {/* Brand Wordmark (Company Name) */}
       {showText && (
-        <div className="flex flex-col justify-center text-left select-none">
+        <div className="flex flex-col justify-center text-left select-none shrink-0">
           <span
-            className={`font-serif font-bold text-xs sm:text-base lg:text-lg tracking-tight leading-none transition-colors ${
+            className={`font-serif font-bold ${
+              textClassName || 'text-[11.5px] min-[360px]:text-xs sm:text-base lg:text-lg'
+            } tracking-tight leading-none transition-colors ${
               isDarkBg ? 'text-cream' : 'text-burgundy group-hover:text-burgundy-dark'
-            } ${textClassName}`}
+            }`}
           >
             MP Landscape
           </span>
           <span
-            className={`font-sans text-[8px] sm:text-[10px] font-semibold tracking-[0.2em] uppercase leading-none mt-0.5 sm:mt-1 ${
+            className={`font-sans ${
+              subtitleClassName || 'text-[6.5px] min-[360px]:text-[7.5px] sm:text-[10px]'
+            } font-semibold tracking-[0.14em] min-[360px]:tracking-[0.18em] sm:tracking-[0.2em] uppercase leading-none mt-0.5 sm:mt-1 ${
               isDarkBg ? 'text-sand-300' : 'text-charcoal/80'
             }`}
           >

@@ -100,7 +100,7 @@ export const Gallery = () => {
 
       {/* 1. HERO BANNER: Cinematic Botanical Background with Staggered Word Motion & Ambient Depth */}
       <section
-        className="relative w-full text-white border-b border-sand/60 overflow-hidden min-h-[300px] sm:min-h-[340px] md:min-h-[380px] lg:min-h-[420px] flex items-center justify-center py-12 sm:py-16 md:py-20 select-none"
+        className="relative w-full text-white border-b border-sand/60 overflow-hidden sm:min-h-[340px] md:min-h-[380px] lg:min-h-[420px] flex items-center justify-center py-7 min-[360px]:py-8 sm:py-16 md:py-20 select-none"
         style={{
           backgroundImage: `url(${galleryHeroBg})`,
           backgroundSize: 'cover',
@@ -117,19 +117,19 @@ export const Gallery = () => {
         <div className="absolute bottom-10 right-14 w-80 h-80 bg-burgundy/10 rounded-full blur-3xl pointer-events-none animate-float-slow" />
 
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10 w-full">
-          <div className="max-w-2xl sm:max-w-3xl mx-auto text-center space-y-3 sm:space-y-4">
+          <div className="max-w-2xl sm:max-w-3xl mx-auto text-center space-y-2 sm:space-y-4">
             
             {/* Top Eyebrow with Expanding Accent Lines */}
-            <div className="flex items-center justify-center gap-3 sm:gap-4 mb-2 animate-fade-in-up">
-              <span className="h-px w-8 sm:w-16 bg-gradient-to-r from-transparent via-bronze/80 to-bronze transition-all duration-700" />
-              <span className="inline-flex items-center gap-2 text-xs sm:text-[13px] font-semibold tracking-[0.22em] sm:tracking-[0.26em] text-sand-200 uppercase px-3.5 py-1.5 rounded-full bg-white/10 border border-white/20 backdrop-blur-md shadow-xs">
+            <div className="flex items-center justify-center gap-2 sm:gap-4 mb-1.5 sm:mb-2 animate-fade-in-up">
+              <span className="h-px w-6 sm:w-16 bg-gradient-to-r from-transparent via-bronze/80 to-bronze transition-all duration-700" />
+              <span className="inline-flex items-center gap-1.5 sm:gap-2 text-[10px] min-[360px]:text-xs sm:text-[13px] font-semibold tracking-[0.16em] sm:tracking-[0.26em] text-sand-200 uppercase px-2.5 py-1 min-[360px]:px-3.5 min-[360px]:py-1.5 rounded-full bg-white/10 border border-white/20 backdrop-blur-md shadow-xs">
                 <span>Visual Portfolio</span>
               </span>
-              <span className="h-px w-8 sm:w-16 bg-gradient-to-l from-transparent via-bronze/80 to-bronze transition-all duration-700" />
+              <span className="h-px w-6 sm:w-16 bg-gradient-to-l from-transparent via-bronze/80 to-bronze transition-all duration-700" />
             </div>
 
             {/* Main Headline with Staggered Word Motion */}
-            <h1 className="text-2xl sm:text-3xl md:text-4xl lg:text-[2.65rem] font-bold text-white font-sans tracking-tight break-words leading-tight drop-shadow-[0_2px_12px_rgba(0,0,0,0.95)] animate-fade-in-up [animation-delay:150ms]">
+            <h1 className="text-[23px] min-[360px]:text-[25px] min-[390px]:text-[27px] sm:text-3xl md:text-4xl lg:text-[2.65rem] font-semibold sm:font-bold text-white font-sans tracking-tight break-words leading-tight drop-shadow-[0_2px_12px_rgba(0,0,0,0.95)] animate-fade-in-up [animation-delay:150ms]">
               <span className="inline-block transition-transform duration-300 hover:scale-[1.01]">
                 Curated Portfolio
               </span>{' '}
@@ -138,23 +138,23 @@ export const Gallery = () => {
               </span>
             </h1>
 
-            {/* Subtitle Description */}
-            <p className="text-xs sm:text-sm md:text-base text-cream leading-relaxed max-w-xl mx-auto font-normal drop-shadow-[0_2px_8px_rgba(0,0,0,0.95)] animate-fade-in-up [animation-delay:300ms]">
+            {/* Subtitle Description (Hidden on mobile) */}
+            <p className="hidden sm:block text-[13.5px] min-[360px]:text-[14px] min-[390px]:text-[14.5px] md:text-base text-cream leading-relaxed max-w-xl mx-auto font-normal drop-shadow-[0_2px_8px_rgba(0,0,0,0.95)] animate-fade-in-up [animation-delay:300ms]">
               Browse our dynamic visual archive showcasing bespoke residential estates, agro-forestry plantations, commercial courtyards, and smart irrigation networks.
             </p>
 
-            {/* Trust Badges Bar */}
-            <div className="pt-2 flex flex-wrap items-center justify-center gap-2.5 sm:gap-4 text-xs font-medium text-sand-200/90 animate-fade-in-up [animation-delay:450ms]">
-              <span className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-black/40 backdrop-blur-xs border border-white/10">
-                <Camera className="w-3.5 h-3.5 text-bronze-light" />
+            {/* Trust Badges Bar (Hidden on mobile) */}
+            <div className="hidden sm:flex pt-1.5 sm:pt-2 flex-wrap items-center justify-center gap-1.5 sm:gap-4 text-[10px] min-[360px]:text-xs font-normal sm:font-medium text-sand-200/90 animate-fade-in-up [animation-delay:450ms]">
+              <span className="inline-flex items-center gap-1.5 px-2.5 py-0.5 min-[360px]:px-3 min-[360px]:py-1 rounded-full bg-black/40 backdrop-blur-xs border border-white/10">
+                <Camera className="w-3 h-3 sm:w-3.5 sm:h-3.5 text-bronze-light" />
                 <span>Authentic On-Site Photography</span>
               </span>
-              <span className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-black/40 backdrop-blur-xs border border-white/10">
-                <Trees className="w-3.5 h-3.5 text-bronze-light" />
+              <span className="inline-flex items-center gap-1.5 px-2.5 py-0.5 min-[360px]:px-3 min-[360px]:py-1 rounded-full bg-black/40 backdrop-blur-xs border border-white/10">
+                <Trees className="w-3 h-3 sm:w-3.5 sm:h-3.5 text-bronze-light" />
                 <span>Living Specimen Installations</span>
               </span>
-              <span className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-black/40 backdrop-blur-xs border border-white/10">
-                <Droplets className="w-3.5 h-3.5 text-bronze-light" />
+              <span className="inline-flex items-center gap-1.5 px-2.5 py-0.5 min-[360px]:px-3 min-[360px]:py-1 rounded-full bg-black/40 backdrop-blur-xs border border-white/10">
+                <Droplets className="w-3 h-3 sm:w-3.5 sm:h-3.5 text-bronze-light" />
                 <span>Smart Water Management</span>
               </span>
             </div>
@@ -164,18 +164,18 @@ export const Gallery = () => {
       </section>
 
       {/* 2. GALLERY SHOWCASE SECTION: Category Filters & Staggered Motion Grid */}
-      <section className="pt-8 sm:pt-10 md:pt-12 pb-16 sm:pb-20 bg-cream relative overflow-hidden">
+      <section className="pt-6 min-[360px]:pt-8 sm:pt-10 md:pt-12 pb-10 min-[360px]:pb-12 sm:pb-20 bg-cream relative overflow-hidden">
         {/* Subtle decorative botanical line art */}
         <BotanicalBranchRight />
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
           
           {/* Controls Bar: Categories & Project Count */}
-          <div className="flex flex-col sm:flex-row sm:items-center justify-between pb-6 sm:pb-8 border-b border-sand/60 gap-4">
-            <div>
-              <h2 className="text-xl sm:text-2xl font-serif font-bold text-burgundy">
+          <div className="flex flex-col sm:flex-row sm:items-center justify-between pb-4 sm:pb-8 border-b border-sand/60 gap-3 sm:gap-4">
+            <div className="text-left">
+              <h2 className="text-lg min-[360px]:text-xl sm:text-2xl font-serif font-semibold sm:font-bold text-burgundy">
                 Project Visual Archive
               </h2>
-              <p className="text-xs sm:text-sm text-brand-muted mt-0.5">
+              <p className="text-xs sm:text-sm text-brand-muted mt-0.5 font-normal leading-relaxed">
                 Click any photograph to view high-resolution imagery and engineering specifications.
               </p>
             </div>
@@ -191,7 +191,7 @@ export const Gallery = () => {
                       key={cat}
                       type="button"
                       onClick={() => handleCategoryChange(cat)}
-                      className={`text-xs px-3 py-1.5 rounded-full border transition-all duration-300 cursor-pointer shadow-2xs ${
+                      className={`text-[11px] min-[360px]:text-xs px-2.5 py-1 min-[360px]:px-3 min-[360px]:py-1.5 rounded-full border transition-all duration-300 cursor-pointer shadow-2xs ${
                         isSelected
                           ? 'bg-burgundy text-white border-burgundy shadow-xs'
                           : 'bg-cream-light text-brand-dark border-sand hover:border-bronze hover:bg-white hover:scale-105'
@@ -260,10 +260,10 @@ export const Gallery = () => {
         </div>
       </section>
 
-      <SectionDivider variant="bronze-accent" />
+      <SectionDivider variant="bronze-accent" className="hidden sm:flex" />
 
       {/* 3. EXECUTION HIGHLIGHTS: Pillars of Landscape Photography */}
-      <section className="py-20 bg-sand-50/70 border-y border-sand-200/60 relative overflow-hidden">
+      <section className="hidden sm:block py-20 bg-sand-50/70 border-y border-sand-200/60 relative overflow-hidden">
         {/* Architectural layout marks */}
         <ArchitecturalGridMarks position="left" />
         {/* Soft background glow */}
@@ -352,7 +352,7 @@ export const Gallery = () => {
       </section>
 
       {/* 4. LUXURY PORTFOLIO CONSULTATION CTA SECTION */}
-      <section className="py-20 sm:py-24 bg-burgundy-dark text-cream border-t border-burgundy/40 relative overflow-hidden">
+      <section className="py-12 min-[360px]:py-14 sm:py-24 bg-burgundy-dark text-cream border-t border-burgundy/40 relative overflow-hidden">
         {/* Soft background radiance */}
         <div className="absolute top-0 right-1/4 w-96 h-96 bg-bronze/15 rounded-full blur-3xl pointer-events-none" />
         <div className="absolute bottom-0 left-10 w-80 h-80 bg-burgundy/30 rounded-full blur-3xl pointer-events-none" />

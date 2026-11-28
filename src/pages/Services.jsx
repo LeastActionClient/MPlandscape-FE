@@ -96,7 +96,7 @@ export const Services = () => {
 
       {/* 1. HERO BANNER: Full-Width Cinematic Entrance with Directional Shade & Staggered Word Motion */}
       <section
-        className="relative w-full bg-cream border-b border-sand/60 overflow-hidden select-none min-h-[440px] sm:min-h-[480px] lg:min-h-[520px] xl:min-h-[550px] flex flex-col justify-center py-10 sm:py-14"
+        className="relative w-full bg-cream border-b border-sand/60 overflow-hidden select-none sm:min-h-[480px] lg:min-h-[520px] xl:min-h-[550px] flex flex-col justify-center py-6 min-[360px]:py-8 sm:py-14"
         aria-label="Our Services Overview"
       >
         {/* Full-Width Landscape Background Image */}
@@ -134,20 +134,20 @@ export const Services = () => {
         />
 
         {/* Hero Content Container */}
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10 w-full py-6 sm:py-8 lg:py-10">
-          <div className="max-w-xl lg:max-w-2xl space-y-4 sm:space-y-4.5">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10 w-full py-2 min-[360px]:py-3 sm:py-8 lg:py-10">
+          <div className="max-w-xl lg:max-w-2xl space-y-3 sm:space-y-4.5">
             
             {/* Eyebrow with Expanding Accent Lines */}
-            <div className="flex items-center gap-3 animate-fade-in-up">
-              <span className="h-px w-8 sm:w-14 bg-gradient-to-r from-transparent via-bronze/80 to-bronze transition-all duration-700" />
-              <span className="inline-flex items-center gap-2 text-[11px] sm:text-xs font-semibold tracking-[0.22em] sm:tracking-[0.26em] text-burgundy uppercase px-3.5 py-1 rounded-full bg-burgundy/5 border border-burgundy/15 backdrop-blur-xs shadow-xs hover:border-bronze transition-all duration-300">
+            <div className="flex items-center gap-2 sm:gap-3 animate-fade-in-up">
+              <span className="h-px w-6 sm:w-14 bg-gradient-to-r from-transparent via-bronze/80 to-bronze transition-all duration-700" />
+              <span className="inline-flex items-center gap-1.5 sm:gap-2 text-[10px] min-[360px]:text-xs font-semibold tracking-[0.16em] sm:tracking-[0.26em] text-burgundy uppercase px-2.5 py-1 sm:px-3.5 sm:py-1 rounded-full bg-burgundy/5 border border-burgundy/15 backdrop-blur-xs shadow-xs hover:border-bronze transition-all duration-300">
                 <span>Our Core Divisions</span>
               </span>
-              <span className="h-px w-8 sm:w-14 bg-gradient-to-l from-transparent via-bronze/80 to-bronze transition-all duration-700" />
+              <span className="h-px w-6 sm:w-14 bg-gradient-to-l from-transparent via-bronze/80 to-bronze transition-all duration-700" />
             </div>
 
             {/* Main Headline with Staggered Word Motion */}
-            <h1 className="text-2xl xs:text-3xl sm:text-4xl md:text-[2.65rem] lg:text-[2.9rem] xl:text-[3.15rem] font-bold text-burgundy font-sans tracking-tight leading-[1.15] animate-fade-in-up [animation-delay:150ms]">
+            <h1 className="text-[23px] min-[360px]:text-[25px] min-[390px]:text-[27px] sm:text-4xl md:text-[2.65rem] lg:text-[2.9rem] xl:text-[3.15rem] font-semibold sm:font-bold text-burgundy font-sans tracking-tight leading-[1.22] sm:leading-[1.15] animate-fade-in-up [animation-delay:150ms]">
               <span className="inline-block transition-transform duration-300 hover:scale-[1.01]">
                 Specialized Landscaping
               </span>{' '}
@@ -156,46 +156,46 @@ export const Services = () => {
               </span>
             </h1>
 
-            {/* Subtitle Description */}
-            <p className="text-xs sm:text-sm md:text-base text-brand-dark leading-relaxed max-w-xl font-medium pt-0.5 animate-fade-in-up [animation-delay:300ms]">
+            {/* Subtitle Description (Hidden on mobile) */}
+            <p className="hidden sm:block text-[13.5px] min-[360px]:text-[14px] min-[390px]:text-[14.5px] md:text-base text-brand-dark leading-relaxed max-w-xl font-normal pt-0.5 animate-fade-in-up [animation-delay:300ms]">
               Explore our seven integrated divisions engineered to bring technical rigor, horticultural mastery, and breathtaking aesthetic value to your property.
             </p>
 
             {/* Modern Interactive Search Bar */}
-            <div className="pt-2 sm:pt-3 max-w-lg animate-fade-in-up [animation-delay:400ms]">
+            <div className="pt-1 sm:pt-3 max-w-lg animate-fade-in-up [animation-delay:400ms]">
               <form onSubmit={handleSearchSubmit} className="relative flex items-center group">
                 <input
                   type="text"
                   placeholder="Search services by keyword or feature..."
                   value={searchTerm}
                   onChange={(e) => setSearchTerm(e.target.value)}
-                  className="w-full pl-9 sm:pl-11 pr-24 sm:pr-28 py-2.5 sm:py-3.5 rounded-xl border border-sand/80 bg-white/95 backdrop-blur-xs text-xs sm:text-sm text-brand-dark focus:outline-hidden focus:border-bronze focus:ring-2 focus:ring-bronze/20 shadow-xs placeholder:text-brand-muted/70 transition-all group-hover:border-sand group-hover:shadow-md"
+                  className="w-full pl-8 sm:pl-11 pr-22 sm:pr-28 py-2 min-[360px]:py-2.5 sm:py-3.5 rounded-xl border border-sand/80 bg-white/95 backdrop-blur-xs text-[13.5px] min-[360px]:text-[14px] sm:text-sm placeholder:text-[13px] min-[360px]:placeholder:text-[13.5px] sm:placeholder:text-sm text-brand-dark focus:outline-hidden focus:border-bronze focus:ring-2 focus:ring-bronze/20 shadow-xs placeholder:text-brand-muted/70 transition-all group-hover:border-sand group-hover:shadow-md"
                 />
-                <Search className="w-4 h-4 sm:w-5 sm:h-5 text-bronze absolute left-3 sm:left-3.5 pointer-events-none" />
+                <Search className="w-3.5 h-3.5 sm:w-5 sm:h-5 text-bronze absolute left-2.5 sm:left-3.5 pointer-events-none" />
 
                 {searchTerm && (
                   <button
                     type="button"
                     onClick={handleClearSearch}
-                    className="absolute right-20 sm:right-24 p-1 rounded-full text-charcoal/40 hover:text-charcoal hover:bg-sand/30 transition-colors"
+                    className="absolute right-18 sm:right-24 p-1 rounded-full text-charcoal/40 hover:text-charcoal hover:bg-sand/30 transition-colors"
                     title="Clear search"
                   >
-                    <X className="w-4 h-4" />
+                    <X className="w-3.5 h-3.5 sm:w-4 sm:h-4" />
                   </button>
                 )}
 
                 <button
                   type="submit"
-                  className="absolute right-1.5 px-3.5 sm:px-5 py-1.5 sm:py-2.5 rounded-lg bg-burgundy text-white text-xs sm:text-sm font-semibold hover:bg-burgundy-dark transition-all cursor-pointer shadow-xs active:scale-98 flex items-center gap-1.5"
+                  className="absolute right-1.5 px-3 sm:px-5 py-1.5 sm:py-2.5 rounded-lg bg-burgundy text-white text-xs sm:text-sm font-medium sm:font-semibold hover:bg-burgundy-dark transition-all cursor-pointer shadow-xs active:scale-98 flex items-center gap-1.5"
                 >
                   <span>Search</span>
                 </button>
               </form>
             </div>
 
-            {/* Quick Interactive Category Filter Chips */}
-            <div className="pt-1 flex flex-wrap items-center gap-1.5 sm:gap-2 animate-fade-in-up [animation-delay:500ms]">
-              <span className="text-[11px] sm:text-xs font-bold text-burgundy uppercase tracking-wider mr-1 flex items-center gap-1">
+            {/* Quick Interactive Category Filter Chips (Hidden on mobile) */}
+            <div className="hidden sm:flex pt-1 flex-wrap items-center gap-1.5 sm:gap-2 animate-fade-in-up [animation-delay:500ms]">
+              <span className="text-[10px] min-[360px]:text-xs font-bold text-burgundy uppercase tracking-wider mr-1 flex items-center gap-1">
                 <SlidersHorizontal className="w-3 h-3 text-bronze" />
                 <span>Filters:</span>
               </span>
@@ -206,7 +206,7 @@ export const Services = () => {
                     key={f.label}
                     type="button"
                     onClick={() => handleQuickFilter(f.value)}
-                    className={`text-xs px-2.5 sm:px-3 py-1 rounded-full border transition-all duration-300 cursor-pointer whitespace-nowrap shadow-2xs ${
+                    className={`text-[11px] min-[360px]:text-xs px-2.5 sm:px-3 py-1 rounded-full border transition-all duration-300 cursor-pointer whitespace-nowrap shadow-2xs ${
                       isSelected
                         ? 'bg-burgundy text-white border-burgundy shadow-xs'
                         : 'bg-white/80 text-brand-dark border-sand/80 hover:border-bronze hover:bg-white hover:scale-105'
@@ -218,36 +218,34 @@ export const Services = () => {
               })}
             </div>
 
-            
-
           </div>
         </div>
       </section>
 
       {/* 2. SERVICES GRID: Staggered Slide Motion & Elevated Cards */}
-      <section id="services-list" className="py-16 sm:py-20 bg-cream relative overflow-hidden">
+      <section id="services-list" className="py-8 min-[360px]:py-10 sm:py-20 bg-cream relative overflow-hidden">
         {/* Subtle decorative botanical side art */}
         <BotanicalBranchLeft />
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
           
           {/* Section Sub-Header / Count Indicator */}
-          <div className="flex flex-col sm:flex-row sm:items-center justify-between pb-8 sm:pb-10 border-b border-sand/60 gap-3">
+          <div className="flex flex-col sm:flex-row sm:items-center justify-between pb-4 sm:pb-10 border-b border-sand/60 gap-3">
             <div>
-              <h2 className="text-xl sm:text-2xl font-serif font-bold text-burgundy">
+              <h2 className="text-lg min-[360px]:text-xl sm:text-2xl font-serif font-bold text-burgundy">
                 Specialized Horticultural Divisions
               </h2>
-              <p className="text-xs sm:text-sm text-brand-muted mt-1">
+              <p className="text-xs sm:text-sm text-brand-muted mt-1 font-normal">
                 Engineered solutions tailored to residential estates, agricultural farmlands, and commercial developments.
               </p>
             </div>
             <div className="flex items-center gap-2 self-start sm:self-auto">
-              <span className="text-xs font-semibold px-3 py-1.5 rounded-full bg-cream-light border border-sand text-burgundy shadow-2xs">
+              <span className="text-xs font-semibold px-2.5 py-1 min-[360px]:px-3 min-[360px]:py-1.5 rounded-full bg-cream-light border border-sand text-burgundy shadow-2xs">
                 {services.length} {services.length === 1 ? 'Division' : 'Divisions'} Available
               </span>
             </div>
           </div>
 
-          <div className="mt-8 sm:mt-10">
+          <div className="mt-6 sm:mt-10">
             {loading ? (
               <LoadingSpinner text="Retrieving specialized service divisions..." fullPage />
             ) : error ? (

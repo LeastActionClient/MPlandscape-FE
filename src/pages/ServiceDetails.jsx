@@ -102,7 +102,7 @@ export const ServiceDetails = () => {
       </Helmet>
 
       {/* Banner & Breadcrumb */}
-      <section className="bg-gradient-to-b from-cream via-cream to-sand/20 border-b border-sand py-10 lg:py-14 relative overflow-hidden">
+      <section className="bg-gradient-to-b from-cream via-cream to-sand/20 border-b border-sand py-6 min-[360px]:py-8 lg:py-14 relative overflow-hidden">
         {/* Ambient subtle glow */}
         <div className="absolute top-0 right-1/4 w-80 h-80 bg-bronze/10 rounded-full blur-3xl pointer-events-none" />
 
@@ -114,13 +114,13 @@ export const ServiceDetails = () => {
             ]}
           />
 
-          <div className="max-w-4xl mt-4 space-y-3 animate-fade-in-up">
-            <span className="badge-burgundy shadow-2xs">Specialized Division</span>
-            <h1 className="text-2xl xs:text-3xl sm:text-4xl lg:text-5xl font-extrabold text-burgundy font-sans tracking-tight leading-tight break-words">
+          <div className="max-w-4xl mt-3 sm:mt-4 space-y-2 sm:space-y-3 animate-fade-in-up">
+            <span className="hidden sm:inline-flex badge-burgundy text-[10px] min-[360px]:text-xs px-2.5 py-0.5 sm:px-3 sm:py-1 shadow-2xs">Specialized Division</span>
+            <h1 className="text-[23px] min-[360px]:text-[25px] min-[390px]:text-[27px] sm:text-4xl lg:text-5xl font-semibold sm:font-bold text-burgundy font-sans tracking-tight leading-tight break-words">
               {service.title}
             </h1>
             {service.subtitle && (
-              <p className="text-sm sm:text-base md:text-lg text-bronze font-semibold">
+              <p className="text-[13px] min-[360px]:text-[13.5px] min-[390px]:text-[14px] sm:text-base md:text-lg text-bronze font-normal sm:font-semibold">
                 {service.subtitle}
               </p>
             )}
@@ -129,17 +129,17 @@ export const ServiceDetails = () => {
       </section>
 
       {/* Main Details & Enquiry Grid */}
-      <section className="py-16 sm:py-20 bg-cream relative overflow-hidden">
+      <section className="py-10 min-[360px]:py-12 sm:py-20 bg-cream relative overflow-hidden">
         {/* Ambient background glow & subtle botanical side decoration */}
         <BotanicalBranchLeft />
         <div className="absolute top-1/2 left-0 w-72 h-72 bg-sand/30 rounded-full blur-3xl pointer-events-none -translate-y-1/2" />
 
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
-          <div className="grid lg:grid-cols-12 gap-12 items-start">
+          <div className="grid lg:grid-cols-12 gap-8 lg:gap-12 items-start">
             {/* Left Content Column */}
-            <div className="lg:col-span-7 space-y-8">
+            <div className="lg:col-span-7 space-y-6 sm:space-y-8">
               {/* Feature Hero Image */}
-              <ScrollReveal animation="zoom-in" duration={800} className="rounded-2xl overflow-hidden shadow-xl border border-sand bg-sand/20 aspect-16/9 flex items-center justify-center group/img relative">
+              <ScrollReveal animation="zoom-in" duration={800} className="rounded-xl sm:rounded-2xl overflow-hidden shadow-xl border border-sand bg-sand/20 aspect-16/9 flex items-center justify-center group/img relative">
                 {service.imageUrl ? (
                   <img
                     src={service.imageUrl}
@@ -163,11 +163,11 @@ export const ServiceDetails = () => {
               </ScrollReveal>
 
               {/* Description Body */}
-              <ScrollReveal animation="fade-up" className="space-y-4">
-                <h3 className="text-2xl font-bold text-burgundy font-sans">
+              <ScrollReveal animation="fade-up" className="space-y-2.5 sm:space-y-4">
+                <h3 className="text-[19px] min-[360px]:text-[20px] min-[390px]:text-[22px] sm:text-2xl font-semibold sm:font-bold text-burgundy font-sans">
                   Division Overview & Capabilities
                 </h3>
-                <p className="text-base text-brand-dark leading-relaxed font-normal whitespace-pre-line">
+                <p className="text-[14px] min-[360px]:text-[14.5px] sm:text-base text-brand-dark leading-relaxed font-normal whitespace-pre-line">
                   {service.description}
                 </p>
               </ScrollReveal>
@@ -175,19 +175,19 @@ export const ServiceDetails = () => {
               {/* Key Features & Deliverables */}
               {service.features && service.features.length > 0 && (
                 <ScrollReveal animation="fade-up" delay={150}>
-                  <div className="relative overflow-hidden p-6 sm:p-8 rounded-2xl bg-cream-light border border-sand hover:border-bronze hover:shadow-xl hover:shadow-burgundy/8 transition-all duration-300 group">
+                  <div className="relative overflow-hidden p-4 min-[360px]:p-5 sm:p-8 rounded-xl sm:rounded-2xl bg-cream-light border border-sand hover:border-bronze hover:shadow-xl hover:shadow-burgundy/8 transition-all duration-300 group">
                     {/* Sliding Top Accent Line */}
                     <div className="absolute top-0 left-0 right-0 h-1 bg-gradient-to-r from-burgundy via-bronze to-burgundy scale-x-0 group-hover:scale-x-100 transition-transform duration-500 origin-left" />
 
-                    <div className="flex items-center gap-2 text-burgundy font-bold text-lg mb-4">
-                      <Award className="w-5 h-5 text-bronze group-hover:rotate-12 transition-transform duration-300" />
+                    <div className="flex items-center gap-2 text-burgundy font-bold text-sm min-[360px]:text-base sm:text-lg mb-3 sm:mb-4">
+                      <Award className="w-4 h-4 sm:w-5 sm:h-5 text-bronze group-hover:rotate-12 transition-transform duration-300" />
                       <span>Key Features & Specifications</span>
                     </div>
-                    <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 pt-2">
+                    <div className="grid grid-cols-1 sm:grid-cols-2 gap-2 sm:gap-3 pt-1 sm:pt-2">
                       {service.features.map((feature, idx) => (
-                        <div key={idx} className="flex items-start gap-2.5 p-1 rounded-lg hover:bg-sand/30 transition-colors duration-200">
-                          <CheckCircle2 className="w-4 h-4 text-bronze shrink-0 mt-0.5 group-hover:scale-110 transition-transform duration-200" />
-                          <span className="text-sm text-brand-dark font-medium leading-snug">
+                        <div key={idx} className="flex items-start gap-2 p-1 rounded-lg hover:bg-sand/30 transition-colors duration-200">
+                          <CheckCircle2 className="w-3.5 h-3.5 sm:w-4 sm:h-4 text-bronze shrink-0 mt-0.5 group-hover:scale-110 transition-transform duration-200" />
+                          <span className="text-xs min-[360px]:text-sm text-brand-dark font-normal sm:font-medium leading-snug">
                             {feature}
                           </span>
                         </div>
@@ -199,15 +199,15 @@ export const ServiceDetails = () => {
 
               {/* Quality Guarantee Box */}
               <ScrollReveal animation="fade-up" delay={250}>
-                <div className="p-6 rounded-2xl bg-burgundy text-white space-y-2 border border-bronze/30 shadow-lg hover:shadow-2xl hover:border-bronze hover:-translate-y-1 transition-all duration-300">
-                  <div className="flex items-center gap-2 text-bronze text-sm sm:text-xs font-bold uppercase tracking-wider">
-                    <ShieldCheck className="w-4 h-4 text-bronze" />
+                <div className="p-4 min-[360px]:p-5 sm:p-6 rounded-xl sm:rounded-2xl bg-burgundy text-white space-y-1.5 sm:space-y-2 border border-bronze/30 shadow-lg hover:shadow-2xl hover:border-bronze hover:-translate-y-1 transition-all duration-300">
+                  <div className="flex items-center gap-1.5 sm:gap-2 text-bronze text-xs sm:text-xs font-bold uppercase tracking-wider">
+                    <ShieldCheck className="w-3.5 h-3.5 sm:w-4 sm:h-4 text-bronze" />
                     <span>The MP Landscape Guarantee</span>
                   </div>
-                  <h4 className="text-xl sm:text-lg font-bold font-sans">
+                  <h4 className="text-base min-[360px]:text-lg sm:text-xl font-bold font-sans">
                     Sustainable Execution & Biological Health
                   </h4>
-                  <p className="text-sm sm:text-sm text-cream/95 font-normal leading-relaxed">
+                  <p className="text-xs min-[360px]:text-sm text-cream/95 font-normal leading-relaxed">
                     Every installation is overseen by certified agronomists and landscape architects to ensure full structural compliance, soil health, and minimal maintenance overheads.
                   </p>
                 </div>
@@ -230,18 +230,18 @@ export const ServiceDetails = () => {
       {relatedServices.length > 0 && (
         <>
           <SectionDivider variant="bronze-accent" />
-          <section className="py-16 bg-sand-50/70 border-t border-sand-200/60 relative overflow-hidden">
+          <section className="py-10 min-[360px]:py-12 sm:py-16 bg-sand-50/70 border-t border-sand-200/60 relative overflow-hidden">
             {/* Subtle botanical line art */}
             <BotanicalBranchRight />
             <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
-            <div className="flex items-center justify-between mb-8">
+            <div className="flex items-center justify-between mb-6 sm:mb-8">
               <div>
-                <span className="badge-burgundy">Complementary Solutions</span>
-                <h3 className="text-2xl font-bold text-burgundy font-sans mt-1">
+                <span className="badge-burgundy text-[10px] min-[360px]:text-xs px-2.5 py-0.5 sm:px-3 sm:py-1">Complementary Solutions</span>
+                <h3 className="text-lg min-[360px]:text-xl sm:text-2xl font-bold text-burgundy font-sans mt-1">
                   Explore Other Services
                 </h3>
               </div>
-              <Link to="/services" className="btn-outline text-xs">
+              <Link to="/services" className="btn-outline text-xs px-3 py-1.5 min-[360px]:px-4 min-[360px]:py-2 sm:px-5 sm:py-2.5 font-medium sm:font-semibold">
                 <span>All Services</span>
                 <ArrowRight className="w-3.5 h-3.5" />
               </Link>
