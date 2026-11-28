@@ -39,14 +39,13 @@ const GalleryManagement = () => {
   const [currentPage, setCurrentPage] = useState(1);
   const [pageSize, setPageSize] = useState(12);
 
-  // Upload Modal State (Supports multi-file)
+  // Upload Modal State (Supports multi-file with restored metadata fields)
   const [isUploadModalOpen, setIsUploadModalOpen] = useState(false);
+  const [uploadTitle, setUploadTitle] = useState('');
+  const [uploadDisplayOrder, setUploadDisplayOrder] = useState(0);
+  const [uploadDescription, setUploadDescription] = useState('');
   const [uploadFiles, setUploadFiles] = useState([]);
   const [previewUrls, setPreviewUrls] = useState([]);
-  const [uploadTitle, setUploadTitle] = useState('');
-  const [uploadDescription, setUploadDescription] = useState('');
-  const [uploadOrder, setUploadOrder] = useState(0);
-  const [uploadUrl, setUploadUrl] = useState('');
   const [uploadActive, setUploadActive] = useState(true);
   const [uploadError, setUploadError] = useState('');
   const [isUploading, setIsUploading] = useState(false);
@@ -204,12 +203,11 @@ const GalleryManagement = () => {
   };
 
   const openUploadModal = () => {
+    setUploadTitle('');
+    setUploadDisplayOrder(0);
+    setUploadDescription('');
     setUploadFiles([]);
     setPreviewUrls([]);
-    setUploadTitle('');
-    setUploadDescription('');
-    setUploadOrder(0);
-    setUploadUrl('');
     setUploadActive(true);
     setUploadError('');
     setUploadProgress('');
@@ -223,58 +221,48 @@ const GalleryManagement = () => {
     setUploadProgress('');
 
     if (!uploadTitle.trim()) {
-      setUploadError('Title is required');
+      setUploadError('Project Title / Caption is required');
       return;
     }
 
-    if (uploadFiles.length === 0 && !uploadUrl.trim()) {
-      setUploadError('Please select at least one image or video file, or provide an image URL');
-      return;
-    }
-
-    if (uploadUrl.trim() && /\.(mp4|webm|mov|m4v)(\?.*)?$/i.test(uploadUrl.trim())) {
-      setUploadError('The URL option is strictly for images. Please upload videos via the file selector.');
+    if (uploadFiles.length === 0) {
+      setUploadError('Please select at least one image or video file to upload');
       return;
     }
 
     try {
       setIsUploading(true);
 
-      if (uploadFiles.length > 0) {
-        // Upload media one-by-one to support multiple uploads and progress tracking
-        for (let i = 0; i < uploadFiles.length; i++) {
-          const file = uploadFiles[i];
-          const isVideo = isVideoFile(file);
-          const mediaLabel = isVideo ? 'video' : 'image';
-          setUploadProgress(
-            uploadFiles.length > 1
-              ? `Uploading ${mediaLabel} ${i + 1} of ${uploadFiles.length}: ${file.name || ''}...`
-              : `Uploading ${mediaLabel}: ${file.name || ''}...`
-          );
+      const parsedDisplayOrder = Number.isFinite(Number(uploadDisplayOrder))
+        ? Number(uploadDisplayOrder)
+        : 0;
 
-          const payload = new FormData();
-          const itemTitle =
-            uploadFiles.length === 1
-              ? uploadTitle.trim()
-              : `${uploadTitle.trim()} - Part ${i + 1}`;
-          payload.append('title', itemTitle);
-          payload.append('description', uploadDescription.trim());
-          payload.append('displayOrder', String(Number(uploadOrder) + i));
-          payload.append('isActive', String(uploadActive));
-          payload.append('mediaType', isVideo ? 'VIDEO' : 'IMAGE');
-          payload.append('media', file);
+      // Upload media one-by-one to support multiple uploads and progress tracking
+      for (let i = 0; i < uploadFiles.length; i++) {
+        const file = uploadFiles[i];
+        const isVideo = isVideoFile(file);
+        const mediaLabel = isVideo ? 'video' : 'image';
+        setUploadProgress(
+          uploadFiles.length > 1
+            ? `Uploading ${mediaLabel} ${i + 1} of ${uploadFiles.length}: ${file.name || ''}...`
+            : `Uploading ${mediaLabel}: ${file.name || ''}...`
+        );
 
-          await galleryService.createGallery(payload);
-        }
-      } else if (uploadUrl.trim()) {
-        setUploadProgress('Saving image URL...');
+        const itemTitle =
+          uploadFiles.length > 1
+            ? `${uploadTitle.trim()} - Part ${i + 1}`
+            : uploadTitle.trim();
+
         const payload = new FormData();
-        payload.append('title', uploadTitle.trim());
-        payload.append('description', uploadDescription.trim());
-        payload.append('displayOrder', String(uploadOrder));
+        payload.append('title', itemTitle);
+        if (uploadDescription.trim()) {
+          payload.append('description', uploadDescription.trim());
+        }
+        payload.append('category', 'Outdoor Landscaping');
+        payload.append('displayOrder', String(parsedDisplayOrder + i));
         payload.append('isActive', String(uploadActive));
-        payload.append('mediaType', 'IMAGE');
-        payload.append('imageUrl', uploadUrl.trim());
+        payload.append('mediaType', isVideo ? 'VIDEO' : 'IMAGE');
+        payload.append('media', file);
 
         await galleryService.createGallery(payload);
       }
@@ -599,51 +587,64 @@ const GalleryManagement = () => {
               </div>
             )}
 
+            {/* 1. Project Title / Caption */}
             <div>
               <label className="block text-xs font-semibold text-charcoal mb-1">
-                Project Title / Caption *
+                Project Title / Caption <span className="text-red-600">*</span>
               </label>
               <input
                 type="text"
                 required
                 value={uploadTitle}
-                onChange={(e) => setUploadTitle(e.target.value)}
-                placeholder="e.g. Luxury Estate Manicured Lawns & Native Flora"
-                className="w-full px-3 py-2 border border-sand-300 rounded-lg text-sm focus:ring-2 focus:ring-burgundy-600 focus:outline-none"
+                onChange={(e) => {
+                  setUploadTitle(e.target.value);
+                  if (uploadError) setUploadError('');
+                }}
+                placeholder="e.g. Indoor Office Landscape Installation"
+                className="w-full px-3 py-2 border border-sand-300 rounded-lg text-sm focus:ring-2 focus:ring-burgundy-600 focus:outline-none bg-white placeholder:text-charcoal/40"
               />
             </div>
 
+            {/* 2. Display Order */}
             <div>
               <label className="block text-xs font-semibold text-charcoal mb-1">
-                Display Order
+                Display Order <span className="text-charcoal/40 font-normal">(Optional)</span>
               </label>
               <input
                 type="number"
                 min="0"
-                value={uploadOrder}
-                onChange={(e) => setUploadOrder(parseInt(e.target.value, 10) || 0)}
+                value={uploadDisplayOrder}
+                onChange={(e) =>
+                  setUploadDisplayOrder(
+                    e.target.value === '' ? '' : parseInt(e.target.value, 10) || 0
+                  )
+                }
                 placeholder="0"
-                className="w-full px-3 py-2 border border-sand-300 rounded-lg text-sm focus:ring-2 focus:ring-burgundy-600 focus:outline-none"
+                className="w-full px-3 py-2 border border-sand-300 rounded-lg text-sm focus:ring-2 focus:ring-burgundy-600 focus:outline-none bg-white placeholder:text-charcoal/40"
               />
+              <p className="text-[10px] text-charcoal/50 mt-1">
+                Used to control the display sequence of gallery items.
+              </p>
             </div>
 
+            {/* 3. Description */}
             <div>
               <label className="block text-xs font-semibold text-charcoal mb-1">
-                Description (Optional)
+                Description <span className="text-charcoal/40 font-normal">(Optional)</span>
               </label>
               <textarea
                 rows={2}
                 value={uploadDescription}
                 onChange={(e) => setUploadDescription(e.target.value)}
-                placeholder="Brief project details, species used, or client requirements..."
-                className="w-full px-3 py-2 border border-sand-300 rounded-lg text-sm focus:ring-2 focus:ring-burgundy-600 focus:outline-none"
+                placeholder="Brief project details or information about this work..."
+                className="w-full px-3 py-2 border border-sand-300 rounded-lg text-sm focus:ring-2 focus:ring-burgundy-600 focus:outline-none bg-white placeholder:text-charcoal/40 resize-none"
               />
             </div>
 
-            {/* Drag & Drop Media Picker with Separate Image & Video Previews */}
+            {/* 4. Upload Images or Videos (Drag & Drop Media Picker with Previews) */}
             <div>
               <label className="block text-xs font-semibold text-charcoal mb-1">
-                Select Media File(s) (Images & Videos Supported)
+                Upload Images or Videos <span className="text-red-600">*</span>
               </label>
               <div
                 onDragOver={(e) => {
@@ -664,18 +665,18 @@ const GalleryManagement = () => {
                     await processFiles(Array.from(e.dataTransfer.files));
                   }
                 }}
-                className={`relative flex flex-col items-center justify-center border-2 border-dashed rounded-xl p-5 cursor-pointer transition-colors ${
+                className={`relative flex flex-col items-center justify-center border-2 border-dashed rounded-xl p-6 cursor-pointer transition-colors ${
                   isDragging
                     ? 'border-burgundy-600 bg-sand-100 ring-2 ring-burgundy-600/20'
                     : 'border-sand-300 hover:border-burgundy-600 bg-sand-50/50 hover:bg-sand-50'
                 }`}
               >
                 <label className="flex flex-col items-center justify-center w-full h-full cursor-pointer">
-                  <Upload className="w-8 h-8 text-burgundy-700 mb-1" />
-                  <span className="text-xs font-semibold text-charcoal">
+                  <Upload className="w-9 h-9 text-burgundy-700 mb-2" />
+                  <span className="text-xs sm:text-sm font-semibold text-charcoal text-center">
                     Click to select images or videos, or drag &amp; drop
                   </span>
-                  <span className="text-[10px] text-charcoal/60 mt-0.5 text-center">
+                  <span className="text-[11px] text-charcoal/60 mt-1 text-center">
                     Images: JPG, PNG, WEBP, GIF, AVIF (max 15MB) &bull; Videos: MP4, WEBM, MOV, M4V (max 100MB)
                   </span>
                   <input
@@ -690,7 +691,7 @@ const GalleryManagement = () => {
 
               {/* Previews with Distinct Image & Video Indicators and Playback Controls */}
               {previewUrls.length > 0 && (
-                <div className="mt-3">
+                <div className="mt-4">
                   <p className="text-xs font-semibold text-charcoal mb-2">
                     Selected Media ({previewUrls.length}):
                   </p>
@@ -748,18 +749,6 @@ const GalleryManagement = () => {
                   </div>
                 </div>
               )}
-
-              {/* Alternative Image URL (For images only) */}
-              <div className="mt-3">
-                <span className="text-[11px] text-charcoal/60">Or provide image URL (images only):</span>
-                <input
-                  type="url"
-                  value={uploadUrl}
-                  onChange={(e) => setUploadUrl(e.target.value)}
-                  placeholder="https://example.com/photo.jpg"
-                  className="w-full px-2.5 py-1.5 mt-0.5 border border-sand-300 rounded-lg text-xs focus:ring-2 focus:ring-burgundy-600 focus:outline-none"
-                />
-              </div>
             </div>
 
             <div className="flex items-center gap-2 pt-2">
@@ -790,7 +779,7 @@ const GalleryManagement = () => {
                 type="submit"
                 variant="primary"
                 size="md"
-                disabled={isUploading}
+                disabled={isUploading || uploadFiles.length === 0}
                 className="w-full xs:w-auto justify-center"
               >
                 {isUploading
