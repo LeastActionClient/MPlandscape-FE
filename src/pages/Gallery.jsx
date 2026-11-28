@@ -1,29 +1,16 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useCallback } from 'react';
 import { Helmet } from 'react-helmet-async';
 import { Link } from 'react-router-dom';
 import {
   ArrowRight,
-  Camera,
-  Trees,
-  Droplets,
-  Sprout,
-  ShieldCheck,
   ChevronLeft,
   ChevronRight,
-  ZoomIn,
-  SlidersHorizontal,
-  Calendar,
-  Layers,
-  PhoneCall,
+  X,
+  Play,
+  Film,
+  Sparkles,
 } from 'lucide-react';
-import SectionHeading from '../components/common/SectionHeading';
 import GalleryCard from '../components/common/GalleryCard';
-import ScrollReveal from '../components/common/ScrollReveal';
-import SectionDivider from '../components/common/SectionDivider';
-import {
-  BotanicalBranchRight,
-  ArchitecturalGridMarks,
-} from '../components/common/DecorativeSideDecor';
 import LoadingSpinner from '../components/common/LoadingSpinner';
 import ErrorMessage from '../components/common/ErrorMessage';
 import EmptyState from '../components/common/EmptyState';
@@ -32,21 +19,63 @@ import Modal from '../components/common/Modal';
 import galleryService from '../services/galleryService';
 import galleryHeroBg from '../assets/gallery-hero-bg.jpg';
 
+// Custom SVG Icons matching the reference image category buttons
+const IndoorLeafIcon = ({ className = 'w-4 h-4' }) => (
+  <svg className={className} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+    <path d="M11 20A7 7 0 0 1 9.8 6.1C15.5 5 17 4.48 19 2c1 2 2 4.18 2 8 0 5.5-4.78 10-10 10Z" />
+    <path d="M2 21c0-3 1.85-5.36 5.08-6C9.5 14.52 12 13 13 12" />
+  </svg>
+);
+
+const OutdoorTreeIcon = ({ className = 'w-4 h-4' }) => (
+  <svg className={className} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+    <path d="M12 2L6 9h3l-4 6h5v5h4v-5h5l-4-6h3L12 2z" />
+  </svg>
+);
+
+const PlaygroundIcon = ({ className = 'w-4 h-4' }) => (
+  <svg className={className} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+    <path d="M3 21l4-16h10l4 16" />
+    <path d="M5 13h14" />
+    <path d="M9 5v8" />
+    <path d="M15 5v8" />
+    <path d="M8 17h2" />
+    <path d="M14 17h2" />
+  </svg>
+);
+
+const PottedPlantIcon = ({ className = 'w-4 h-4' }) => (
+  <svg className={className} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+    <path d="M7 11h10l-1.5 10h-7L7 11z" />
+    <path d="M5 11h14" />
+    <path d="M12 11V3" />
+    <path d="M12 7c-2-2-4-2-6 0 0 2.5 3 4 6 4" />
+    <path d="M12 5c2-2 4-2 6 0 0 2.5-3 4-6 4" />
+  </svg>
+);
+
+const CATEGORIES = [
+  { id: 'All', label: 'All Projects', icon: null },
+  { id: 'Indoor Landscaping', label: 'Indoor Landscaping', icon: IndoorLeafIcon },
+  { id: 'Outdoor Landscaping', label: 'Outdoor Landscaping', icon: OutdoorTreeIcon },
+  { id: 'Playground & Recreation', label: 'Playground & Recreation', icon: PlaygroundIcon },
+  { id: 'Plantation & Nursery', label: 'Plantation & Nursery', icon: PottedPlantIcon },
+];
+
 export const Gallery = () => {
   const [items, setItems] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
   const [currentPage, setCurrentPage] = useState(1);
   const [totalPages, setTotalPages] = useState(1);
-  const [selectedImage, setSelectedImage] = useState(null);
+  const [selectedMedia, setSelectedMedia] = useState(null);
   const [selectedCategory, setSelectedCategory] = useState('All');
-  const [availableCategories, setAvailableCategories] = useState([]);
 
   const fetchGallery = async (page = 1, category = 'All') => {
     setLoading(true);
     setError(null);
     try {
-      const params = { page, limit: 12 };
+      const params = { page, limit: 24 };
       if (category && category !== 'All') {
         params.category = category;
       }
@@ -54,9 +83,6 @@ export const Gallery = () => {
       setItems(res.data || []);
       setTotalPages(res.pages || 1);
       setCurrentPage(res.page || 1);
-      if (res.categories && res.categories.length > 0) {
-        setAvailableCategories(['All', ...res.categories]);
-      }
     } catch (err) {
       setError(err.message || 'Failed to retrieve project gallery.');
     } finally {
@@ -68,39 +94,51 @@ export const Gallery = () => {
     fetchGallery(currentPage, selectedCategory);
   }, [currentPage, selectedCategory]);
 
-  const handleCategoryChange = (cat) => {
-    setSelectedCategory(cat);
+  const handleCategoryChange = (catId) => {
+    setSelectedCategory(catId);
     setCurrentPage(1);
   };
 
   // Next / Previous Lightbox Navigation
-  const handleNextImage = () => {
-    if (!selectedImage || items.length === 0) return;
-    const currentIndex = items.findIndex((i) => i._id === selectedImage._id);
+  const handleNextMedia = useCallback(() => {
+    if (!selectedMedia || items.length === 0) return;
+    const currentIndex = items.findIndex((i) => i._id === selectedMedia._id);
     const nextIndex = (currentIndex + 1) % items.length;
-    setSelectedImage(items[nextIndex]);
-  };
+    setSelectedMedia(items[nextIndex]);
+  }, [selectedMedia, items]);
 
-  const handlePrevImage = () => {
-    if (!selectedImage || items.length === 0) return;
-    const currentIndex = items.findIndex((i) => i._id === selectedImage._id);
+  const handlePrevMedia = useCallback(() => {
+    if (!selectedMedia || items.length === 0) return;
+    const currentIndex = items.findIndex((i) => i._id === selectedMedia._id);
     const prevIndex = (currentIndex - 1 + items.length) % items.length;
-    setSelectedImage(items[prevIndex]);
-  };
+    setSelectedMedia(items[prevIndex]);
+  }, [selectedMedia, items]);
+
+  // Keyboard navigation for Lightbox
+  useEffect(() => {
+    const handleKeyDown = (e) => {
+      if (!selectedMedia) return;
+      if (e.key === 'ArrowRight') handleNextMedia();
+      if (e.key === 'ArrowLeft') handlePrevMedia();
+      if (e.key === 'Escape') setSelectedMedia(null);
+    };
+    window.addEventListener('keydown', handleKeyDown);
+    return () => window.removeEventListener('keydown', handleKeyDown);
+  }, [selectedMedia, handleNextMedia, handlePrevMedia]);
 
   return (
     <>
       <Helmet>
-        <title>Projects Gallery | Signature Landscapes &amp; Agricultural Works</title>
+        <title>Projects Gallery | MP Landscape Services</title>
         <meta
           name="description"
-          content="Explore our extensive visual portfolio of completed projects across landscape architecture, estate gardens, commercial irrigation, and farm development."
+          content="A visual showcase of our landscaping, indoor greenery, playgrounds, and commercial installations."
         />
       </Helmet>
 
       {/* 1. HERO BANNER: Cinematic Botanical Background with Staggered Word Motion & Ambient Depth */}
       <section
-        className="relative w-full text-white border-b border-sand/60 overflow-hidden sm:min-h-[340px] md:min-h-[380px] lg:min-h-[420px] flex items-center justify-center py-7 min-[360px]:py-8 sm:py-16 md:py-20 select-none"
+        className="relative w-full text-white border-b border-sand/60 overflow-hidden min-h-[300px] sm:min-h-[340px] md:min-h-[380px] lg:min-h-[420px] flex items-center justify-center py-12 sm:py-16 md:py-20 select-none"
         style={{
           backgroundImage: `url(${galleryHeroBg})`,
           backgroundSize: 'cover',
@@ -109,314 +147,153 @@ export const Gallery = () => {
         }}
         aria-label="Projects Gallery Header"
       >
-        {/* Light transparent scrim to keep the nursery background bright and visible while ensuring text readability */}
-        <div className="absolute inset-0 bg-gradient-to-b from-black/45 via-black/28 to-black/50 pointer-events-none" />
+        {/* Naturally illuminated subtle gradient wash preserving botanical vibrancy & pristine text readability */}
+        <div className="absolute inset-0 bg-gradient-to-b from-black/50 via-burgundy-950/25 to-black/60 pointer-events-none" />
 
-        {/* Subtle warm ambient glow lights */}
-        <div className="absolute top-1/4 left-10 w-72 h-72 bg-bronze/10 rounded-full blur-3xl pointer-events-none animate-pulse-glow" />
-        <div className="absolute bottom-10 right-14 w-80 h-80 bg-burgundy/10 rounded-full blur-3xl pointer-events-none animate-float-slow" />
+        {/* Ambient floating glow lights */}
+        <div className="absolute top-1/4 left-10 w-72 h-72 bg-bronze/15 rounded-full blur-3xl pointer-events-none animate-pulse-glow" />
+        <div className="absolute bottom-10 right-14 w-80 h-80 bg-burgundy/15 rounded-full blur-3xl pointer-events-none animate-float-slow" />
 
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10 w-full">
-          <div className="max-w-2xl sm:max-w-3xl mx-auto text-center space-y-2 sm:space-y-4">
+          <div className="max-w-2xl sm:max-w-3xl mx-auto text-center space-y-3 sm:space-y-4">
             
             {/* Top Eyebrow with Expanding Accent Lines */}
-            <div className="flex items-center justify-center gap-2 sm:gap-4 mb-1.5 sm:mb-2 animate-fade-in-up">
-              <span className="h-px w-6 sm:w-16 bg-gradient-to-r from-transparent via-bronze/80 to-bronze transition-all duration-700" />
-              <span className="inline-flex items-center gap-1.5 sm:gap-2 text-[10px] min-[360px]:text-xs sm:text-[13px] font-semibold tracking-[0.16em] sm:tracking-[0.26em] text-sand-200 uppercase px-2.5 py-1 min-[360px]:px-3.5 min-[360px]:py-1.5 rounded-full bg-white/10 border border-white/20 backdrop-blur-md shadow-xs">
+            <div className="flex items-center justify-center gap-3 sm:gap-4 mb-2 animate-fade-in-up">
+              <span className="h-px w-8 sm:w-16 bg-gradient-to-r from-transparent via-bronze/80 to-bronze transition-all duration-700" />
+              <span className="inline-flex items-center gap-2 text-xs sm:text-[13px] font-semibold tracking-[0.22em] sm:tracking-[0.26em] text-sand-200 uppercase px-3.5 py-1.5 rounded-full bg-white/10 border border-white/20 backdrop-blur-md shadow-xs">
+                <Sparkles className="w-3.5 h-3.5 text-bronze-light animate-pulse" />
                 <span>Visual Portfolio</span>
               </span>
-              <span className="h-px w-6 sm:w-16 bg-gradient-to-l from-transparent via-bronze/80 to-bronze transition-all duration-700" />
+              <span className="h-px w-8 sm:w-16 bg-gradient-to-l from-transparent via-bronze/80 to-bronze transition-all duration-700" />
             </div>
 
             {/* Main Headline with Staggered Word Motion */}
-            <h1 className="text-[23px] min-[360px]:text-[25px] min-[390px]:text-[27px] sm:text-3xl md:text-4xl lg:text-[2.65rem] font-semibold sm:font-bold text-white font-sans tracking-tight break-words leading-tight drop-shadow-[0_2px_12px_rgba(0,0,0,0.95)] animate-fade-in-up [animation-delay:150ms]">
+            <h1 className="text-2xl sm:text-3xl md:text-4xl lg:text-[2.65rem] font-bold text-white font-sans tracking-tight break-words leading-tight drop-shadow-[0_2px_8px_rgba(0,0,0,0.85)] animate-fade-in-up [animation-delay:150ms]">
               <span className="inline-block transition-transform duration-300 hover:scale-[1.01]">
                 Curated Portfolio
               </span>{' '}
-              <span className="inline-block font-serif italic text-bronze-light font-semibold bg-gradient-to-r from-bronze-light via-sand-100 to-bronze-light bg-clip-text text-transparent drop-shadow-[0_2px_8px_rgba(0,0,0,0.9)]">
+              <span className="inline-block font-serif italic text-bronze-light font-semibold bg-gradient-to-r from-bronze-light via-sand-200 to-bronze-light bg-clip-text text-transparent">
                 of Completed Works
               </span>
             </h1>
 
-            {/* Subtitle Description (Hidden on mobile) */}
-            <p className="hidden sm:block text-[13.5px] min-[360px]:text-[14px] min-[390px]:text-[14.5px] md:text-base text-cream leading-relaxed max-w-xl mx-auto font-normal drop-shadow-[0_2px_8px_rgba(0,0,0,0.95)] animate-fade-in-up [animation-delay:300ms]">
+            {/* Subtitle Description */}
+            <p className="text-xs sm:text-sm md:text-base text-sand-100 leading-relaxed max-w-xl mx-auto font-normal drop-shadow-[0_2px_6px_rgba(0,0,0,0.85)] animate-fade-in-up [animation-delay:300ms]">
               Browse our dynamic visual archive showcasing bespoke residential estates, agro-forestry plantations, commercial courtyards, and smart irrigation networks.
             </p>
-
-            {/* Trust Badges Bar (Hidden on mobile) */}
-            <div className="hidden sm:flex pt-1.5 sm:pt-2 flex-wrap items-center justify-center gap-1.5 sm:gap-4 text-[10px] min-[360px]:text-xs font-normal sm:font-medium text-sand-200/90 animate-fade-in-up [animation-delay:450ms]">
-              <span className="inline-flex items-center gap-1.5 px-2.5 py-0.5 min-[360px]:px-3 min-[360px]:py-1 rounded-full bg-black/40 backdrop-blur-xs border border-white/10">
-                <Camera className="w-3 h-3 sm:w-3.5 sm:h-3.5 text-bronze-light" />
-                <span>Authentic On-Site Photography</span>
-              </span>
-              <span className="inline-flex items-center gap-1.5 px-2.5 py-0.5 min-[360px]:px-3 min-[360px]:py-1 rounded-full bg-black/40 backdrop-blur-xs border border-white/10">
-                <Trees className="w-3 h-3 sm:w-3.5 sm:h-3.5 text-bronze-light" />
-                <span>Living Specimen Installations</span>
-              </span>
-              <span className="inline-flex items-center gap-1.5 px-2.5 py-0.5 min-[360px]:px-3 min-[360px]:py-1 rounded-full bg-black/40 backdrop-blur-xs border border-white/10">
-                <Droplets className="w-3 h-3 sm:w-3.5 sm:h-3.5 text-bronze-light" />
-                <span>Smart Water Management</span>
-              </span>
-            </div>
-
           </div>
         </div>
       </section>
 
-      {/* 2. GALLERY SHOWCASE SECTION: Category Filters & Staggered Motion Grid */}
-      <section className="pt-6 min-[360px]:pt-8 sm:pt-10 md:pt-12 pb-10 min-[360px]:pb-12 sm:pb-20 bg-cream relative overflow-hidden">
-        {/* Subtle decorative botanical line art */}
-        <BotanicalBranchRight />
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
-          
-          {/* Controls Bar: Categories & Project Count */}
-          <div className="flex flex-col sm:flex-row sm:items-center justify-between pb-4 sm:pb-8 border-b border-sand/60 gap-3 sm:gap-4">
-            <div className="text-left">
-              <h2 className="text-lg min-[360px]:text-xl sm:text-2xl font-serif font-semibold sm:font-bold text-burgundy">
-                Project Visual Archive
-              </h2>
-              <p className="text-xs sm:text-sm text-brand-muted mt-0.5 font-normal leading-relaxed">
-                Click any photograph to view high-resolution imagery and engineering specifications.
-              </p>
-            </div>
-
-            {/* Category Filter Pills (if categories available) */}
-            {availableCategories.length > 1 && (
-              <div className="flex flex-wrap items-center gap-1.5 sm:gap-2">
-                <SlidersHorizontal className="w-3.5 h-3.5 text-bronze mr-1 hidden sm:inline" />
-                {availableCategories.map((cat) => {
-                  const isSelected = selectedCategory === cat;
-                  return (
-                    <button
-                      key={cat}
-                      type="button"
-                      onClick={() => handleCategoryChange(cat)}
-                      className={`text-[11px] min-[360px]:text-xs px-2.5 py-1 min-[360px]:px-3 min-[360px]:py-1.5 rounded-full border transition-all duration-300 cursor-pointer shadow-2xs ${
-                        isSelected
-                          ? 'bg-burgundy text-white border-burgundy shadow-xs'
-                          : 'bg-cream-light text-brand-dark border-sand hover:border-bronze hover:bg-white hover:scale-105'
-                      }`}
-                    >
-                      {cat === 'All' ? 'All Works' : cat}
-                    </button>
-                  );
-                })}
-              </div>
-            )}
+      {/* 2. CATEGORY FILTER NAVIGATION: Reference Image Rounded Pill Buttons */}
+      <section className="bg-[#FAF7F2] py-8 sm:py-10 border-b border-[#E8DFC8]">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          <div className="flex items-center gap-2 sm:gap-3 overflow-x-auto no-scrollbar pb-2 sm:pb-0 justify-start sm:justify-center flex-nowrap sm:flex-wrap">
+            {CATEGORIES.map((category) => {
+              const isSelected = selectedCategory === category.id;
+              const Icon = category.icon;
+              return (
+                <button
+                  key={category.id}
+                  type="button"
+                  onClick={() => handleCategoryChange(category.id)}
+                  className={`inline-flex items-center gap-2 px-5 py-2.5 sm:px-6 sm:py-2.5 rounded-full text-xs sm:text-sm font-medium tracking-wide transition-all duration-300 shrink-0 cursor-pointer border ${
+                    isSelected
+                      ? 'bg-burgundy text-white border-burgundy shadow-sm'
+                      : 'bg-white text-charcoal border-stone-300/80 hover:border-bronze hover:bg-white shadow-2xs hover:-translate-y-0.5'
+                  }`}
+                >
+                  {Icon && <Icon className={`w-4 h-4 ${isSelected ? 'text-white' : 'text-charcoal/70'}`} />}
+                  <span>{category.label}</span>
+                </button>
+              );
+            })}
           </div>
+        </div>
+      </section>
 
-          {/* Grid Content */}
-          <div className="mt-8 sm:mt-10">
-            {loading ? (
-              <LoadingSpinner text="Loading gallery projects..." fullPage />
-            ) : error ? (
-              <ErrorMessage
-                title="Unable to Load Gallery"
-                message={error}
-                onRetry={() => fetchGallery(currentPage, selectedCategory)}
-              />
-            ) : items.length === 0 ? (
-              <EmptyState
-                title="No Gallery Projects Available"
-                description={
-                  selectedCategory !== 'All'
-                    ? `No projects found under "${selectedCategory}". Try selecting another category.`
-                    : 'There are currently no items in our project portfolio showcase.'
-                }
-                actionText={selectedCategory !== 'All' ? 'View All Projects' : undefined}
-                onAction={selectedCategory !== 'All' ? () => handleCategoryChange('All') : undefined}
-              />
-            ) : (
-              <>
-                <div className="grid grid-cols-1 min-[380px]:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4 sm:gap-5 md:gap-6">
-                  {items.map((item, idx) => (
-                    <ScrollReveal
-                      key={item._id}
-                      animation="fade-up"
-                      delay={Math.min((idx % 4) * 80, 240)}
-                      className="h-full"
-                    >
-                      <GalleryCard
-                        item={item}
-                        onSelect={(img) => setSelectedImage(img)}
-                      />
-                    </ScrollReveal>
-                  ))}
-                </div>
-
-                {/* Pagination Controls */}
-                {totalPages > 1 && (
-                  <div className="mt-12 sm:mt-14">
-                    <Pagination
-                      currentPage={currentPage}
-                      totalPages={totalPages}
-                      onPageChange={(p) => setCurrentPage(p)}
+      {/* 3. MASONRY GALLERY SHOWCASE SECTION */}
+      <section className="py-10 sm:py-14 md:py-16 bg-[#FAF7F2] min-h-[500px]">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          
+          {loading ? (
+            <div className="py-20 flex justify-center">
+              <LoadingSpinner text="Loading gallery projects..." />
+            </div>
+          ) : error ? (
+            <ErrorMessage
+              title="Unable to Load Gallery"
+              message={error}
+              onRetry={() => fetchGallery(currentPage, selectedCategory)}
+            />
+          ) : items.length === 0 ? (
+            <EmptyState
+              title="No Gallery Projects Available"
+              description={
+                selectedCategory !== 'All'
+                  ? `No projects found under "${selectedCategory}". Try selecting another category.`
+                  : 'There are currently no items in our project portfolio showcase.'
+              }
+              actionText={selectedCategory !== 'All' ? 'View All Projects' : undefined}
+              onAction={selectedCategory !== 'All' ? () => handleCategoryChange('All') : undefined}
+            />
+          ) : (
+            <>
+              {/* Reference-Inspired Editorial Masonry Multi-Column Layout */}
+              <div className="columns-1 sm:columns-2 lg:columns-3 gap-5 sm:gap-6 [column-fill:_balance]">
+                {items.map((item) => (
+                  <div key={item._id} className="break-inside-avoid mb-5 sm:mb-6">
+                    <GalleryCard
+                      item={item}
+                      onSelect={(media) => setSelectedMedia(media)}
                     />
                   </div>
-                )}
-              </>
-            )}
-          </div>
+                ))}
+              </div>
+
+              {/* Pagination Controls */}
+              {totalPages > 1 && (
+                <div className="mt-12 sm:mt-16">
+                  <Pagination
+                    currentPage={currentPage}
+                    totalPages={totalPages}
+                    onPageChange={(p) => setCurrentPage(p)}
+                  />
+                </div>
+              )}
+            </>
+          )}
+
         </div>
       </section>
 
-      <SectionDivider variant="bronze-accent" className="hidden sm:flex" />
-
-      {/* 3. EXECUTION HIGHLIGHTS: Pillars of Landscape Photography */}
-      <section className="hidden sm:block py-20 bg-sand-50/70 border-y border-sand-200/60 relative overflow-hidden">
-        {/* Architectural layout marks */}
-        <ArchitecturalGridMarks position="left" />
-        {/* Soft background glow */}
-        <div className="absolute top-1/2 right-0 w-80 h-80 bg-bronze/10 rounded-full blur-3xl pointer-events-none -translate-y-1/2" />
-        <div className="absolute bottom-0 left-0 w-96 h-96 bg-sand/25 rounded-full blur-3xl pointer-events-none" />
-
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
-          <SectionHeading
-            badge="Portfolio Rigor"
-            title="The Hallmark of Our Executed Grounds"
-            subtitle="Every photograph documents real, thriving landscapes engineered with biological precision and generational resilience."
-          />
-
-          <div className="mt-14 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 sm:gap-7">
-            
-            <ScrollReveal animation="fade-up" delay={0}>
-              <div className="group relative p-6 sm:p-7 rounded-2xl bg-white border border-sand hover:border-bronze hover:shadow-xl hover:-translate-y-2.5 transition-all duration-400 flex flex-col justify-between overflow-hidden cursor-default h-full">
-                <div>
-                  <div className="w-12 h-12 rounded-xl bg-burgundy/10 text-burgundy flex items-center justify-center mb-5 group-hover:bg-burgundy group-hover:text-white group-hover:scale-110 group-hover:rotate-3 transition-all duration-300 shadow-xs">
-                    <Camera className="w-6 h-6" />
-                  </div>
-                  <h4 className="text-base font-bold text-burgundy mb-2 group-hover:text-burgundy-950 transition-colors">
-                    Photographic Authenticity
-                  </h4>
-                  <p className="text-xs text-brand-muted leading-relaxed font-normal">
-                    Zero artificial rendering—all photographs depict living, completed installations across residential villas, farmlands, and commercial campuses.
-                  </p>
-                </div>
-                <div className="w-8 group-hover:w-full h-0.5 bg-gradient-to-r from-bronze to-burgundy transition-all duration-500 rounded-full mt-6" />
-              </div>
-            </ScrollReveal>
-
-            <ScrollReveal animation="fade-up" delay={120}>
-              <div className="group relative p-6 sm:p-7 rounded-2xl bg-white border border-sand hover:border-bronze hover:shadow-xl hover:-translate-y-2.5 transition-all duration-400 flex flex-col justify-between overflow-hidden cursor-default h-full">
-                <div>
-                  <div className="w-12 h-12 rounded-xl bg-bronze/15 text-bronze flex items-center justify-center mb-5 group-hover:bg-bronze group-hover:text-white group-hover:scale-110 group-hover:-rotate-3 transition-all duration-300 shadow-xs">
-                    <Trees className="w-6 h-6" />
-                  </div>
-                  <h4 className="text-base font-bold text-burgundy mb-2 group-hover:text-burgundy-950 transition-colors">
-                    Botanical Longevity
-                  </h4>
-                  <p className="text-xs text-brand-muted leading-relaxed font-normal">
-                    Our specimen plantings are selected with generous root allowances and organic soil blends, ensuring grounds grow denser and more valuable with time.
-                  </p>
-                </div>
-                <div className="w-8 group-hover:w-full h-0.5 bg-gradient-to-r from-bronze to-burgundy transition-all duration-500 rounded-full mt-6" />
-              </div>
-            </ScrollReveal>
-
-            <ScrollReveal animation="fade-up" delay={240}>
-              <div className="group relative p-6 sm:p-7 rounded-2xl bg-white border border-sand hover:border-bronze hover:shadow-xl hover:-translate-y-2.5 transition-all duration-400 flex flex-col justify-between overflow-hidden cursor-default h-full">
-                <div>
-                  <div className="w-12 h-12 rounded-xl bg-burgundy/10 text-burgundy flex items-center justify-center mb-5 group-hover:bg-burgundy group-hover:text-white group-hover:scale-110 group-hover:rotate-3 transition-all duration-300 shadow-xs">
-                    <Droplets className="w-6 h-6" />
-                  </div>
-                  <h4 className="text-base font-bold text-burgundy mb-2 group-hover:text-burgundy-950 transition-colors">
-                    Precision Hydraulics
-                  </h4>
-                  <p className="text-xs text-brand-muted leading-relaxed font-normal">
-                    Beneath each lawn lies an invisible network of pressure-regulated drip and rotary irrigation lines preventing root rot and water waste.
-                  </p>
-                </div>
-                <div className="w-8 group-hover:w-full h-0.5 bg-gradient-to-r from-bronze to-burgundy transition-all duration-500 rounded-full mt-6" />
-              </div>
-            </ScrollReveal>
-
-            <ScrollReveal animation="fade-up" delay={360}>
-              <div className="group relative p-6 sm:p-7 rounded-2xl bg-white border border-sand hover:border-bronze hover:shadow-xl hover:-translate-y-2.5 transition-all duration-400 flex flex-col justify-between overflow-hidden cursor-default h-full">
-                <div>
-                  <div className="w-12 h-12 rounded-xl bg-bronze/15 text-bronze flex items-center justify-center mb-5 group-hover:bg-bronze group-hover:text-white group-hover:scale-110 group-hover:-rotate-3 transition-all duration-300 shadow-xs">
-                    <ShieldCheck className="w-6 h-6" />
-                  </div>
-                  <h4 className="text-base font-bold text-burgundy mb-2 group-hover:text-burgundy-950 transition-colors">
-                    Architectural Hardscaping
-                  </h4>
-                  <p className="text-xs text-brand-muted leading-relaxed font-normal">
-                    Natural stone walkways, pergolas, retaining masonry, and illuminated garden paths engineered against subsoil settling and erosion.
-                  </p>
-                </div>
-                <div className="w-8 group-hover:w-full h-0.5 bg-gradient-to-r from-bronze to-burgundy transition-all duration-500 rounded-full mt-6" />
-              </div>
-            </ScrollReveal>
-
-          </div>
-        </div>
-      </section>
-
-      {/* 4. LUXURY PORTFOLIO CONSULTATION CTA SECTION */}
-      <section className="py-12 min-[360px]:py-14 sm:py-24 bg-burgundy-dark text-cream border-t border-burgundy/40 relative overflow-hidden">
-        {/* Soft background radiance */}
-        <div className="absolute top-0 right-1/4 w-96 h-96 bg-bronze/15 rounded-full blur-3xl pointer-events-none" />
-        <div className="absolute bottom-0 left-10 w-80 h-80 bg-burgundy/30 rounded-full blur-3xl pointer-events-none" />
-
-        <ScrollReveal animation="fade-up" delay={150} className="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10 text-center space-y-6">
-          <div className="inline-flex items-center gap-2 text-xs font-bold uppercase tracking-widest text-bronze px-4 py-1.5 rounded-full bg-white/5 border border-white/10 backdrop-blur-xs">
-            <span>Signature Bespoke Designs</span>
-          </div>
-
-          <h2 className="text-2xl xs:text-3xl sm:text-4xl md:text-5xl font-serif font-bold text-white tracking-tight leading-tight">
-            Have a Signature Project in Mind?
-          </h2>
-
-          <p className="text-sm sm:text-base text-cream/90 max-w-2xl mx-auto leading-relaxed font-normal">
-            Whether you are envisioning a private estate garden, a high-yield farm orchard, or commercial campus hardscaping, our specialists are ready to turn your vision into enduring reality.
-          </p>
-
-          <div className="pt-4 flex flex-col sm:flex-row items-center justify-center gap-3 sm:gap-4">
-            <Link
-              to="/contact"
-              className="w-full sm:w-auto group btn-accent text-sm sm:text-base px-8 py-3.5 rounded-full inline-flex items-center justify-center gap-2.5 shadow-xl hover:shadow-2xl hover:shadow-bronze/40 hover:-translate-y-0.5 transition-all duration-300"
-            >
-              <span>Schedule On-Site Survey</span>
-              <ArrowRight className="w-4 h-4 text-white group-hover:translate-x-1.5 transition-transform duration-300 shrink-0" />
-            </Link>
-
-            <Link
-              to="/services"
-              className="w-full sm:w-auto inline-flex items-center justify-center gap-2 px-7 py-3.5 rounded-full bg-white/10 hover:bg-white/20 text-white border border-white/20 hover:border-white text-sm sm:text-base font-semibold backdrop-blur-xs transition-all duration-300 shadow-md"
-            >
-              <span>Explore All Services</span>
-              <ArrowRight className="w-4 h-4 text-bronze-light shrink-0" />
-            </Link>
-          </div>
-        </ScrollReveal>
-      </section>
-
-      {/* 5. ENHANCED LIGHTBOX MODAL WITH NEXT / PREVIOUS NAVIGATION */}
+      {/* 4. LIGHTBOX / MEDIA VIEWER MODAL */}
       <Modal
-        isOpen={Boolean(selectedImage)}
-        onClose={() => setSelectedImage(null)}
-        title={selectedImage?.title || 'Project Preview'}
-        maxWidth="max-w-4xl"
+        isOpen={Boolean(selectedMedia)}
+        onClose={() => setSelectedMedia(null)}
+        title={selectedMedia?.title || 'Project Preview'}
+        maxWidth="max-w-5xl"
       >
-        {selectedImage && (
+        {selectedMedia && (
           <div className="space-y-4">
-            {/* Media Canvas with Navigation Arrows */}
-            <div className="relative rounded-2xl overflow-hidden bg-brand-charcoal max-h-[70vh] flex items-center justify-center group/preview border border-sand/40">
+            {/* Media Canvas with Next/Prev navigation */}
+            <div className="relative rounded-2xl overflow-hidden bg-black max-h-[75vh] flex items-center justify-center group/preview border border-sand/40">
               {(() => {
                 const isVideo =
-                  selectedImage.mediaType === 'VIDEO' ||
-                  selectedImage.resourceType === 'video' ||
-                  /\.(mp4|webm|mov|m4v)(\?.*)?$/i.test(selectedImage.imageUrl || '');
+                  selectedMedia.mediaType === 'VIDEO' ||
+                  selectedMedia.resourceType === 'video' ||
+                  /\.(mp4|webm|mov|m4v)(\?.*)?$/i.test(selectedMedia.imageUrl || '');
 
                 if (isVideo) {
                   return (
                     <video
-                      key={selectedImage._id}
-                      src={selectedImage.imageUrl}
+                      key={selectedMedia._id}
+                      src={selectedMedia.imageUrl}
                       controls
                       autoPlay={false}
                       controlsList="nodownload"
                       playsInline
-                      className="max-h-[70vh] w-full max-w-full rounded-xl object-contain mx-auto shadow-2xl bg-black"
+                      className="max-h-[75vh] w-full max-w-full rounded-xl object-contain mx-auto shadow-2xl bg-black"
                     >
                       Your browser does not support the video tag.
                     </video>
@@ -425,9 +302,9 @@ export const Gallery = () => {
 
                 return (
                   <img
-                    src={selectedImage.imageUrl}
-                    alt={selectedImage.title}
-                    className="max-h-[70vh] w-auto object-contain mx-auto transition-transform duration-300 select-none"
+                    src={selectedMedia.imageUrl}
+                    alt={selectedMedia.title || 'Project Preview'}
+                    className="max-h-[75vh] w-auto max-w-full object-contain mx-auto transition-transform duration-300 select-none"
                   />
                 );
               })()}
@@ -438,7 +315,7 @@ export const Gallery = () => {
                   type="button"
                   onClick={(e) => {
                     e.stopPropagation();
-                    handlePrevImage();
+                    handlePrevMedia();
                   }}
                   className="absolute left-3 top-1/2 -translate-y-1/2 w-10 h-10 rounded-full bg-black/60 hover:bg-black/85 text-white flex items-center justify-center backdrop-blur-md border border-white/20 hover:border-bronze transition-all shadow-lg cursor-pointer z-20"
                   aria-label="Previous photograph or video"
@@ -453,7 +330,7 @@ export const Gallery = () => {
                   type="button"
                   onClick={(e) => {
                     e.stopPropagation();
-                    handleNextImage();
+                    handleNextMedia();
                   }}
                   className="absolute right-3 top-1/2 -translate-y-1/2 w-10 h-10 rounded-full bg-black/60 hover:bg-black/85 text-white flex items-center justify-center backdrop-blur-md border border-white/20 hover:border-bronze transition-all shadow-lg cursor-pointer z-20"
                   aria-label="Next photograph or video"
@@ -463,27 +340,27 @@ export const Gallery = () => {
               )}
             </div>
 
-            {/* Project Details & Enquiry Trigger */}
+            {/* Project Details & CTA */}
             <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 pt-2">
               <div>
                 <h4 className="text-xl font-bold text-burgundy font-serif">
-                  {selectedImage.title}
+                  {selectedMedia.title}
                 </h4>
-                {selectedImage.category && (
+                {selectedMedia.category && (
                   <span className="inline-block text-[11px] font-bold text-bronze uppercase tracking-widest mt-0.5">
-                    {selectedImage.category}
+                    {selectedMedia.category}
                   </span>
                 )}
-                {selectedImage.description && (
-                  <p className="text-xs sm:text-sm text-brand-muted mt-1 leading-relaxed max-w-xl">
-                    {selectedImage.description}
+                {selectedMedia.description && (
+                  <p className="text-xs sm:text-sm text-charcoal/70 mt-1 leading-relaxed max-w-2xl">
+                    {selectedMedia.description}
                   </p>
                 )}
               </div>
               <Link
                 to="/contact"
-                onClick={() => setSelectedImage(null)}
-                className="btn-accent text-xs sm:text-sm py-2.5 px-5 rounded-xl shrink-0 flex items-center gap-2 shadow-md hover:shadow-xl hover:-translate-y-0.5 transition-all"
+                onClick={() => setSelectedMedia(null)}
+                className="btn-accent text-xs sm:text-sm py-2.5 px-5 rounded-full shrink-0 flex items-center gap-2 shadow-md hover:shadow-xl hover:-translate-y-0.5 transition-all text-white bg-burgundy hover:bg-burgundy-900"
               >
                 <span>Enquire About Similar Project</span>
                 <ArrowRight className="w-3.5 h-3.5" />
